@@ -1,0 +1,960 @@
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/cwi_142_925.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25940
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 5625
+	Voluntary context switches: 5
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 80
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/cwi_1_2.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25796
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5630
+	Voluntary context switches: 3
+	Involuntary context switches: 5
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/cwi_214_684.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25920
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5627
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/cwi_2165_8723.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.00
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25968
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5630
+	Voluntary context switches: 3
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/cwi_2416_17605.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 26024
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5632
+	Voluntary context switches: 3
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/cwi_33949_165318.bcg"
+	User time (seconds): 0.01
+	System time (seconds): 0.00
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25796
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5624
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/cwi_371_641.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25916
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5631
+	Voluntary context switches: 3
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/cwi_3_14.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25856
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5623
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/cwi_566_3984.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25960
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5629
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/cwi_7838_59101.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.00
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25956
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5627
+	Voluntary context switches: 3
+	Involuntary context switches: 4
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_0_1.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25932
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5626
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_10_56.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.00
+	Percent of CPU this job got: 92%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25956
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5631
+	Voluntary context switches: 2
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_11026_24660.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25916
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5626
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_1112_5290.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25940
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5626
+	Voluntary context switches: 3
+	Involuntary context switches: 1
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_116_368.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.00
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25916
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5631
+	Voluntary context switches: 3
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_12323_27667.bcg"
+	User time (seconds): 0.01
+	System time (seconds): 0.00
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25940
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5628
+	Voluntary context switches: 3
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_157_297.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25968
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5630
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_164_1619.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25976
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5630
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_166_651.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 26016
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5629
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_18_73.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.00
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25796
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5624
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_1_4.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25976
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5626
+	Voluntary context switches: 3
+	Involuntary context switches: 4
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_2581_11442.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25852
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5625
+	Voluntary context switches: 3
+	Involuntary context switches: 5
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_25_25.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.00
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25856
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5622
+	Voluntary context switches: 3
+	Involuntary context switches: 1
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_386_1171.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25976
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5627
+	Voluntary context switches: 3
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_40_60.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 88%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25880
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5629
+	Voluntary context switches: 3
+	Involuntary context switches: 5
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_4220_13944.bcg"
+	User time (seconds): 0.01
+	System time (seconds): 0.00
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25856
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5625
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_4338_15666.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.00
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25940
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5626
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_52_318.bcg"
+	User time (seconds): 0.01
+	System time (seconds): 0.00
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25796
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5625
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_574_13561.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25940
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5626
+	Voluntary context switches: 3
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_5_9.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25916
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5627
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_6020_19353.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25976
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5628
+	Voluntary context switches: 3
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_6120_11031.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25968
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5632
+	Voluntary context switches: 3
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_65_2621.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25976
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5632
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_66_1302.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.00
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25956
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5629
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_69_520.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 26020
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5631
+	Voluntary context switches: 3
+	Involuntary context switches: 1
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_720_390.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.00
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25796
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5630
+	Voluntary context switches: 3
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_8082_42933.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25960
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5627
+	Voluntary context switches: 3
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_83_325.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 26012
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5629
+	Voluntary context switches: 3
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_8_24.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 25856
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5628
+	Voluntary context switches: 3
+	Involuntary context switches: 5
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+Command exited with non-zero status 2
+	Command being timed: "timeout 20m ./sctl -bcg deadlock /home/jian/Desktop/bcg_benchmark/vasy_8_38.bcg"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 91%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 26012
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5628
+	Voluntary context switches: 3
+	Involuntary context switches: 4
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2

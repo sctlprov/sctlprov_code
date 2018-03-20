@@ -1,0 +1,120 @@
+VVM
+VAR	
+s00: {noncritical, trying, critical}; 
+s01: {noncritical, trying, critical}; 
+s02: {noncritical, trying, critical}; 
+s03: {noncritical, trying, critical}; 
+s04: {noncritical, trying, critical}; 
+s05: {noncritical, trying, critical}; 
+s06: {noncritical, trying, critical}; 
+s07: {noncritical, trying, critical}; 
+s08: {noncritical, trying, critical}; 
+s09: {noncritical, trying, critical}; 
+s10: {noncritical, trying, critical}; 
+s11: {noncritical, trying, critical}; 
+s12: {noncritical, trying, critical}; 
+s13: {noncritical, trying, critical}; 
+s14: {noncritical, trying, critical}; 
+s15: {noncritical, trying, critical}; 
+s16: {noncritical, trying, critical}; 
+s17: {noncritical, trying, critical}; 
+s18: {noncritical, trying, critical}; 
+s19: {noncritical, trying, critical}; 
+s20: {noncritical, trying, critical}; 
+s21: {noncritical, trying, critical}; 
+s22: {noncritical, trying, critical}; 
+s23: {noncritical, trying, critical}; 
+s24: {noncritical, trying, critical}; 
+s25: {noncritical, trying, critical}; 
+s26: {noncritical, trying, critical}; 
+s27: {noncritical, trying, critical}; 
+s28: {noncritical, trying, critical}; 
+s29: {noncritical, trying, critical}; 
+s30: {noncritical, trying, critical}; 
+s31: {noncritical, trying, critical}; 
+s32: {noncritical, trying, critical}; 
+s33: {noncritical, trying, critical}; 
+s34: {noncritical, trying, critical}; 
+s35: {noncritical, trying, critical}; 
+s36: {noncritical, trying, critical}; 
+s37: {noncritical, trying, critical}; 
+s38: {noncritical, trying, critical}; 
+s39: {noncritical, trying, critical}; 
+s40: {noncritical, trying, critical}; 
+turn: 0..40;
+INIT 
+turn=0;
+PROC
+ss: stuttering();
+pr00: prc(s00, s01, turn, 00, 01); 
+pr01: prc(s01, s02, turn, 01, 02);
+pr02: prc(s02, s03, turn, 02, 03);
+pr03: prc(s03, s04, turn, 03, 04);
+pr04: prc(s04, s05, turn, 04, 05);
+pr05: prc(s05, s06, turn, 05, 06);
+pr06: prc(s06, s07, turn, 06, 07);
+pr07: prc(s07, s08, turn, 07, 08);
+pr08: prc(s08, s09, turn, 08, 09);
+pr09: prc(s09, s10, turn, 09, 10);
+pr10: prc(s10, s11, turn, 10, 11); 
+pr11: prc(s11, s12, turn, 11, 12);
+pr12: prc(s12, s13, turn, 12, 13);
+pr13: prc(s13, s14, turn, 13, 14);
+pr14: prc(s14, s15, turn, 14, 15);
+pr15: prc(s15, s16, turn, 15, 16);
+pr16: prc(s16, s17, turn, 16, 17);
+pr17: prc(s17, s18, turn, 17, 18);
+pr18: prc(s18, s19, turn, 18, 19);
+pr19: prc(s19, s20, turn, 19, 20);
+pr20: prc(s20, s21, turn, 20, 21);
+pr21: prc(s21, s22, turn, 21, 22);
+pr22: prc(s22, s23, turn, 22, 23);
+pr23: prc(s23, s24, turn, 23, 24);
+pr24: prc(s24, s25, turn, 24, 25);
+pr25: prc(s25, s26, turn, 25, 26);
+pr26: prc(s26, s27, turn, 26, 27);
+pr27: prc(s27, s28, turn, 27, 28);
+pr28: prc(s28, s29, turn, 28, 29);
+pr29: prc(s29, s30, turn, 29, 30);
+pr30: prc(s30, s31, turn, 30, 31);
+pr31: prc(s31, s32, turn, 31, 32);
+pr32: prc(s32, s33, turn, 32, 33);
+pr33: prc(s33, s34, turn, 33, 34);
+pr34: prc(s34, s35, turn, 34, 35);
+pr35: prc(s35, s36, turn, 35, 36);
+pr36: prc(s36, s37, turn, 36, 37);
+pr37: prc(s37, s38, turn, 37, 38);
+pr38: prc(s38, s39, turn, 38, 39);
+pr39: prc(s39, s40, turn, 39, 40);
+pr40: prc(s40, s00, turn, 40, 00);
+FAIRNESS
+!(s00=critical);
+SPEC 
+
+
+
+
+AG(!(s01 = critical) | A((s01 = critical) U (!(s01 = critical) & A(!(s01 = critical) U (s00 = critical)))));            
+MODULE stuttering()
+VAR
+INIT
+TRANS
+TRUE: 1=1;
+MODULE	prc(state0,state1,turn,turn0,turn1)
+VAR
+INIT
+	state0=noncritical;
+TRANS 	
+	state0=noncritical&turn=turn0: state0=trying&turn=turn1;
+	state0=noncritical&turn!=turn0: state0=trying;
+	state0=noncritical&turn=turn0: state0=noncritical&turn=turn1;
+	state0=noncritical&turn!=turn0: state0=noncritical;
+	state0=trying&state1=noncritical: state0=critical;
+	state0=trying&state1=trying&turn=turn0: state0=critical;
+//	state0=critical: 	state0=trying;
+	state0=critical: 	state0=critical;
+	state0=critical: 	state0=noncritical;
+	state0=trying&!(state1=noncritical)&!(state1=trying&turn=turn0)
+	: state0=state0;
+FAIRNESS
+running

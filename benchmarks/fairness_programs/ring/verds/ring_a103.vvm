@@ -1,0 +1,42 @@
+VVM
+VAR
+INIT
+PROC
+ss: stuttering();
+gate01 : inverter(gate10.output);
+gate02 : inverter(gate01.output);
+gate03 : inverter(gate02.output);
+gate04 : inverter(gate03.output);
+gate05 : inverter(gate04.output);
+gate06 : inverter(gate05.output);
+gate07 : inverter(gate06.output);
+gate08 : inverter(gate07.output);
+gate09 : inverter(gate08.output);
+gate10 : inverter(gate09.output);
+SPEC
+(EG AF gate01.output=1) & (EG AF !gate01.output=1)
+MODULE stuttering()
+VAR
+INIT
+TRANS
+TRUE:1=1;
+MODULE inverter(input)
+VAR
+r1:(0..1);
+r2:(0..1);
+r3:(0..1);
+r4:(0..1);
+r5:(0..1);
+output:(0..1);
+INIT
+r1=0;
+r2=0;
+r3=0;
+r4=0;
+r5=0;
+output=0;
+TRANS
+TRUE: 
+r1=1-input&r2=1-r1&r3=1-r2&r4=1-r3&r5=1-r4&output=1-r5;
+FAIRNESS
+running

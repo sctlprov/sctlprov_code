@@ -1,0 +1,15 @@
+*.cm[ioxa]
+*.o
+*.mli
+lexer.ml
+parser.ml
+sctl
+sctl.exe
+log
+*.log
+.DS_Store
+.vscode/*
+*.a
+*.cmxa
+*.conflicts
+backup/*

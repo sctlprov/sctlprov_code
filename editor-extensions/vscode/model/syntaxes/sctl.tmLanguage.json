@@ -1,0 +1,76 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "SCTL input language",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#comment"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.sctl",
+					"match": "\\b(function|datatype|value|let|if|then|else|match|with|Model|Var|Init|Transition|Atomic|Fairness|Spec)\\b|\\|"
+				},
+				{
+					"name": "keyword.other.import.sctl",
+					"match": "\\bimport\\b"
+				},
+				{
+					"name":"keyword.other.basictype.sctl",
+					"match": "\\b(int|bool)\\b"
+				},
+				{
+					"name":"keyword.other.typeconstr.sctl",
+					"match": "\\b(list)\\b|(\\-\\>)"
+				},
+				{
+					"name":"keyword.operator.sctl",
+					"match": "\\=|\\+|\\-|\\*|(\\-\\.)|(\\+\\.)|(\\*\\.)"
+				}
+		]
+		},
+		"strings": {
+			"name": "string.quoted.double.sctl",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.sctl",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comment": {
+			"patterns": [
+				{
+					"name": "comment.block.cstyle.sctl",
+					"begin": "\\/\\*",
+					"end": "\\*\\/"
+				},
+				{
+					"name": "comment.line.sctl",
+					"match": "\\/\\/(.*?)\\n"
+				},
+				{
+					"name": "comment.block.ocamlstyle.sctl",
+					"begin": "\\(\\*",
+					"end": "\\*\\)"
+				}
+			]
+		}
+
+	},
+	"scopeName": "source.sctl",
+	"fileTypes": [
+		"model"
+	]
+	
+}

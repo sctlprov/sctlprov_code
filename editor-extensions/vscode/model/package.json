@@ -1,0 +1,27 @@
+{
+    "name": "sctl_model",
+    "displayName": "SCTL",
+    "description": "Input language for the tool SCTLProV.",
+    "version": "0.0.1",
+    "publisher": "Jian",
+    "engines": {
+        "vscode": "^1.15.0"
+    },
+    "icon": "./imgs/test.ico",
+    "categories": [
+        "Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "sctl",
+            "aliases": ["SCTL input language", "sctl"],
+            "extensions": [".model"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "sctl",
+            "scopeName": "source.sctl",
+            "path": "./syntaxes/sctl.tmLanguage.json"
+        }]
+    }
+}

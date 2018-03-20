@@ -1,0 +1,84 @@
+MODULE main
+VAR
+s00: {noncritical, trying, critical}; 
+s01: {noncritical, trying, critical}; 
+s02: {noncritical, trying, critical}; 
+s03: {noncritical, trying, critical}; 
+s04: {noncritical, trying, critical}; 
+s05: {noncritical, trying, critical}; 
+s06: {noncritical, trying, critical}; 
+s07: {noncritical, trying, critical}; 
+s08: {noncritical, trying, critical}; 
+s09: {noncritical, trying, critical}; 
+s10: {noncritical, trying, critical}; 
+s11: {noncritical, trying, critical}; 
+s12: {noncritical, trying, critical}; 
+s13: {noncritical, trying, critical}; 
+s14: {noncritical, trying, critical}; 
+s15: {noncritical, trying, critical}; 
+s16: {noncritical, trying, critical}; 
+s17: {noncritical, trying, critical}; 
+s18: {noncritical, trying, critical}; 
+s19: {noncritical, trying, critical}; 
+s20: {noncritical, trying, critical}; 
+s21: {noncritical, trying, critical}; 
+s22: {noncritical, trying, critical}; 
+s23: {noncritical, trying, critical}; 
+s24: {noncritical, trying, critical}; 
+s25: {noncritical, trying, critical}; 
+s26: {noncritical, trying, critical}; 
+turn: 0..26;
+pr00: process prc(s00, s01, turn, 00, 01); 
+pr01: process prc(s01, s02, turn, 01, 02);
+pr02: process prc(s02, s03, turn, 02, 03);
+pr03: process prc(s03, s04, turn, 03, 04);
+pr04: process prc(s04, s05, turn, 04, 05);
+pr05: process prc(s05, s06, turn, 05, 06);
+pr06: process prc(s06, s07, turn, 06, 07);
+pr07: process prc(s07, s08, turn, 07, 08);
+pr08: process prc(s08, s09, turn, 08, 09);
+pr09: process prc(s09, s10, turn, 09, 10);
+pr10: process prc(s10, s11, turn, 10, 11); 
+pr11: process prc(s11, s12, turn, 11, 12);
+pr12: process prc(s12, s13, turn, 12, 13);
+pr13: process prc(s13, s14, turn, 13, 14);
+pr14: process prc(s14, s15, turn, 14, 15);
+pr15: process prc(s15, s16, turn, 15, 16);
+pr16: process prc(s16, s17, turn, 16, 17);
+pr17: process prc(s17, s18, turn, 17, 18);
+pr18: process prc(s18, s19, turn, 18, 19);
+pr19: process prc(s19, s20, turn, 19, 20);
+pr20: process prc(s20, s21, turn, 20, 21);
+pr21: process prc(s21, s22, turn, 21, 22);
+pr22: process prc(s22, s23, turn, 22, 23);
+pr23: process prc(s23, s24, turn, 23, 24);
+pr24: process prc(s24, s25, turn, 24, 25);
+pr25: process prc(s25, s26, turn, 25, 26);
+pr26: process prc(s26, s00, turn, 26, 00);
+ASSIGN
+init(turn) := 0;
+FAIRNESS
+!(s00 = critical)
+
+SPEC AG((s00 = trying) -> AF (s00 = critical))  
+
+
+
+MODULE prc(state0, state1, turn, turn0, turn1)
+ASSIGN
+init(state0) := noncritical;
+next(state0) := 
+case
+   (state0 = noncritical) : {noncritical,trying};
+   (state0 = trying) & (state1 = noncritical): critical;
+   (state0 = trying) & (state1 = trying) & (turn = turn0):  critical;
+   (state0 = critical) : {critical,noncritical};
+   1: state0;
+esac;
+next(turn) :=
+case
+   turn = turn0 & state0 = noncritical: turn1;
+   1: turn;
+esac;
+FAIRNESS
+running

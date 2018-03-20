@@ -1,0 +1,762 @@
+datatype side = Right | Left
+
+datatype aircraft = {
+	seq: int;
+	mahf: side;
+}
+
+value dummy_aircraft : aircraft = {
+	mahf = Left;
+	seq = -1;
+}
+
+
+datatype sca = {
+	holding3_left: 	list aircraft;
+	holding3_right: list aircraft;
+	holding2_left: 	list aircraft;
+	holding2_right: list aircraft;
+	lez_left: 		list aircraft;
+	lez_right:		list aircraft;
+	maz_left:		list aircraft;
+	maz_right:		list aircraft;
+	base_left:		list aircraft;
+	base_right:		list aircraft;
+	departure_left:	list aircraft;
+	departure_right:list aircraft;
+	intermediate:	list aircraft;
+	final:			list aircraft;
+	runway:			list aircraft;
+}
+
+
+datatype path = list sca
+datatype result = {
+	counterexample: path;
+	deadlocks:		list path;
+	visited:		list sca;
+}
+
+// helper functions for list of aircrafts
+function first_of_list (la) : (list aircraft) -> aircraft = 
+	match la with
+	| [a] -> a
+	| a :: as -> a
+
+function remove_first (la) : (list aircraft) -> (list aircraft) = 
+	match la with
+	| [a] -> []
+	| a :: as -> as
+
+function add_to_last (la, a) : (list aircraft, aircraft) -> (list aircraft) =
+	match la with
+	| [] -> [a]
+	| a1 :: as -> a1 :: (add_to_last (as, a))
+
+function length (la) : (list aircraft) -> int = 
+	match la with
+	| [] -> 0
+	| a :: as -> 1 + length (as)
+
+function opposite (s) : side -> side = 
+	match s with
+	| Left -> Right
+	| Right -> Left
+
+value none = 0
+value first = 1
+
+function sign (s): side -> int = 
+	match s with
+	| Left -> 1
+	| Right -> -1
+
+// Is this the first aircraft in landing sequence?
+function is_first (a) : aircraft -> bool = 
+	a.seq = first
+
+// Leading sequence of leader aircraft
+function leader (a) : aircraft -> int = 
+	if a.seq = none then none else (a.seq - 1)
+
+// Is b the leader aircraft of a?
+function is_leader (a, b) : (aircraft, aircraft) -> bool = 
+	b.seq = leader (a)
+
+// Next landing sequence
+function next_landing (a) : aircraft -> int =
+	a.seq + 1
+
+// Number of aircraft in a zone (list of aircrafts) to assingned to one side
+function assigned (z, s) : ((list aircraft), side) -> int = 
+	if z = [] then 
+		0
+	else 
+		let (fz, rz) = (first_of_list (z), remove_first (z));
+		if fz.mahf = s then 
+			1 + (assigned (rz, s))
+		else 
+			assigned (rz, s)
+	
+
+// Is any aircraft in zone z assigned to the mahf side?
+function is_assigned (z, s) : (list aircraft, side) -> bool = 
+	assigned (z, s) != 0
+
+// Is aircraft with sequence number n in zone z?
+function is_on_zone (z, n) : (list aircraft, int) -> bool = 
+	match z with
+	| [] -> false
+	| z1::zs -> if z1.seq = n then true else is_on_zone (zs, n)
+
+// Decrease by one the sequence number of aircraft in zone z
+function decrease (z): (list aircraft) -> (list aircraft) = 
+	match z with
+	| [] -> []
+	| z1 :: zs -> (z1 with {seq = leader (z1);}) :: (decrease (zs))
+
+// Is aircraft with sequence number n on the approach?
+function is_on_approach (s, n) : (sca, int) -> bool = 
+	is_on_zone (s.base_right, n) || 
+	is_on_zone (s.base_left, n) || 
+	is_on_zone (s.intermediate, n) || 
+	(is_on_zone (s.final, n))
+
+// Is any aircraft on the approach assigned to the mahf side?
+function is_on_approach_side (s, si) : (sca, side) -> bool = 
+	is_assigned (s.base_right, si) || is_assigned (s.base_left, si) || is_assigned (s.intermediate, si) || is_assigned (s.final, si)
+
+// Actual number of aircraft at one side (excluding the approach)
+function actual (s, si) : (sca, side) -> int = 
+	match si with
+	| Left -> length (s.holding3_left) + length (s.holding2_left) + length (s.lez_left) + length (s.maz_left)
+	| Right -> length (s.holding3_right) + length (s.holding2_right) + length (s.lez_right) + length (s.maz_right)
+
+// Virtual number of aircraft at one fix
+function virtual (s, si) : (sca, side) -> int = 
+	match si with
+	| Left -> 
+		length (s.holding3_left) + length (s.holding2_left) + length (s.lez_left) + length (s.maz_left) +
+		assigned (s.holding3_right, Left) + assigned (s.holding2_right, Left) + assigned (s.lez_right, Left) +
+		assigned (s.maz_right, Left) + assigned (s.base_right, Left) + assigned (s.base_left, Left) +
+		assigned (s.intermediate, Left) + assigned (s.final, Left)
+	| Right -> 
+		length (s.holding3_right) + length (s.holding2_right) + length (s.lez_right) + length (s.maz_right) +
+		assigned (s.holding3_left, Right) + assigned (s.holding2_left, Right) + assigned (s.lez_left, Right) +
+		assigned (s.maz_left, Right) + assigned (s.base_right, Right) + assigned (s.base_left, Right) +
+		assigned (s.intermediate, Right) + assigned (s.final, Right)
+
+// Number of aircraft assigned to a fix
+function assigned2fix (s, si) : (sca, side) -> int = 
+	assigned (s.holding3_left, si) + assigned (s.holding3_right, si) +
+	assigned (s.holding2_left, si) + assigned (s.holding2_right, si) +
+	assigned (s.lez_left, si) + assigned (s.lez_right, si) +
+	assigned (s.base_left, si) + assigned (s.base_right, si) +
+	assigned (s.intermediate, si) +
+	assigned (s.final, si) +
+	assigned (s.maz_left, si) + assigned (s.maz_right, si)
+
+// Total number of simultaneous landing operations
+function landing_op (s) : sca -> int = 
+	actual (s, Left) + actual (s, Right) +
+	length (s.base_left) + length (s.base_right) +
+	length (s.intermediate) + length (s.final)
+
+
+//find aircraft with seq number x
+function find_aircraft_by_seq (ta, x) : (list aircraft, int) -> aircraft = 
+	match ta with
+	| [] -> dummy_aircraft
+	| a :: tas -> 
+		if a.seq = x then 
+			a
+		else
+			find_aircraft_by_seq (tas, x)
+
+
+// New aircraft
+function new_aircraft (s, si) : (sca, side) -> aircraft = 
+	let ta = all_in_sca (s);
+	if length (ta) = 0 then
+		{
+			mahf = si;
+			seq = 1;
+		}
+	else
+		let last = find_aircraft_by_seq (ta, length(ta));
+		{
+			mahf = (opposite(last.mahf));
+			seq = length (ta) + 1;
+		}
+
+// New aircraft for departure
+function departure (s, si) : (sca, side) -> aircraft = {
+	mahf = si;
+	seq = 0;
+}
+
+// Reassign aircraft
+function reassign (s, a) : (sca, aircraft) -> aircraft = 
+	let all = all_in_sca (s);
+	let tn = length (all);
+	let last = find_aircraft_by_seq(all, tn);
+	a with {
+		mahf = (if tn = first then a.mahf else opposite(last.mahf));
+		seq = tn + 1;
+	}
+
+// Move a departing aircraft
+function move (a) : aircraft -> aircraft = 
+	a with {
+		seq = (if a.seq = 0 then 3 else 10);
+	}
+
+// **************************Now define the helper functions for the transition rules***********************************
+function vertical_entry (si, s) : (side, sca) -> (list sca) = 
+	if virtual (s, si) < 2 && 
+		(!(is_on_approach_side (s, si))) && 
+		((length (if si = Left then s.maz_left else s.maz_right)) = 0) &&
+	   	((length (if si = Left then s.lez_left else s.lez_right)) = 0) && 
+		((length (if si = Left then s.holding3_left else s.holding3_right)) = 0) then
+	   let a = new_aircraft (s, si);
+	   match si with
+	   | Left -> 
+		    [s with {
+		    	holding3_left = add_to_last (s.holding3_left, a);
+		    }]
+	   | Right -> 
+		   [s with {
+		    	holding3_right = add_to_last (s.holding3_right, a);
+		    }]
+	else
+		[]
+
+function lateral_entry (si, this) : (side, sca) -> (list sca) = 
+	if virtual (this, si) = 0 then
+		let a = new_aircraft (this, si);
+		match si with
+		| Left -> 
+			[this with{
+				lez_left = add_to_last (this.lez_left, a);
+			}]
+		| Right -> 
+			[this with{
+				lez_right = add_to_last (this.lez_right, a);
+			}]
+	else
+		[]
+
+function holding_pattern_descend (si, this) : (side, sca) -> (list sca) = 
+	match si with
+	| Left ->
+		if (length (this.holding3_left) != 0) && (length (this.holding2_left) = 0) then
+			(let a = first_of_list (this.holding3_left);
+			[this with {
+				holding3_left = remove_first (this.holding3_left);
+				holding2_left = add_to_last (this.holding2_left, a);
+			}])
+		else
+			[]
+	| Right ->
+		if (length (this.holding3_right) != 0) && (length (this.holding2_right) = 0) then
+			(let a = first_of_list (this.holding3_right);
+			[this with {
+				holding3_right = remove_first (this.holding3_right);
+				holding2_right = add_to_last (this.holding2_right, a);
+			}])
+		else
+			[]
+
+function vertical_approach_initiation (si, this) : (side, sca) -> (list sca) = 
+	match si with
+	| Left ->
+		if length (this.holding2_left) != 0 then
+			(let a = first_of_list (this.holding2_left);
+			if length (this.base_right) <= 1 && (is_first (a) || is_on_approach (this, leader (a))) then
+				[this with {
+					holding2_left = remove_first (this.holding2_left);
+					base_left = add_to_last (this.base_left, a);
+				}]
+			else
+				[])
+		else
+			[]
+	| Right ->
+		if length (this.holding2_right) != 0 then
+			(let a = first_of_list (this.holding2_right);
+			if length (this.base_left) <= 1 && (is_first (a) || is_on_approach (this, leader (a))) then
+				[this with {
+					holding2_right = remove_first (this.holding2_right);
+					base_right = add_to_last (this.base_right, a);
+				}]
+			else
+				[])
+		else
+			[]
+
+function lateral_approach_initiation (si, this) : (side, sca) -> (list sca) = 
+	match si with
+	| Left ->
+		if length (this.lez_left) != 0 then
+			(let a = first_of_list (this.lez_left);
+			if length (this.base_right) <= 1 && (is_first (a) || is_on_approach (this, leader (a))) then
+				[this with {
+					lez_left = remove_first (this.lez_left);
+					base_left = add_to_last (this.base_left, a);
+				}]
+			else
+				[this with {
+					lez_left = remove_first (this.lez_left);
+					holding2_left = add_to_last (this.holding2_left, a);
+				}])
+		else 
+			[]
+	| Right ->
+		if length (this.lez_right) != 0 then
+			(let a = first_of_list (this.lez_right);
+			if length (this.base_left) <= 1 && (is_first (a) || is_on_approach (this, leader (a))) then
+				[this with {
+					lez_right = remove_first (this.lez_right);
+					base_right = add_to_last (this.base_right, a);
+				}]
+			else
+				[this with {
+					lez_right = remove_first (this.lez_right);
+					holding2_right = add_to_last (this.holding2_right, a);
+				}])
+		else 
+			[]
+
+function merging (si, this) : (side, sca) -> (list sca) = 
+	match si with
+	| Left ->
+		if length (this.base_left) != 0 then
+			(let a = first_of_list (this.base_left);
+			(if is_first (a) || is_on_zone (this.intermediate, leader (a)) || is_on_zone (this.final, leader (a)) then
+				[this with {
+					base_left = remove_first (this.base_left);
+					intermediate = add_to_last (this.intermediate, a);
+				}]
+			else
+				[]))
+		else
+			[]
+	| Right ->
+		if length (this.base_right) != 0 then
+			(let a = first_of_list (this.base_right);
+			(if is_first (a) || is_on_zone (this.intermediate, leader (a)) || is_on_zone (this.final, leader (a)) then
+				[this with {
+					base_right = remove_first (this.base_right);
+					intermediate = add_to_last (this.intermediate, a);
+				}]
+			else
+				[]))
+		else 
+			[]
+			
+
+function exit this : sca -> (list sca) = 
+	if length (this.intermediate) != 0 && is_first (first_of_list (this.intermediate)) then //assume "first" is in PVS
+		[this with {
+			holding3_right = decrease (this.holding3_right);
+			holding3_left = decrease (this.holding3_left);
+			holding2_right = decrease (this.holding2_right);
+			holding2_left = decrease (this.holding2_left);
+			lez_right = decrease (this.lez_right);
+			lez_left = decrease (this.lez_left);
+			maz_right = decrease (this.maz_right);
+			maz_left = decrease (this.maz_left);
+			base_right = decrease (this.base_right);
+			base_left = decrease (this.base_left);
+			intermediate = decrease (remove_first (this.intermediate));
+			final = decrease (this.final);
+		}]
+	else
+		[]
+
+function final_segment this : sca -> (list sca) = 
+	if length (this.intermediate) != 0 then
+		(let a = first_of_list (this.intermediate);
+		[this with {
+			intermediate = remove_first (this.intermediate);
+			final = add_to_last (this.final, a);
+		}])
+	else 
+		[]
+
+function landing this : sca -> (list sca) = 
+	if length (this.final) != 0 && length (this.runway) = 0 then
+		[this with {
+			holding3_right = decrease (this.holding3_right);
+			holding3_left = decrease (this.holding3_left);
+			holding2_right = decrease (this.holding2_right);
+			holding2_left = decrease (this.holding2_left);
+			lez_right = decrease (this.lez_right);
+			lez_left = decrease (this.lez_left);
+			maz_right = decrease (this.maz_right);
+			maz_left = decrease (this.maz_left);
+			base_right = decrease (this.base_right);
+			base_left = decrease (this.base_left);
+			intermediate = decrease (this.intermediate);
+			final = decrease (remove_first (this.final));
+			runway = add_to_last (this.runway, (first_of_list (this.final)));
+		}]
+	else
+		[]
+
+function taxing this : sca -> (list sca) =
+	if length (this.runway) != 0 && is_first (first_of_list (this.runway)) then
+		[this with {
+			runway = remove_first (this.runway);
+		}]
+	else
+		[]
+
+function missed_approach this : sca -> (list sca) =
+	if (length (this.final) != 0) then
+		(let a = first_of_list (this.final);
+		let ra = reassign (this, a);
+		match a.mahf with
+		| Left ->
+			[this with {
+				holding3_right = decrease (this.holding3_right);
+				holding3_left = decrease (this.holding3_left);
+				holding2_right = decrease (this.holding2_right);
+				holding2_left = decrease (this.holding2_left);
+				lez_right = decrease (this.lez_right);
+				lez_left = decrease (this.lez_left);
+				maz_right = decrease (this.maz_right);
+				maz_left = decrease (add_to_last (this.maz_left, ra));
+				base_right = decrease (this.base_right);
+				base_left = decrease (this.base_left);
+				intermediate = decrease (this.intermediate);
+				final = decrease (remove_first (this.final)); 
+			}]
+		| Right ->
+			[this with {
+				holding3_right = decrease (this.holding3_right);
+				holding3_left = decrease (this.holding3_left);
+				holding2_right = decrease (this.holding2_right);
+				holding2_left = decrease (this.holding2_left);
+				lez_right = decrease (this.lez_right);
+				lez_left = decrease (this.lez_left);
+				maz_right = decrease (add_to_last (this.maz_right, ra));
+				maz_left = decrease (this.maz_left);
+				base_right = decrease (this.base_right);
+				base_left = decrease (this.base_left);
+				intermediate = decrease (this.intermediate);
+				final = decrease (remove_first (this.final));
+			}])
+	else 
+		[]
+
+function lowest_avaliable_altitude (si, this) : (side, sca) -> (list sca) =
+	match si with
+	| Left ->
+		if length (this.maz_left) != 0 then
+			let a = first_of_list (this.maz_left);
+			(if length (this.holding3_left) = 0 && length (this.holding2_left) = 0 then
+				[this with {
+					holding2_left = add_to_last (this.holding2_left, a);
+					maz_left = remove_first (this.maz_left);
+				}]
+			else (if length (this.holding3_left) = 0 then
+				[this with {
+					holding3_left = add_to_last (this.holding3_left, a);
+					maz_left = remove_first (this.maz_left);
+				}]
+			else
+				[this with {
+					holding3_left = add_to_last ((remove_first (this.holding3_left)), a);
+					holding2_left = add_to_last (this.holding2_left, (first_of_list (this.holding3_left)));
+					maz_left = remove_first (this.maz_left);
+				}]))
+		else
+			[]
+	| Right ->
+		if length (this.maz_right) != 0 then
+			let a = first_of_list (this.maz_right);
+			(if length (this.holding3_right) = 0 && length (this.holding2_right) = 0 then
+				[this with {
+					holding2_right = add_to_last (this.holding2_right, a);
+					maz_right = remove_first (this.maz_right);
+				}]
+			else (if length (this.holding3_right) = 0 then
+				[this with {
+					holding3_right = add_to_last (this.holding3_right, a);
+					maz_right = remove_first (this.maz_right);
+				}]
+			else
+				[this with {
+					holding3_right = add_to_last ((remove_first (this.holding3_right)), a);
+					holding2_right = add_to_last (this.holding2_right, (first_of_list (this.holding3_right)));
+					maz_right = remove_first (this.maz_right);
+				}]))
+		else
+			[]
+
+function seq_of_aircraft (a) : aircraft -> int = 
+	a.seq			
+
+function departure_initiation (si, this) : (side, sca) -> (list sca) = 
+	match si with
+	| Left ->
+		if (length (this.final) + length (this.runway)) = 0 &&
+		   (length (this.departure_right) + length (this.departure_left) < 2) &&
+		   ((length (this.departure_right) + length (this.departure_left)) = 0 ||
+			(length (this.departure_right) > 0 && (seq_of_aircraft (first_of_list (this.departure_right))) >= 3) ||
+			(length (this.departure_left) > 0 && (seq_of_aircraft (first_of_list (this.departure_left))) >= 10)
+		   ) then
+			[this with {
+				runway = add_to_last (this.runway, departure (this, Left));
+			}]
+		else 
+			[]
+	| Right ->
+		if (length (this.final) + length (this.runway)) = 0 &&
+		   (length (this.departure_right) + length (this.departure_left) < 2) &&
+		   ((length (this.departure_right) + length (this.departure_left)) = 0 ||
+			(length (this.departure_left) > 0 && (seq_of_aircraft (first_of_list (this.departure_left))) >= 3) ||
+			(length (this.departure_right) > 0 && (seq_of_aircraft (first_of_list (this.departure_right))) >= 10)
+		   ) then
+			[this with {
+				runway = add_to_last (this.runway, departure (this, Right));
+			}]
+		else 
+			[]
+
+
+
+
+function takeoff (this) : sca -> (list sca) = 
+	if length (this.runway) > 0 then
+		let a = first_of_list (this.runway);
+		if a.seq = 0 then
+			match a.mahf with
+			| Left ->
+				[this with {
+					runway = remove_first (this.runway);
+					departure_left = add_to_last (this.departure_left, a);
+				}]
+			| Right ->
+				[this with {
+					runway = remove_first (this.runway);
+					departure_right = add_to_last (this.departure_right, a);
+				}]
+		else 
+			[]
+	else 
+		[]
+
+function departing (si, this) : (side, sca) -> (list sca) =
+	match si with
+	| Left ->
+		if length (this.departure_left) > 0 then
+			(let a = first_of_list (this.departure_left);
+			let new_dep_left = 
+				(if a.seq >= 10 then
+					remove_first (this.departure_left)
+				else
+					((move (a)) :: (remove_first (this.departure_left))));
+			[this with {
+				departure_left = new_dep_left;
+			}])
+		else 
+			[]
+	| Right ->
+		if length (this.departure_right) > 0 then
+			(let a = first_of_list (this.departure_right);
+			let new_dep_right = 
+				(if a.seq >= 10 then
+					remove_first (this.departure_right)
+				else
+					((move (a)) :: (remove_first (this.departure_right))));
+			[this with {
+				departure_right = new_dep_right;
+			}])
+		else 
+			[]
+
+// **********************Defining related properties**************************
+// No more than four simultaneous landing operations
+function four_landings (s) : sca -> bool = 
+	landing_op (s) <= 4 && ((length (all_in_sca (s))) <= landing_op (s))
+
+// No more than 2 aircraft assigned to each missed approach fix. Moreover,
+// no more than 2 aircraft at each side of the sca (excluding the approach).
+function well_assigned (s) : sca -> bool = 
+	assigned2fix (s, Right) <= 2 && assigned2fix (s, Left) <= 2 &&
+	actual (s, Right) <= 2 && actual (s, Left) <= 2
+
+// At most one aircraft at a holding fix for a given altitude.
+// No more than 2 aircraft on a missed approach zone.
+function non_crowded_side (si, s) : (side, sca) -> bool = 
+	match si with
+	| Left ->
+		length (s.holding3_left) <= 1 && length (s.holding2_left) <= 1 && length (s.maz_left) <= 2
+	| Right ->
+		length (s.holding3_right) <= 1 && length (s.holding2_right) <= 1 && length (s.maz_right) <= 2
+
+// Each side of the sca is non-crowded. Furthermore, no more than 3 aircraft on base.
+function non_crowded_sca (s) : sca -> bool = 
+	non_crowded_side (Left, s) && non_crowded_side (Right, s) && (length (s.base_right) + length (s.base_left) <= 3)
+
+// At most one aircraft on lateral entry. Moreover, if there is an aircraft on lateral entry, 
+// that side of the sca is empty (excluding the approach)
+function safe_len (si, s) : (side, sca) -> bool = 
+	match si with
+	| Left ->
+		length (s.lez_left) <= 1 && 
+		((length (s.lez_left) <= 0) || (length (s.holding3_left) + length (s.holding2_left) + length (s.maz_left) = 0))
+	| Right ->
+		length (s.lez_right) <= 1 && 
+		((length (s.lez_right) <= 0) || (length (s.holding3_right) + length (s.holding2_right) + length (s.maz_right) = 0))
+
+// An aircraft on the approach is either the first in sequence or its leader is already in the approach
+function smooth_merging (si, s) : (side, sca) -> bool = 
+	match si with
+	| Left ->
+		if length (s.base_left) = 0 then 
+			true
+		else
+			(let a = first_of_list (s.base_left);
+			(is_first (a) || 
+				(is_on_zone (s.intermediate, leader (a))) || 
+				(is_on_zone (s.final,leader (a))) || 
+				((length (s.base_right)) > 0 && 
+					(is_leader (a, first_of_list (s.base_right))))))
+	| Right ->
+		if length (s.base_right) = 0 then
+			true
+		else
+			(let b = first_of_list (s.base_right);
+			((is_first (b)) ||
+			(is_on_zone (s.intermediate, leader (b))) ||
+			(is_on_zone (s.final, leader (b))) ||
+			(length (s.base_left) > 0 && (is_leader (b, first_of_list (s.base_left))))))
+
+// Aircraft land in sequence order
+function safe_landing (s) : sca -> bool = 
+	length (s.final) <= 0 || (is_first (first_of_list (s.final)))
+
+// At most one aircraft at the runway
+function no_incursion (s) : sca -> bool = 
+	length (s.runway) <= 1
+
+// Simultaneous departure are separated (3nm if using different departure fix, 10 nm if using the same departure fix).
+function safe_departure (si, s) : (side, sca) -> bool = 
+	match si with
+	| Left ->
+		if length (s.departure_left) <= 1 then
+			true 
+		else 
+			let (fst_dep_left, fst_rest_dep_left) = (first_of_list (s.departure_left), first_of_list (remove_first (s.departure_left)));
+			fst_dep_left.seq = 10 && fst_rest_dep_left.seq = 0
+	| Right ->
+		if length (s.departure_right) <= 1 then
+			true 
+		else 
+			let (fst_dep_right, fst_rest_dep_right) = (first_of_list (s.departure_right), first_of_list (remove_first (s.departure_right)));
+			fst_dep_right.seq = 10 && fst_rest_dep_right.seq = 0
+
+// All the above properties
+function invariant (s) : sca -> bool = 
+	four_landings (s) &&
+	well_assigned (s) &&
+	non_crowded_sca (s) &&
+	safe_len (Right, s) &&
+	safe_len (Left, s) &&
+	smooth_merging (Right, s) &&
+	smooth_merging (Left, s) &&
+	safe_landing (s) &&
+	no_incursion (s) &&
+	safe_departure (Right, s) &&
+	safe_departure (Left, s)
+
+// Initial state
+value init : sca = {
+(*	holding3_left = [];
+	holding3_right = [];
+	holding2_left = [];
+	holding2_right = [];
+	lez_left = [];
+	lez_right = [];
+	maz_left = [];
+	maz_right = [];
+	base_left = [];
+	base_right = [];
+	departure_left = [];
+	departure_right = [];
+	intermediate = [];
+	final = [];
+	runway = [];*)
+
+	departure_left = [];
+	departure_right = [];
+	runway = [];
+	final = [];
+	intermediate = [];
+	base_left = [];
+	base_right = [];
+	maz_left = [];
+	lez_left = [];
+	holding2_left = [];
+	holding3_left = [];
+	maz_right = [];
+	lez_right = [];
+	holding2_right = [];
+	holding3_right = [];
+}
+
+//all aircraft in the sca
+function all_in_sca (s) : sca -> (list aircraft) = 
+	s.holding3_left @ s.holding3_right
+	@ s.holding2_left @ s.holding2_right
+	@ s.lez_left @ s.lez_right
+	@ s.maz_left @ s.maz_right
+	@ s.base_left @ s.base_right
+	@ s.intermediate
+	@ s.final
+
+
+// SCA will be empty again
+function empty_again this : sca -> bool = 
+	length (this.holding3_left) = 0 && length (this.holding3_right) = 0 &&
+	length (this.holding2_left) = 0 && length (this.holding2_right) = 0 &&
+	length (this.lez_left) = 0 && length (this.lez_right) = 0 &&
+	length (this.maz_left) = 0 && length (this.maz_right) = 0 &&
+	length (this.departure_left) = 0 && length (this.departure_right) = 0 &&
+	length (this.intermediate) = 0 && length (this.final) = 0 &&
+	length (this.runway) = 0
+
+Model SATS () 
+{
+	Transition {
+		next s := 
+			(vertical_entry (Left, s)) @ (vertical_entry (Right, s)) @
+			(lateral_entry (Left, s)) @ (lateral_entry (Right, s)) @
+			(holding_pattern_descend (Left, s)) @ (holding_pattern_descend (Right, s)) @
+			(vertical_approach_initiation (Left, s)) @ (vertical_approach_initiation (Right, s)) @
+			(lateral_approach_initiation (Left, s)) @ (lateral_approach_initiation (Right, s)) @
+			(merging (Left, s)) @ (merging (Right, s)) @
+			(exit (s)) @
+			(final_segment (s)) @
+			(landing (s)) @
+			(taxing (s)) @
+			(missed_approach (s)) @
+			(lowest_avaliable_altitude (Left, s)) @ (lowest_avaliable_altitude (Right, s)) @ 
+			(departure_initiation (Left, s)) @ (departure_initiation (Right, s)) @
+			(takeoff (s)) @
+			(departing (Left, s)) @ (departing (Right, s))
+	}
+
+	Atomic {
+		atom_safe (s) := invariant (s);
+		atom_empty_again (s) := empty_again (s);
+	}
+
+	Spec {
+		safe := AR (x, y, FALSE, atom_safe (y), init);
+		emergency := AX (x, AF(y, atom_empty_again (y), x), init);
+	}
+}
