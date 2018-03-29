@@ -27,10 +27,10 @@ Comments are treated as blanks, which are ignored when parsing the input file. T
 Identifiers are sequences of ASCII characters. A character in an identifier can be either an English letter, a digit, `_`, or `-`.  There are two kinds of identifiers: identifiers starting with lowercase letters (`ident`), and identifiers starting with a uppercase letter (`uident`):
 
 ```
-iden	::=		letter {letter|uletter|0...9|_|-}*
-uiden	::=		uletter {letter|uletter|0...9|_|-}*
-letter	::= 	a...z
-uletter ::= 	A...Z
+iden	::=   letter {letter|uletter|0...9|_|-}*
+uiden	::=   uletter {letter|uletter|0...9|_|-}*
+letter	::=   a...z
+uletter ::=   A...Z
 ```
 
  An `iden` is usually used to denote the name of a value, a type, or a function, etc. An `uiden` is usually used to denote a variant type constructor, or the name of a module.
@@ -40,7 +40,7 @@ uletter ::= 	A...Z
 There are two kinds of numeric literals: integers and floating-points.
 
 ```
-integer	::=	[-]{0...9}+
+integer	::= [-]{0...9}+
 float	::= [-](0...9).{0...9}*
 ```
 
@@ -49,10 +49,10 @@ float	::= [-](0...9).{0...9}*
  Keywords are lexical tokens which have special meanings and cannot be treated as identifiers in the input file. The keywords are listed as follows.
 
 ```
-	Model  Var  Define Init Transition Atomic Fairness Spec int bool list array
-	true  false  TRUE FALSE  not  AX  EX  AF  EG  AR  EU datatype value function 
-	let match with if then else ( ) [ ] { } = != < <= > >= + +. - -. * *. / /. ! 
-	| || && -> : :: , ; .  
+    Model  Var  Define  Init  Transition  Atomic  Fairness  Spec  int  bool  list
+    array  true false   TRUE  FALSE   not  AX  EX  AF  EG  AR  EU   datatype  value
+    function  let  match  with  if  then  else ( ) [ ] { } = != < <= > >= + +. - -. 
+    * *. / /. ! | || && -> : :: , ; .  
 ```
 
 ## 2.2 Values 
@@ -92,6 +92,18 @@ Records can be seen as labeled tuples of values, which have the form `{l1 = v1 ;
 
 A variant value is either a variant constructor (an `uiden`), or a variant constructor applied to a tuple of values.
 
+```
+    value ::= 
+          ()
+        | true | false
+        | integer | float
+        | #iden
+        | [|v1 ; ... ; vn[;]|] | [v1 ; ... ; vn [;]]
+        | (v1,...,vn)
+        | {l1 = v1 ; ... ; ln = vn [;]}
+        | uiden | uiden (v1,...,vn)
+```
+
 ## 2.3 Expressions and patterns
 
 Expressions are used to build complex values via evluations. The evaluations of expressions in our input language coincide with that of the corresponding OCaml expressions. Values can then be seen as the normal form of expressions, i.e., expressions that cannot be further evaluated.
@@ -99,44 +111,46 @@ Expressions are used to build complex values via evluations. The evaluations of 
 Patterns are used to match different cases of expressions. The way that patterns match expressions in our input language coincide with that in OCaml.
 
     expr ::=
-        value									(*value*)
-      |	iden                					(*variable or name of a value*)
-      | uiden [(expr1,...,exprn)]				(*variant expression*)	
-      | expr . iden		  						(*select one field of a record*)
-      | expr "[" expr "]"	  					(*select one field of a array*)
-      | ! expr            						(*logical negation*)
-      | expr1 && expr2      					(*logical and*)
-      | expr1 || expr2      					(*logical or*)
-      | - expr            						(*integer negation*)
-      | expr1 + expr2       					(*integer addition*)
-      | expr1 - expr2       					(*integer subtraction*)
-      | expr1 * expr2       					(*integer multiplication*)
-      | -. expr 			   					(*float negation*)
-      | expr1 +. expr2							(*float addition*)
-      | expr1 -. expr2 							(*float subtraction*)
-      | expr1 *. expr2 	   						(*float multiplication*)
-      | expr1 = expr2       					(*expression equivalence*)
-      | expr1 != expr2      					(*expression non-equivalence*)
-      | expr1 < expr2       					(*less than*)
-      | expr1 <= expr2      					(*less than or equal*)
-      | expr1 > expr2       					(*larger than*)
-      | expr1 >= expr2      					(*larger than or equal*)
-      | ( expr )								(*expression grouping*)
-      | let pattern = expr						(*declare local variables*)
-      | if expr1 then expr2 [else expr3] 		(*if expression*)
-      | expr1 ; expr							(*expression with effect*)
-      | expr1 <- expr							(*assignment*)
-      | match_expr								(*pattern matching*)
-      | expr with {iden1 = expr1 ; ... ; idenn = exprn [;]}
-      											(*a record with changed bindings*)
+          value                                 (*value*)
+        | iden                                  (*variable or name of a value*)
+        | uiden [(expr1,...,exprn)]             (*variant expression*)	
+        | expr . iden                           (*select one field of a record*)
+        | expr1 [ expr2 ]                       (*select one field of a array*)
+        | ! expr                                (*logical negation*)
+        | expr1 && expr2                        (*logical and*)
+        | expr1 || expr2                        (*logical or*)
+        | - expr                                (*integer negation*)
+        | expr1 + expr2                         (*integer addition*)
+        | expr1 - expr2                         (*integer subtraction*)
+        | expr1 * expr2                         (*integer multiplication*)
+        | -. expr                               (*float negation*)
+        | expr1 +. expr2                        (*float addition*)
+        | expr1 -. expr2                        (*float subtraction*)
+        | expr1 *. expr2                        (*float multiplication*)
+        | expr1 = expr2                         (*expression equivalence*)
+        | expr1 != expr2                        (*expression non-equivalence*)
+        | expr1 < expr2                         (*less than*)
+        | expr1 <= expr2                        (*less than or equal*)
+        | expr1 > expr2                         (*larger than*)
+        | expr1 >= expr2                        (*larger than or equal*)
+        | ( expr )                              (*expression grouping*)
+        | let pattern = expr                    (*declare local variables*)
+        | if expr1 then expr2 [else expr3]      (*if expression*)
+        | expr1 ; expr2                         (*sequence of expressions*)
+        | expr1 <- expr                         (*assignment*)
+        | match_expr                            (*pattern matching*)
+        | expr with {iden1 = expr1 ; ... ; idenn = exprn [;]}
+                                                (*a record with changed bindings*)
+        | iden (expr1 , ..., exprn)             (*a function call*)
+    
     match_expr ::= match expr with {| pattern -> expr}+
      
     pattern ::= 
-        iden 
-      | constant
-      | pattern "::" pattern			(*list*)
-      | ( {pattern ,}+ pattern ) 		(*tuple*)
-      | _								(*match any case*)
+          iden 
+        | constant
+        | pattern :: pattern                    (*list*)
+        | ( {pattern ,}+ pattern )              (*tuple*)
+        | _                                     (*match any case*)
 
 ## 2.4 Types
 
@@ -184,33 +198,27 @@ The syntax of `type` is specified as follows.
 
 ```
 type ::= 
-	     unit | int | float | bool 					(*base types*)
-	   | (min .. max)								(*integer type with a range*)
-	   | {#scalar1, #scalar2...,#scalarn}			(*scalar type*)
-	   | (type1 , ... , typen)						(*tuple type*)
-	   | array type									(*array type*)
-	   | list type									(*list type*)
-	   | record_type								(*record type*)
-	   | variant_type								(*variant type*)
-	   | type "->" type								(*function type*)
+          unit | int | float | bool             (*base types*)
+        | (min .. max)                          (*integer type with a range*)
+        | {#scalar1, #scalar2...,#scalarn}      (*scalar type*)
+        | (type1 , ... , typen)                 (*tuple type*)
+        | array type                            (*array type*)
+        | list type                             (*list type*)
+        | record_type                           (*record type*)
+        | variant_type                          (*variant type*)
+        | type "->" type                        (*function type*)
 	   
 variant_type ::= constructor {| constructor}*
-constructor ::= uiden | uiden (type1 , ... , typen) 
+constructor  ::= uiden | uiden (type1 , ... , typen) 
 
-record_type ::= { {type_bingding}* }
+record_type  ::= { {type_bingding}* }
 ```
 
-## 2.5 Declaractions
+## 2.5 Type, value, and function declarations
 
+#### Type declarations
 
-
-
-
-
-
-In addition to base types and compound types, the language provides a machanism to define new types.
-
-In this language, users can define type aliases. For instance, suppose we want to draw a rectangle in the screen of a monitor, then we need to tell the computer the size of the rectangle, and at what position we want it to draw. In the following code, we defined a rectangle `rect`, and told the computer that the width of `rect` is 10, and the height of `rect` is 20, and the position we want the computer to draw `rect` is (0, 0). 
+In this language, users can define type aliases by type declarations. Type aliases make the input file more readable. For instance, suppose we want to draw a rectangle in the screen of a monitor, then we need to tell the computer the size of the rectangle, and at what position we want it to draw. In the following code, we defined a rectangle `rect`, and told the computer that the width of `rect` is 10, and the height of `rect` is 20, and the position we want the computer to draw `rect` is (0, 0). 
 
 ```
 datatype width = int
@@ -221,7 +229,8 @@ datatype position = (x, y)
 datatype size = (width, height)
 value rect : (size, position) = ((10, 20), (0, 0))
 ```
-In addition to type aliases, users can also define new types via type constructors. There are two kinds of type constructors supported in the language: variants and records. 
+
+Moreover, we can also define aliases for more complicated types in the language.  
 
 For instance, in the following code, `object` is a variant type, `Rectangle` and `Circle` are two variant type constructors. Using a variant type, we can define an object that is either a rectangle or a circle in this case. Futhermore, we also want to draw objects that can be filled by colors, for instance, in the following code, if we want the computer to draw a rectangle which is filled by blue color, we can define the drawable value `drawed_rect`, and if we want the computer to draw a circle which is filled by red color, we can define the drawable value `drawed_circle`.
 
@@ -251,42 +260,17 @@ value drawed_rect = {drawing_object = obj1; fillcolor = #blue;}
 value drawed_circle = {drawing_object = obj2; fillcolor = #red;}
 ```
 
-Type asiases, variant types, and record types are called user defined types in the language. The definition of user defined data types is the major way to define new data types. 
-
-The syntax of user defined types is as follows.
+The syntax of type declaractions is as follows.
 
 ```
-udt_def ::=   "datatype" iden "=" udt (*to define new types*)
-udt ::= variant_type | record_type | type
-
-variant_type ::= constructor {"|" constructor}*
-constructor ::= Iden | Iden type 
-
-record_type ::= "{" {type_bingding}* "}"
-type_binding ::= iden ":" type ";"
+type_decl ::=  datatype iden = type (*to define new types*)
 ```
 
-**Remark:**  An `Iden` is an `iden` with the first letter in upper case.
+#### Value declarations
 
-The syntax of `type` is specified as follows.
+Value declarations are used to define values on the top level of a program. **Note that values in the language are not global variables.** In contrast to global variables, values are in functional style: when a value is defined, it is bonded by a name, such that neither the binding nor subfields of the value can be changed once defined.
 
-```
-type ::= 
-	     unit | int | float | bool 								(*base types*)
-	   | "("type "," type "," ... "," type")"					(*tuple type*)
-	   | array type												(*array type*)
-	   | list type												(*list type*)
-	   | udt													(*user defined type*)
-	   | type "->" type											(*function type*)
-```
-
-
-
-### 2.3.1 Values
-
-The value definition is used to define values on the top level of a program. **Note that values in the language are not global variables.** In contrast to global variables, values are in functional style: when a value is defined, it is bonded by a name, such that neither the binding nor subfields of the value can be changed once defined.
-
-Value definitions are useful to define states in a Kripke model. For instance, in the following code, we define the type of states in a Kripke model to be a pair of integers, and we also define two states: `init` and `bound`.
+Value declarations are useful to define states in a Kripke model. For instance, in the following code, we define the type of states in a Kripke model to be a pair of integers, and we also define two states: `init` and `bound`.
 
 ```
 datatype state = (int, int)
@@ -300,9 +284,9 @@ The syntax of value definition is as follows.
 value_def ::= "value" iden "=" expr		(*value definition*)
 ```
 
-### 2.3.2 Functions
+#### Function declarations
 
-Function definitions in the language are used for the definition of transition relation, atomic formulae, and some other operations to help build transition relation and atomic formulae. 
+Function declarations in the language are used for the definition of transition relation, atomic formulae, and some other operations to help build transition relation and atomic formulae. 
 
 For instance, in the following code, `next` defines a transition relation: when the current state is `larger` than `bound`, then it goes to itself, otherwise it goes to a new state where both subfields are `increased` by 1. 
 
@@ -325,8 +309,8 @@ function next (s) : state -> list state =
 The syntax of function definition is as follows.
 
 ```
-fun_def ::= iden "(" args ")" "=" expr
-args ::= pattern [":" type] {"," pattern [":" type]}*
+fun_decl   ::=  iden ( parameter1,...,parametern ) : type = expr
+parameter  ::=  iden | ( parameter1,...,parametern )
 ```
 
 **Note: **
@@ -337,84 +321,58 @@ args ::= pattern [":" type] {"," pattern [":" type]}*
 
 **3. Both the above problems may be avoid in the programming phase by a type system in the future.**
 
-## 2.4 Comments
-Comments in the input file are of the following forms.
-```
-//a one-line comment
-/*a multi-line comment*/
-(*a one-line or multi-line comment*)
-```
+## 2.6 Kripke model declaraction
 
-## 2.5 Kripke model
+The definition of Kripke model is the leading role of the input file. All type, value, and function declaractions are used to build a Kripke model in the input file:
 
-The definition of Kripke model is the leading role of the input file. All datatype definitions, value definitions, and function definitions are used to build a Kripke model in the input file:
-
-- datatype definitions are used to define the type of states, or the types of subfields of states;
-- value definitions are used to define the actual states, or the values of subfields of states;
-- function definitions are used to define the transition relation and atomic formulae, and also their helper operations.
+- type declaractions are used to define the type of states, or the types of subfields of states;
+- value declaractions are used to define the actual states, or the values of subfields of states;
+- function declaractions are used to define the transition relation and atomic formulae, and also their helper operations.
 
 **In order to make sure that the Kripke model defined is valid, values are functinal, i.e., subfields of values cannot be changed once defined. Although programmers can define local variables in a function body whose bindings of values may change in the function body, their value are functional once returned. This is to make sure that when doing an operation (e.g., a step of transition) on a state, the value of this state would not change.**
 
 The Kripke model is specified by the declaration as follows.
 
 ```
-kripke_def ::= "Model" "{"
-				/*
-                Define states as lists of state variables (a record),
-                this is optional.
-              */
-				[
-					"Vars"  "{" 
-						{iden ":" type ";"}+ 
-					"}" 
-				]
-				/*
-				Define the initial states (refered to as either "ini" or "init"), 
-				also optional.
-				*/
-				[
-                  	"Init" "{"
-                  		{iden ":=" expr ";"}+
-                  	"}"
-				]
-				//Define the transition relation
-				"Transition" "{"
-					"next" iden ":=" {expr ":" expr ";"}+ | expr
- 				"}"
- 				//Define atomic formulae
-				"Atomic" "{"
-					{iden "(" {iden ","}* iden ")" ":=" expr ";"}*
-				"}"
-				//Define fairness constraints
-				"Fairness" "{"
-					{formula ";"}* formula
-				"}"
-				//Define the specification
-				"Spec" "{"
-					{iden ":=" formula ";"}+
-				"}"
-			"}"
+kripke_decl ::= Model { 
+       (*Define states as lists of state variable bindings (a record), this is optional.*)
+       [ Vars { {iden : type ;}+ } ]
+	   (*Define the initial state (refered to as either "ini" or "init"), also optional.*)
+	   [ Init { {iden := expr ;}+ } ]
+	   (*Define the transition relation.*)
+	   Transition { next iden := {expr : expr ;}+ | expr }
+	   (*Define atomic formulae.*)
+	   Atomic { {iden ( {iden ,}* iden ) := expr ;}* }				
+	   (*Define fairness constraints, optional.*)
+	   Fairness { {formula ;}* formula }
+	   (*Define the specification.*)
+	   Spec { {iden := formula ;}+ }
+	}
 			
-formula ::= iden "(" iden {"," iden}* ")"
-		  | "not" formula
-		  | formula "/\" formula
-		  | formula "\/" formula
-		  | "EX" "(" iden "," formula "," expr ")"
-		  | "AX" "(" iden "," formula "," expr ")"
-		  | "EG" "(" iden "," formula "," expr ")"
-		  | "AF" "(" iden "," formula "," expr ")"
-		  | "EU" "(" iden "," iden "," formula "," formula "," expr ")"
-		  | "AR" "(" iden "," iden "," formula "," formula "," expr ")"
+formula ::= 
+         iden ( iden {, iden}* )
+       | not formula
+       | formula1 /\ formula2
+       | formula1 \/ formula2
+       | EX ( iden , formula , expr )
+       | AX ( iden , formula , expr )
+       | EG ( iden , formula , expr )
+       | AF ( iden , formula , expr )
+       | EU ( iden1 , iden2 , formula1 , formula2 , expr )
+       | AR ( iden1 , iden2 , formula1 , formula2 , expr )
 ```
 
-## 2.5 Program Structure
+## 2.7 Program Structure
 
-Programs are organized as modules. Each modules contains a set of declarations. Modules can be imported into others, while cyclic dependencies are not allowed.
+Programs are organized as modules. Each modules contains a set of declarations. Modules can be imported into others, while cyclic dependencies are not allowed. 
 
 ```
-kripke_model ::= 
-		{"import" iden}*
-		{udt_def | value_def | fun_def}*
-		[kripke_def]
+module ::= 
+    {import uiden}* 
+    {type_decl | value_decl | fun_decl}*
+
+main_file ::= 
+		[module]
+		[kripke_decl]
 ```
 
