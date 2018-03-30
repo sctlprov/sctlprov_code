@@ -1,4 +1,0 @@
-./run -exec /home/jian/Desktop/git_terminatorlxj/SCTLProV/sctl -timeout 20m -dir /home/jian/Desktop/bcg_benchmark/ -surfix bcg -extra ./new_sctl_bcg_deadlock_extra
-./run -exec /home/jian/Desktop/git_terminatorlxj/SCTLProV/sctl -timeout 20m -dir /home/jian/Desktop/bcg_benchmark/ -surfix bcg -extra ./new_sctl_bcg_livelock_extra
-./run -exec /home/jian/cadp/com/bcg_open -timeout 20m -dir /home/jian/Desktop/bcg_benchmark/ -surfix bcg -extra ./cadp_deadlock_extra -extra-last
-./run -exec /home/jian/cadp/com/bcg_open -timeout 20m -dir /home/jian/Desktop/bcg_benchmark/ -surfix bcg -extra ./cadp_livelock_extra -extra-last
