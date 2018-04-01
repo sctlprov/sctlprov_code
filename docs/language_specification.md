@@ -41,7 +41,7 @@ There are two kinds of numeric literals: integers and floating-points.
 
 ```
 integer	::= [-]{0...9}+
-float	::= [-](0...9)+.{0...9}*
+float	::= [-]{0...9}+.{0...9}*
 ```
 
 #### Keywords
