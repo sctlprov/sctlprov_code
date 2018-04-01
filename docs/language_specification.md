@@ -1,7 +1,7 @@
 [TOC]
 
 # 1. Introduction
-This document specifies the input language of the automated theorem prover [SCTLProV](https://github.com/terminatorlxj/SCTLProV). This input language is designed much like a ML-style real world programming language, in order to ease the task of generating Kripke models out of real world computer systems.
+This document specifies the input language of the automated theorem prover SCTLProV. This input language is designed much like a ML-style real world programming language, in order to ease the task of generating Kripke models out of real world computer systems.
 
 # 2. The Input Language
 The specification of the new input language is described as follows. In the following des
@@ -124,24 +124,25 @@ Patterns are used to match different cases of expressions. The way that patterns
         | expr1 - expr2                         (*integer subtraction*)
         | expr1 * expr2                         (*integer multiplication*)
         | -. expr                               (*float negation*)
-        | expr1 +. expr2                        (*float addition*)
-        | expr1 -. expr2                        (*float subtraction*)
-        | expr1 *. expr2                        (*float multiplication*)
-        | expr1 = expr2                         (*expression equivalence*)
-        | expr1 != expr2                        (*expression non-equivalence*)
-        | expr1 < expr2                         (*less than*)
-        | expr1 <= expr2                        (*less than or equal*)
-        | expr1 > expr2                         (*larger than*)
-        | expr1 >= expr2                        (*larger than or equal*)
+        | expr +. expr                          (*float addition*)
+        | expr -. expr                          (*float subtraction*)
+        | expr *. expr                          (*float multiplication*)
+        | expr = expr                           (*expression equivalence*)
+        | expr != expr                          (*expression non-equivalence*)
+        | expr < expr                           (*less than*)
+        | expr <= expr                          (*less than or equal*)
+        | expr > expr                           (*larger than*)
+        | expr >= expr                          (*larger than or equal*)
         | ( expr )                              (*expression grouping*)
         | let pattern = expr                    (*declare local variables*)
-        | if expr1 then expr2 [else expr3]      (*if expression*)
-        | expr1 ; expr2                         (*sequence of expressions*)
-        | expr1 <- expr                         (*assignment*)
+        | if expr then expr                     (*if-then expression*)
+        | if expr then expr else expr           (*if-then-else expression *)
+        | expr ; expr                           (*sequence of expressions*)
+        | expr <- expr                          (*assignment*)
         | match_expr                            (*pattern matching*)
-        | expr with {iden1 = expr1 ; ... ; idenn = exprn [;]}
+        | expr with {iden = expr ; ... ; iden = expr [;]}
                                                 (*a record with changed bindings*)
-        | iden (expr1 , ..., exprn)             (*a function call*)
+        | iden (expr , ..., expr)             (*a function call*)
     
     match_expr ::= match expr with {| pattern -> expr}+
      
@@ -149,7 +150,7 @@ Patterns are used to match different cases of expressions. The way that patterns
           iden 
         | constant
         | pattern :: pattern                    (*list*)
-        | ( {pattern ,}+ pattern )              (*tuple*)
+        | ( pattern ,..., pattern )             (*tuple*)
         | _                                     (*match any case*)
 
 ## 2.4 Types
@@ -200,7 +201,7 @@ The syntax of `type` is specified as follows.
 type ::= 
           unit | int | float | bool             (*base types*)
         | (min .. max)                          (*integer type with a range*)
-        | {#scalar1, #scalar2...,#scalarn}      (*scalar type*)
+        | {#iden, #iden...,#iden}               (*scalar type*)
         | (type1 , ... , typen)                 (*tuple type*)
         | array type                            (*array type*)
         | list type                             (*list type*)
@@ -208,10 +209,10 @@ type ::=
         | variant_type                          (*variant type*)
         | type "->" type                        (*function type*)
 	   
-variant_type ::= constructor {| constructor}*
-constructor  ::= uiden | uiden (type1 , ... , typen) 
+variant_type ::= constructor | ... | constructor
+constructor  ::= uiden | uiden (type , ... , type) 
 
-record_type  ::= { {type_bingding}* }
+record_type  ::= { iden : type ; ... ; iden : type ;}
 ```
 
 ## 2.5 Type, value, and function declarations
@@ -281,7 +282,7 @@ value bound = (10, 10)
 The syntax of value definition is as follows.
 
 ```
-value_def ::= "value" iden "=" expr		(*value definition*)
+value_def ::= value iden = expr		(*value definition*)
 ```
 
 #### Function declarations
@@ -309,8 +310,8 @@ function next (s) : state -> list state =
 The syntax of function definition is as follows.
 
 ```
-fun_decl   ::=  iden ( parameter1,...,parametern ) : type = expr
-parameter  ::=  iden | ( parameter1,...,parametern )
+fun_decl   ::=  iden ( parameter,...,parameter ) : type = expr
+parameter  ::=  iden | ( parameter,...,parameter )
 ```
 
 **Note: **
@@ -334,32 +335,42 @@ The definition of Kripke model is the leading role of the input file. All type, 
 The Kripke model is specified by the declaration as follows.
 
 ```
-kripke_decl ::= Model { 
+kripke_decl ::=  
+    Model { 
        (*Define states as lists of state variable bindings (a record), this is optional.*)
-       [ Vars { {iden : type ;}+ } ]
-	   (*Define the initial state (refered to as either "ini" or "init"), also optional.*)
-	   [ Init { {iden := expr ;}+ } ]
-	   (*Define the transition relation.*)
-	   Transition { next iden := {expr : expr ;}+ | expr }
-	   (*Define atomic formulae.*)
-	   Atomic { {iden ( {iden ,}* iden ) := expr ;}* }				
-	   (*Define fairness constraints, optional.*)
-	   Fairness { {formula ;}* formula }
-	   (*Define the specification.*)
-	   Spec { {iden := formula ;}+ }
-	}
+       Vars { iden : type ; ... ; iden : type ; }
+
+       (*Define the initial state (refered to as either "ini" or "init"), also optional.*)
+       Init { iden := expr ; ... ; iden := expr ; }
+
+       (*Define the transition relation.*)
+       Transition { next iden := transitions }
+
+       (*Define atomic formulae.*)
+       Atomic { {iden ( iden , ... , iden ) := expr ;}* }		
+
+       (*Define fairness constraints, optional.*)
+       Fairness { formula ; ... ; formula }
+
+       (*Define the specification.*)
+       Spec { iden := formula ; ... ; iden := formula ;}
+    }
+
+trasitions ::= 
+      expr 
+    | expr : expr ; ... ; expr : expr ;
 			
 formula ::= 
-         iden ( iden {, iden}* )
+         iden ( iden , ... , iden )
        | not formula
-       | formula1 /\ formula2
-       | formula1 \/ formula2
+       | formula /\ formula
+       | formula \/ formula
        | EX ( iden , formula , expr )
        | AX ( iden , formula , expr )
        | EG ( iden , formula , expr )
        | AF ( iden , formula , expr )
-       | EU ( iden1 , iden2 , formula1 , formula2 , expr )
-       | AR ( iden1 , iden2 , formula1 , formula2 , expr )
+       | EU ( iden , iden , formula , formula , expr )
+       | AR ( iden , iden , formula , formula , expr )
 ```
 
 ## 2.7 Program Structure
@@ -368,11 +379,10 @@ Programs are organized as modules. Each modules contains a set of declarations. 
 
 ```
 module ::= 
-    {import uiden}* 
-    {type_decl | value_decl | fun_decl}*
+    import uiden ... import uiden
+    decl ... decl
+decl   ::= type_decl | value_decl | fun_decl
 
-main_file ::= 
-		[module]
-		[kripke_decl]
+main_file ::= kripke_decl | module kripke_decl
 ```
 
