@@ -113,16 +113,16 @@ Patterns are used to match different cases of expressions. The way that patterns
     expr ::=
           value                                 (*value*)
         | iden                                  (*variable or name of a value*)
-        | uiden [(expr1,...,exprn)]             (*variant expression*)	
+        | uiden [(expr,...,expr)]               (*variant expression*)	
         | expr . iden                           (*select one field of a record*)
-        | expr1 [ expr2 ]                       (*select one field of a array*)
+        | expr [ expr ]                         (*select one field of a array*)
         | ! expr                                (*logical negation*)
-        | expr1 && expr2                        (*logical and*)
-        | expr1 || expr2                        (*logical or*)
+        | expr && expr                          (*logical and*)
+        | expr || expr                          (*logical or*)
         | - expr                                (*integer negation*)
-        | expr1 + expr2                         (*integer addition*)
-        | expr1 - expr2                         (*integer subtraction*)
-        | expr1 * expr2                         (*integer multiplication*)
+        | expr + expr                           (*integer addition*)
+        | expr - expr                           (*integer subtraction*)
+        | expr * expr                           (*integer multiplication*)
         | -. expr                               (*float negation*)
         | expr +. expr                          (*float addition*)
         | expr -. expr                          (*float subtraction*)
@@ -140,8 +140,7 @@ Patterns are used to match different cases of expressions. The way that patterns
         | expr ; expr                           (*sequence of expressions*)
         | expr <- expr                          (*assignment*)
         | match_expr                            (*pattern matching*)
-        | expr with {iden = expr ; ... ; iden = expr [;]}
-                                                (*a record with changed bindings*)
+        | expr with {iden = expr ; ... ; iden = expr [;]}  (*a record with changed bindings*)
         | iden (expr , ..., expr)             (*a function call*)
     
     match_expr ::= match expr with {| pattern -> expr}+
