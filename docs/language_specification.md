@@ -98,10 +98,10 @@ A variant value is either a variant constructor (an `uiden`), or a variant const
         | true | false
         | integer | float
         | #iden
-        | [|v1 ; ... ; vn[;]|] | [v1 ; ... ; vn [;]]
-        | (v1,...,vn)
-        | {l1 = v1 ; ... ; ln = vn [;]}
-        | uiden | uiden (v1,...,vn)
+        | [| value ; ... ; value |] | [ value ; ... ; value ]
+        | ( value,...,value )
+        | { iden = value ; ... ; iden = value ; }
+        | uiden | uiden ( value , ... , value )
 ```
 
 ## 2.3 Expressions and patterns
@@ -206,7 +206,7 @@ type ::=
         | list type                             (*list type*)
         | record_type                           (*record type*)
         | variant_type                          (*variant type*)
-        | type "->" type                        (*function type*)
+        | type -> type                          (*function type*)
 	   
 variant_type ::= constructor | ... | constructor
 constructor  ::= uiden | uiden (type , ... , type) 
