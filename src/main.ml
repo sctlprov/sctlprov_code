@@ -131,7 +131,7 @@ let _ =
     let files = ref [] in
     let vis_addr = ref "" in
     Arg.parse [
-        "-visualize_addr ip", Arg.String (fun s -> vis_addr := s; Flags.visualize_addr := Some s), "\tIP address of the VMDV server";
+        "-visualize_addr", Arg.String (fun s -> vis_addr := s; Flags.visualize_addr := Some s), "\tIP address of the VMDV server";
         "-bdd", Arg.Unit (fun () -> Flags.using_bdd := true), "\tUsing BDD to store visited states";
         "-optmize", Arg.Bool (fun b -> Flags.optmization := b), "\tApplying optimization";
         "-bcg", Arg.String (fun s -> Flags.bcg_property := s), "\tDetecting livelocks or deadlocks for BCG files"
