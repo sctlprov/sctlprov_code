@@ -214,9 +214,9 @@ constructor  ::= uiden | uiden (type , ... , type)
 record_type  ::= { iden : type ; ... ; iden : type ;}
 ```
 
-## 2.5 Type, value, and function declarations
+## 2.5 Type, value, and function definitions
 
-#### Type declarations
+#### Type definitions
 
 In this language, users can define type aliases by type declarations. Type aliases make the input file more readable. For instance, suppose we want to draw a rectangle in the screen of a monitor, then we need to tell the computer the size of the rectangle, and at what position we want it to draw. In the following code, we defined a rectangle `rect`, and told the computer that the width of `rect` is 10, and the height of `rect` is 20, and the position we want the computer to draw `rect` is (0, 0). 
 
@@ -266,11 +266,11 @@ The syntax of type declaractions is as follows.
 type_decl ::=  datatype iden = type (*to define new types*)
 ```
 
-#### Value declarations
+#### Value definitions
 
-Value declarations are used to define values on the top level of a program. **Note that values in the language are not global variables.** In contrast to global variables, values are in functional style: when a value is defined, it is bonded by a name, such that neither the binding nor subfields of the value can be changed once defined.
+Value definitions are used to define values on the top level of a program. **Note that values in the language are not global variables.** In contrast to global variables, values are in functional style: when a value is defined, it is bonded by a name, such that neither the binding nor subfields of the value can be changed once defined.
 
-Value declarations are useful to define states in a Kripke model. For instance, in the following code, we define the type of states in a Kripke model to be a pair of integers, and we also define two states: `init` and `bound`.
+Value definitions are useful to define states in a Kripke model. For instance, in the following code, we define the type of states in a Kripke model to be a pair of integers, and we also define two states: `init` and `bound`.
 
 ```
 datatype state = (int, int)
@@ -284,9 +284,9 @@ The syntax of value definition is as follows.
 value_def ::= value iden = expr		(*value definition*)
 ```
 
-#### Function declarations
+#### Function definitions
 
-Function declarations in the language are used for the definition of transition relation, atomic formulae, and some other operations to help build transition relation and atomic formulae. 
+Function definitions  in the language are used for the definition of transition relation, atomic formulae, and some other operations to help build transition relation and atomic formulae. 
 
 For instance, in the following code, `next` defines a transition relation: when the current state is `larger` than `bound`, then it goes to itself, otherwise it goes to a new state where both subfields are `increased` by 1. 
 
@@ -321,7 +321,7 @@ parameter  ::=  iden | ( parameter,...,parameter )
 
 **3. Both the above problems may be avoid in the programming phase by a type system in the future.**
 
-## 2.6 Kripke model declaraction
+## 2.6 Kripke model definition
 
 The definition of Kripke model is the leading role of the input file. All type, value, and function declaractions are used to build a Kripke model in the input file:
 
