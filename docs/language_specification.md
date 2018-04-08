@@ -309,7 +309,7 @@ function next (s) : state -> list state =
 The syntax of function definition is as follows.
 
 ```
-fun_decl   ::=  iden ( parameter,...,parameter ) : type = expr
+fun_decl   ::=  function iden ( parameter,...,parameter ) : type = expr
 parameter  ::=  iden | ( parameter,...,parameter )
 ```
 
