@@ -5,7 +5,7 @@ type location = {
     loc_start: position;
     loc_end: position;
 }
-type attribute = Mutable | Unmutable
+(* type attribute = Mutable | Unmutable *)
 type ptyp = PTInt | PTFloat | PTBool | PTUnt 
           | PTAray of ptyp
           | PTLst of ptyp

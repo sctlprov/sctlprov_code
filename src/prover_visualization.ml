@@ -324,7 +324,7 @@ let send_state_graph id =
 		List.iter (fun c -> Communicate.add_edge id (string_of_int a) (string_of_int c) "") b
 	) state_struct_tbl
 
-let parse msg = 
+let parse runtime modul msg = 
     match msg with
     | Highlight_node (sid, nid) -> 
 		feedback_ok sid;
@@ -355,6 +355,30 @@ let parse msg =
 		feedback_ok sid;
 		let new_sid = if sid = !proof_session_id then !state_session_id else !proof_session_id in
 		clear_color new_sid
+	| Request (sid, attris) ->
+		feedback_ok sid;
+		let nids = ref [] in
+		Hashtbl.iter (fun id (gamma, fml) -> 
+			let states = states_in_fml fml in
+			let satisfy_attributes = List.exists (fun state -> 
+				List.fold_left (fun acc attri ->
+					if not acc then acc 
+					else begin
+						if String.get attri 0 = '!' then
+							let neg_attri = String.sub attri 1 (List.length attri - 1) in
+							if not (prove_atomic neg_attri [state]) then true else false
+						else 
+							prove_atomic attri [state]
+					end
+				) true attris
+			) states in
+			if satisfy_attributes then
+				nids := (string_of_int id) :: !nids
+		) sequents;
+		response sid attris !nids
+
+	(* | Response (sid, attris, nids) -> *)
+
     | _ -> 
         printf "Not supposed to recieve this message %s\n" (str_msg msg);
         flush stdout
@@ -393,7 +417,7 @@ let rec prove_model runtime modul visualize_addr =
 			ignore(Thread.create (fun o -> sending o) o);
 			send_proof_tree s;
 			send_state_graph ("State graph for "^s);
-			receiving i parse
+			receiving i (parse runtime modul)
 			(*Hashtbl.clear sequents; 
 			Hashtbl.clear proof*)
 			);

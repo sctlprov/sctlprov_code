@@ -12,6 +12,8 @@ type message =
     | Highlight_node of string * string
     | Unhighlight_node of string * string
     | Clear_color of string
+    | Request of string * (string list)
+    | Response of string * (string list) * (string list)
     | Feedback_ok of string
     | Feedback_fail of string * string
 
@@ -27,6 +29,16 @@ let str_msg msg =
     | Highlight_node (sid, nid) -> "Highlight_node ("^sid^", "^nid^")"
     | Unhighlight_node (sid, nid) -> "Unhighlight_node ("^sid^", "^nid^")"
     | Clear_color sid -> "Clear_color "^sid
+    | Request (sid, attris) -> 
+        if attris = [] then
+            "Request ("^sid^", [])"
+        else if List.length attris = 1 then
+            "Request ("^sid^", ["^(List.hd attris)^"])"
+        else begin
+            "Request ("^sid^", ["^(List.fold_left (fun str attri -> str^","^attri) (List.hd attris) (List.tl attris))^"])"
+        end
+    | Response (sid, attris, nids) -> 
+        "Response ("^sid^", "^(Lists.str_slist attris "[" "]" ",")^", "^(Lists.str_slist nids "[" "]" ",")^")"
     | Feedback_ok sid -> "Feedback_ok "^sid
     | Feedback_fail (sid, error_msg) -> "Feedback_fail ("^sid^", "^error_msg^")"
 
@@ -57,6 +69,8 @@ let change_node_state sid nid state = wait_to_send (Change_node_state (sid, nid,
 let highlight_node sid nid = wait_to_send (Highlight_node (sid, nid))
 let unhighlight_node sid nid = wait_to_send (Unhighlight_node (sid, nid))
 let clear_color sid = wait_to_send (Clear_color sid)
+let request sid attris = wait_to_send (Request (sid, attris))
+let response sid attris nids = wait_to_send (Response (sid, attris, nids))
 let feedback_ok sid = wait_to_send (Feedback_ok sid)
 let feedback_fail sid error_msg = wait_to_send (Feedback_fail (sid, error_msg))
 
@@ -130,6 +144,19 @@ let json_of_msg (msg:message) =
             ("type", `String "clear_color");
             ("session_id", `String sid)
         ]
+    | Request (sid, attris) ->
+        `Assoc [
+            ("type", `String "request");
+            ("session_id", `String sid);
+            ("attributes", `List (List.map (fun str -> `String str) attris))
+        ]
+    | Response (sid, attris, nids) ->
+        `Assoc [
+            ("type", `String "response");
+            ("session_id", `String sid);
+            ("attributes", `List (List.map (fun str -> `String str) attris));
+            ("nodes", `List (List.map (fun str -> `String str) nids))
+        ]
     | Feedback_ok sid ->
         `Assoc [
             ("type", `String "feedback");
@@ -159,6 +186,8 @@ let get_string_of_json json =
     | `String str -> str
     | _ -> printf "%s is not a string\n" (Yojson.Basic.to_string json); exit 1
 
+let get_string_list_of_json jsons = List.map (fun json -> get_string_of_json json) jsons 
+
 
 let msg_of_json json = 
     match json with
@@ -182,6 +211,10 @@ let msg_of_json json =
                 Unhighlight_node ((get_string_of_json (get_json_of_key "session_id" str_json_list)), (get_string_of_json (get_json_of_key "node_id" str_json_list)))
             | "clear_color" ->
                 Clear_color (get_string_of_json (get_json_of_key "session_id" str_json_list))
+            | "request" ->
+                Request (get_string_of_json (get_json_of_key "session_id"), get_string_list_of_json (get_json_of_key "attributes"))
+            | "response" -> 
+                Response (get_string_of_json (get_json_of_key "session_id"), get_string_list_of_json (get_json_of_key "attributes"), get_string_list_of_json (get_json_of_key "nodes"))
             | _ as s -> printf "not supposed to be received by the prover: %s\n" s; exit 1
         end
     | _ -> printf "%s can not be a message\n" (Yojson.Basic.to_string json); exit 1
