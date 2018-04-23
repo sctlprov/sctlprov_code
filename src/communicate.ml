@@ -2,7 +2,7 @@ open Printf
 open Yojson
 
 type message = 
-    | Create_session of string * string * string
+    | Create_session of string * string * string * (string list)
     | Remove_session of string
     | Add_node of string * string * string * string
     | Remove_node of string * string
@@ -19,7 +19,7 @@ type message =
 
 let str_msg msg = 
     match msg with
-    | Create_session (sid, session_descr, graph_type) -> "Create_session ("^sid^", "^ session_descr^", "^graph_type^")"
+    | Create_session (sid, session_descr, graph_type, attris) -> "Create_session ("^sid^", "^ session_descr^", "^graph_type^", "^(Lists.str_slist attris "[" "]" ",")^")"
     | Remove_session (sid) -> "Remove_session "^sid
     | Add_node (sid, nid, label, state) -> "Add_node ("^sid^", "^nid^", "^label^", "^state^")"
     | Remove_node (sid, nid) -> "Remove_node ("^sid^", "^nid^")"
@@ -58,8 +58,8 @@ let wait_to_send msg =
     Condition.signal sending_conditional;
     Mutex.unlock sending_mutex
 
-let create_proof_session session = wait_to_send (Create_session (session, session, "Tree"))
-let create_state_session session = wait_to_send (Create_session (session, session, "DiGraph"))
+let create_proof_session session attris = wait_to_send (Create_session (session, session, "Tree", attris))
+let create_state_session session attris = wait_to_send (Create_session (session, session, "DiGraph", attris))
 let remove_session sid = wait_to_send (Remove_session sid)
 let add_node sid nid label state = wait_to_send (Add_node (sid, nid, label, state))
 let remove_node sid nid = wait_to_send (Remove_node (sid, nid))
@@ -77,12 +77,13 @@ let feedback_fail sid error_msg = wait_to_send (Feedback_fail (sid, error_msg))
 
 let json_of_msg (msg:message) = 
     match msg with
-    | Create_session (session_id, session_descr, graph_type) ->
+    | Create_session (session_id, session_descr, graph_type, attris) ->
         `Assoc [
             ("type", `String "create_session");
             ("session_id", `String session_id);
             ("session_descr", `String session_descr);
-            ("graph_type", `String graph_type)
+            ("graph_type", `String graph_type);
+            ("attributes", `List (List.map (fun attri -> `String attri) attris))
         ]
     | Remove_session sid ->
         `Assoc [
@@ -186,7 +187,10 @@ let get_string_of_json json =
     | `String str -> str
     | _ -> printf "%s is not a string\n" (Yojson.Basic.to_string json); exit 1
 
-let get_string_list_of_json jsons = List.map (fun json -> get_string_of_json json) jsons 
+let get_string_list_of_json jsons = 
+    match jsons with
+    | `List jsons -> List.map (fun json -> get_string_of_json json) jsons 
+    | _ -> printf "%s is not a list\n" (Yojson.Basic.to_string jsons); exit 1 
 
 
 let msg_of_json json = 
@@ -212,9 +216,9 @@ let msg_of_json json =
             | "clear_color" ->
                 Clear_color (get_string_of_json (get_json_of_key "session_id" str_json_list))
             | "request" ->
-                Request (get_string_of_json (get_json_of_key "session_id"), get_string_list_of_json (get_json_of_key "attributes"))
+                Request (get_string_of_json (get_json_of_key "session_id" str_json_list), get_string_list_of_json (get_json_of_key "attributes" str_json_list))
             | "response" -> 
-                Response (get_string_of_json (get_json_of_key "session_id"), get_string_list_of_json (get_json_of_key "attributes"), get_string_list_of_json (get_json_of_key "nodes"))
+                Response (get_string_of_json (get_json_of_key "session_id" str_json_list), get_string_list_of_json (get_json_of_key "attributes" str_json_list), get_string_list_of_json (get_json_of_key "nodes" str_json_list))
             | _ as s -> printf "not supposed to be received by the prover: %s\n" s; exit 1
         end
     | _ -> printf "%s can not be a message\n" (Yojson.Basic.to_string json); exit 1

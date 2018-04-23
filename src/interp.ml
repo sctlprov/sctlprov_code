@@ -28,6 +28,12 @@ type runtime = {
     mutable model: model;
 }
 
+let all_unary_predicates runtime = 
+    let atomics = runtime.model.atomic in
+    let predicates = ref [] in
+    Hashtbl.iter (fun p (args,_) -> if List.length args = 1 then predicates := !predicates @ [p]) atomics;
+    !predicates
+
 exception Evaluation_error of string
 exception No_matched_pattern of value
 

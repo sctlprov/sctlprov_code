@@ -250,9 +250,9 @@ let rec prove cont runtime modul =
 		| _ -> raise Unable_to_prove
 		)
 
-let send_proof_tree id = 
+let send_proof_tree id runtime = 
 	proof_session_id := id;
-	Communicate.create_proof_session id;
+	Communicate.create_proof_session id (Interp.all_unary_predicates runtime);
 	(*let rec str_sequent seqt = 
 		(let gamma = fst seqt and fml = snd seqt in
 			let str_gamma = (State_set.fold (fun a b -> (str_state a)^"\r\n"^b) gamma "") in
@@ -306,9 +306,9 @@ let rec states_in_fml fml =
 	| _ -> []
 
 
-let send_state_graph id = 
+let send_state_graph id runtime = 
 	state_session_id := id;
-	Communicate.create_state_session id;
+	Communicate.create_state_session id (Interp.all_unary_predicates runtime);
 	(* let raw_out = open_out "raw_digraph.txt" in
 	output_string raw_out "DIGRAPH\n";
 	Hashtbl.iter (fun a b -> output_string raw_out ((string_of_int b)^":"^(str_state (State a))^"\n")) state_tbl;
@@ -365,10 +365,10 @@ let parse runtime modul msg =
 					if not acc then acc 
 					else begin
 						if String.get attri 0 = '!' then
-							let neg_attri = String.sub attri 1 (List.length attri - 1) in
-							if not (prove_atomic neg_attri [state]) then true else false
+							let neg_attri = String.sub attri 1 (String.length attri - 1) in
+							if not (prove_atomic neg_attri [State state] runtime modul) then true else false
 						else 
-							prove_atomic attri [state]
+							prove_atomic attri [State state] runtime modul
 					end
 				) true attris
 			) states in
@@ -415,8 +415,8 @@ let rec prove_model runtime modul visualize_addr =
 			flush out; *)
 			let i,o = Communicate.init visualize_addr in
 			ignore(Thread.create (fun o -> sending o) o);
-			send_proof_tree s;
-			send_state_graph ("State graph for "^s);
+			send_proof_tree s runtime;
+			send_state_graph ("State graph for "^s) runtime;
 			receiving i (parse runtime modul)
 			(*Hashtbl.clear sequents; 
 			Hashtbl.clear proof*)
