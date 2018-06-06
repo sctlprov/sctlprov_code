@@ -13,3 +13,5 @@ log
 *.cmxa
 *.conflicts
 backup/*
+*.origin
+*.typed

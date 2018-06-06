@@ -80,7 +80,7 @@ let rec str_ppatl ppatl =
                 | Some ppatl -> str^" "^(str_ppatl ppatl)
             end
     in
-    (str_ppat ppatl.ppat)^":"^(str_ptyp ppatl.ptyp)
+    (str_ppat ppatl.ppat)^":"^(str_ptyp ppatl.pptyp)
 
 let rec str_pexprl pel =
     let rec str_pexpr pe =
@@ -161,7 +161,7 @@ let rec str_pexprl pel =
         | PConstr (PConstr_basic str) -> str
         | PConstr (PConstr_compound (str, pel1)) -> str^" "^(str_pexprl pel1)
     in
-    (str_pexpr (pel.pexpr))^":"^(str_ptyp (pel.ptyp))
+    (str_pexpr (pel.pexpr))^":"^(str_ptyp (pel.eptyp))
 
 let str_pstate ps = 
     match ps with

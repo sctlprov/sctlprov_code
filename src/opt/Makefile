@@ -15,6 +15,13 @@
 # 	ocamlyacc parser.mly 
 # 	ocamlfind ocamlopt -o sctl.exe -package cudd yojson -linkpkg -g bdd.ml term.ml formula.ml modul.ml prover.ml prover_bdd.ml prover_output.ml communicate.ml prover_visualization.ml parser.mli parser.ml lexer.ml main.ml
 
+all:
+	ocamlyacc oparser.mly
+	ocamllex olexer.mll
+	ocamlfind ocamlopt -o sctl -thread -package cudd -package yojson -linkpkg -g \
+	 obdd.ml oterm.ml oformula.ml omodul.ml oprover.ml oprover_bdd.ml oprover_output.ml \
+	 ocommunicate.ml oprover_visualization.ml oparser.mli oparser.ml  olexer.ml opt.ml
+
 opt-lib:
 	ocamlyacc oparser.mly
 	ocamllex olexer.mll
@@ -33,4 +40,5 @@ clean:
 	rm -f sctl
 	rm -f sctl.exe
 	rm -f *.cmx[as]
+
 

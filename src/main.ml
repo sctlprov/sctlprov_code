@@ -86,13 +86,16 @@ let parse_and_prove fnames ip =
                 psymbol_tbl = psymbol_tbl;
                 pkripke_model = pkripke_model;
             } in
-            (* let origin_out = open_out (mname^".origin") in
+            let origin_out = open_out (mname^".origin") in
             output_string origin_out (Print.str_modul modul);
-            flush origin_out; *)
+            flush origin_out;
             Hashtbl.add pmoduls mname modul
-        with e -> raise e
-            (* let ep = lbuf.lex_curr_p in
-            (* printf "syntax error at line %d, column %d\n" ep.pos_lnum (ep.pos_cnum - ep.pos_bol) *) *)
+        with e -> 
+            let sp = lbuf.lex_start_p in
+            let ep = lbuf.lex_curr_p in
+            printf "syntax error from line %d, column %d to line %d, column %d\n" 
+                sp.pos_lnum (sp.pos_cnum - sp.pos_bol)
+                ep.pos_lnum (ep.pos_cnum - ep.pos_bol)
     ) fnames;
     match !opkripke with
     | None -> print_endline "no kripke model was built, exit."; exit 1
@@ -102,10 +105,10 @@ let parse_and_prove fnames ip =
             match dg with
             | Leaf mname -> 
                 (try
-                    Typechecker.check_modul mname moduls(*;
+                    Typechecker.check_modul mname moduls;
                     let out = open_out (mname^".typed") in
                     output_string out (Print.str_modul (Hashtbl.find moduls mname));
-                    flush out*)
+                    flush out
                 with Invalid_pexpr_loc (pel, msg) ->
                     print_endline ("Error: "^msg);
                     print_endline (Print.str_pexprl pel);

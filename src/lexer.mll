@@ -22,6 +22,7 @@ rule token = parse
   | "function"  {Function}
   | "match"     {Match}
   | "with"      {With}
+  | "where"     {Where}
   | "Model"     {Model}
   | "AX"        {AX}
   | "EX"        {EX}
@@ -51,6 +52,7 @@ rule token = parse
   | "Atomic"    {Atomic}
   | "Fairness"  {Fairness}
   | "Spec"      {Spec}
+  | "end"       {End}   
   | integer as i  {Int (int_of_string i)}
   | float as f    {Float (float_of_string f)}
   | iden as id  {Iden id}

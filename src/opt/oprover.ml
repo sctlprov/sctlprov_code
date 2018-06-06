@@ -222,12 +222,32 @@ let get_global_merge level =
 
 
 let generate_EX_cont gamma fairs levl x fml next contl contr = 
-    State_set.fold (fun elem b ->
-        Cont (State_set.empty, fresh_fairs fairs, levl^"1", And (subst_s fml x (State elem), EG (SVar "y", Top, State elem)), contl, b, [], [])) next contr
+    (* State_set.fold (fun elem b ->
+        Cont (State_set.empty, fresh_fairs fairs, levl^"1", And (subst_s fml x (State elem), EG (SVar "y", Top, State elem)), contl, b, [], [])) next contr *)
+		let ffairs = fresh_fairs fairs in
+		if !has_fairs then
+			State_set.fold (fun elem b ->
+				Cont (State_set.empty, ffairs, levl^"1", subst_s fml x (State elem), Cont(State_set.empty, ffairs, "-1", EG(SVar "y", Top, State elem), contl, b, [], []), b, [], [])
+			) next contr
+		else
+			State_set.fold (fun elem b ->
+				Cont(State_set.empty, ffairs, levl^"1", subst_s fml x (State elem), contl, b, [], [])
+			) next contr
+
 
 let generate_AX_cont gamma fairs levl x fml next contl contr = 
-    State_set.fold (fun elem b ->
-        Cont (State_set.empty, fresh_fairs fairs, levl^"1", Or (subst_s fml x (State elem), Neg (EG (SVar "y", Top, State elem))), b, contr, [], [])) next contl
+    (* State_set.fold (fun elem b ->
+        Cont (State_set.empty, fresh_fairs fairs, levl^"1", Or (subst_s fml x (State elem), Neg (EG (SVar "y", Top, State elem))), b, contr, [], [])) next contl *)
+		let ffairs = fresh_fairs fairs in
+		if !has_fairs then
+			State_set.fold (fun elem b ->
+				Cont (State_set.empty, ffairs, levl^"1", subst_s fml x (State elem), b, Cont(State_set.empty, ffairs, "-1", EG(SVar "y", Top, State elem), contr, b, [], []), [], [])
+			) next contl
+		else 
+			State_set.fold ( fun elem b ->
+				Cont(State_set.empty, ffairs, levl^"1", subst_s fml x (State elem), b, contr, [], [])
+			) next contl
+		
 
 let generate_EG_cont gamma fairs level x fml s next contl contr =
 	let level1 = level^"1" in
@@ -318,6 +338,7 @@ and prove_fairs cont modl =
 			List.iter (fun (a, b) -> if a<>"-1" then add_to_true_merge b a ) ts;
 			List.iter (fun (a, b) -> if a<>"-1" then add_to_false_merge b a ) fs
 		);
+		(* print_endline (levl^"<-->"^(fml_to_string fml)); *)
 		begin match fml with
 		| Top -> prove_fairs contl modl
 		| Bottom -> prove_fairs contr modl

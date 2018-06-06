@@ -124,7 +124,9 @@ let select_sub_fmls fml_levl_tbl =
 	| Atomic _ -> true
 	| Neg (Atomic _) -> true
 	| _ -> false) in
-	Hashtbl.iter (fun a b -> if (filter b = false) then Hashtbl.remove fml_levl_tbl a else ()) fml_levl_tbl; fml_levl_tbl
+	Hashtbl.iter (fun a b -> if (filter b = false) then Hashtbl.remove fml_levl_tbl a else ()) fml_levl_tbl; 
+	(* Hashtbl.iter (fun a b -> print_endline (a^"--"^(fml_to_string b))) fml_levl_tbl; *)
+	fml_levl_tbl
 
 let rec ias_in_fml fml = 
 	match fml with

@@ -56,7 +56,7 @@
         | PRecord str_pels -> 
             (* printf "before translation: %s\n" (Print.str_pexprl rcd); *)
             let wpe = PWith (mk_pexpr_loc (PSymbol ["s"]) (PTVar (new_type_var ())) spos epos, str_pels) in
-            let wpel = {pexpr = wpe; ptyp = rcd.ptyp; loc = rcd.loc} in
+            let wpel = {pexpr = wpe; eptyp = rcd.eptyp; eloc = rcd.eloc} in
             (*printf "translated with expression: %s\n" (Print.str_pexprl wpel);*)
             wpel
         | _ -> print_endline "cannot replace a non-record-expression to a with-expression"; exit 1
@@ -65,19 +65,29 @@
 %token <int>Int 
 %token <float>Float
 %token <string>Iden UIden
-%token Import Datatype Vertical Value Let Match With Underline Model Next If Then Else For In While Do Done
+%token Import Datatype Vertical Value Let Match With Underline Model Next If Then Else For In While Do Done End Where
 %token LB1 RB1 LB2 RB2 LB3 RB3 Equal Non_Equal LT GT LE GE Scalar Comma Semicolon Dot DotDot Arrow EOF Add AddDot Minus MinusDot Mult MultDot
 %token Negb Ando Oro And Or Neg LArrow Colon ColonColon Top Bottom AX EX AF EG AR EU True False Function
 %token TLst TFloat TAray TInt TBool TUnt At Var Init Transition Atomic Spec Fairness Assigno
 
 %start <(string list) * (Ast.psymbol_tbl) * ((Ast.pkripke_model) option)>program
- %start <unit>debug 
+ /* %start <unit>debug  */
 
 /*%left Semicolon*/
+/* %left Vertical */
+
+/* %nonassoc regular_expr */
+/* %nonassoc if_single */
+/* %left Semicolon */
+/* %nonassoc Underline_pat */
+%nonassoc Constr_pat
+/* %nonassoc Arrayindex_expr */
+/* %nonassoc Constr_expr_0 */
+/* %nonassoc Constr_expr */
+/* %right Match_expr */
 %left Or
 %left And
 %right Neg
-
 
 %right ColonColon
 %right Oro
@@ -86,18 +96,26 @@
 %nonassoc LT LE GT GE
 %nonassoc Equal Non_Equal
 %left Add AddDot 
+%nonassoc NEGI NEGF
 %left Minus MinusDot
 %left Mult MultDot
-%nonassoc NEGI NEGF
+
 %right Arrow
 %right COLONCOLON
 %left At
+/* %nonassoc Where */
+/* %nonassoc LArrow */
+
+%right TLst
+%right TAray
+
+/* %nonassoc with_expr */
 
 %%
-
+/* 
 debug: declare EOF {}
     | Import UIden {print_endline ("imported "^$2)}
-;
+; */
 
 
 program: imported declars EOF  {!imported, symbol_tbl, None} 
@@ -124,19 +142,22 @@ declare: Datatype id = Iden args = list(Iden) Equal t = type_def  {
             | None -> Hashtbl.add symbol_tbl id (Val, PExpr_loc (PTVar (new_type_var ()), e))
             | Some pt -> Hashtbl.add symbol_tbl id (Val, PExpr_loc (pt, e))
         }
-    | Function id = Iden ags = args otf = option(type_of_expr) Equal e = expr  {
+    | Function id = Iden LB1 ags = separated_list(Comma, Iden) RB1 otf = option(type_of_expr) Equal e = expr  {
         (* print_endline ("declared function "^id); *)
+        let ag_pat ag sp ep = mk_ppat_loc (PPat_Symbol ag) (PTVar (new_type_var())) sp ep in
+        let ag_pat_list = List.map (fun ag -> ag_pat ag $startpos(ags) $endpos(ags)) ags in
+        let ags_pat = mk_ppat_loc (PPat_Tuple (ag_pat_list)) (PTTuple (List.map (fun pat -> pat.pptyp) (ag_pat_list))) $startpos(ags) $endpos(ags) in
         match otf with
-        | None -> Hashtbl.add symbol_tbl id (Function, PFunction(PTVar (new_type_var ()), ags, e))
-        | Some pt -> Hashtbl.add symbol_tbl id (Function, PFunction(pt, ags, e))}
+        | None -> Hashtbl.add symbol_tbl id (Function, PFunction (PTVar (new_type_var ()), (if List.length ag_pat_list = 1 then ag_pat_list else [ags_pat]), e))
+        | Some pt -> Hashtbl.add symbol_tbl id (Function, PFunction (pt, (if List.length ag_pat_list = 1 then ag_pat_list else [ags_pat]), e))}
 ;
 
 type_of_expr: Colon typ {$2}
 ;
-
-args: pattern {[$1]}
+/* 
+args: Iden {[$1]}
     | pattern args  {$1 :: $2}
-;
+; */
 
 kripke: Model UIden LB1 RB1 LB3 ovd = option(var_decl) oinit = option(init_decl) trans = trans_decl atomics = atomic_decl ofairs = option(fair_decl) spec = spec_decl RB3    {
             (*choose_action ovd (fun ()->()) (fun t->Hashtbl.add symbol_tbl ($2^"_State") (UDT, PTyp t));
@@ -327,7 +348,9 @@ typ: TInt {PTInt}
     | TUnt  {PTUnt}
     | TAray typ {PTAray ($2)}
     | TLst typ {PTLst ($2)}
-    | Iden tl = list(typ) {PTUdt ($1, tl)}
+    /* | Iden tl = list(typ) {PTUdt ($1, tl)} */
+    | Iden  {PTUdt ($1, [])}
+    | Iden LB1 tl = separated_list(Comma, typ) RB1   {PTUdt ($1, tl)}
     | LB1 tuple_typ RB1 {PTTuple $2}
     | record_typ {PTRecord $1}
     | typ Arrow typ {PTArrow ($1, $3)}
@@ -355,145 +378,186 @@ scalar_expr:
 
 
 expr: expr_single {$1}
-    | e = expr_single Semicolon el = separated_nonempty_list(Semicolon, expr_single)    {
+    | e = expr_single Semicolon el = separated_nonempty_list(Semicolon, expr_single)  {
             mk_pexpr_loc (PSeq (e::el)) (PTVar (new_type_var())) $startpos(e) $endpos(el)
         }
-    | LB1 e = expr_single Semicolon el = separated_nonempty_list(Semicolon, expr_single) RB1   {
-            mk_pexpr_loc (PSeq (e::el)) (PTVar (new_type_var())) $startpos(e) $endpos(el)
-        }
+
 ;
 
 expr_path: id = Iden {[id]}
     | id = Iden Dot expr_path {id::$3}
 ;
 
-expr_single: expr_path {mk_pexpr_loc (PSymbol $1) (PTVar (new_type_var ())) $startpos($1) $endpos($1)}
+path_expr_single:
+      expr_path {mk_pexpr_loc (PSymbol $1) (PTVar (new_type_var ())) $startpos($1) $endpos($1)}
     | UIden Dot expr_path {mk_pexpr_loc (PSymbol ($1::$3)) (PTVar (new_type_var ())) $startpos($1) $endpos($3)}
+;
+expr_single: 
+    | simple_expr_single {$1}
+    | complex_expr_single {$1}
+    /* | LB1 expr_single RB1  {$2} */
+;
+simple_expr_single:
+    | path_expr_single {$1}
     | i = Int   {mk_pexpr_loc (PInt i) (PTInt) $startpos(i) $endpos(i)}
     | scalar_expr {
         let pos = find_scalar_position $1 !scalars in
         mk_pexpr_loc (PInt ((snd pos))) (PTScalar ((fst pos))) $startpos($1) $endpos($1)}
     | f = Float {mk_pexpr_loc (PFloat f) (PTFloat) $startpos(f) $endpos(f)}
     | LB1 RB1   {mk_pexpr_loc PUnt (PTUnt) $startpos($1) $endpos($2)}
-    | LB2 Vertical el = expr_single_list Vertical RB2   {
+    | LB2 Vertical el = simple_expr_list Vertical RB2   {
             let ea = el in
             if List.length ea = 0 then
                 mk_pexpr_loc (PAray ea) (PTAray (PTVar (new_type_var ()))) $startpos($1) $endpos($5)
             else begin
                 let e0 = List.hd ea in
-                mk_pexpr_loc (PAray ea) (PTAray e0.ptyp) $startpos($1) $endpos($5)
+                mk_pexpr_loc (PAray ea) (PTAray e0.eptyp) $startpos($1) $endpos($5)
             end 
         }
-    | LB2 el = expr_single_list RB2    {
+    | LB2 el = simple_expr_list RB2    {
             if List.length el = 0 then
                 mk_pexpr_loc (PLst el) (PTLst (PTVar (new_type_var ()))) $startpos($1) $endpos($3)
             else begin
                 let e0 = List.hd el in
-                mk_pexpr_loc (PLst el) (PTLst e0.ptyp) $startpos($1) $endpos($3)
+                mk_pexpr_loc (PLst el) (PTLst e0.eptyp) $startpos($1) $endpos($3)
             end
         }
     | True  {mk_pexpr_loc (PBool true) (PTBool) $startpos($1) $endpos($1)}
     | False {mk_pexpr_loc (PBool false) (PTBool) $startpos($1) $endpos($1)}
     | LB1 e = expr Comma el = separated_nonempty_list(Comma, expr) RB1 {
-            let elt = List.map (fun (e:pexpr_loc) -> e.ptyp) (e::el) in
+            let elt = List.map (fun (e:pexpr_loc) -> e.eptyp) (e::el) in
             mk_pexpr_loc (PTuple (e::el)) ((PTTuple elt)) $startpos($1) $endpos($5)
         }
     | LB3 str_el = str_expr_list RB3 {
-            let str_elt = List.map (fun (str, (pel:pexpr_loc)) -> (str, pel.ptyp)) str_el in
+            let str_elt = List.map (fun (str, (pel:pexpr_loc)) -> (str, pel.eptyp)) str_el in
             mk_pexpr_loc (PRecord str_el) (PTRecord str_elt) $startpos($1) $endpos($3)
         }
-    | Negb e = expr_single     {
+    | Negb e = simple_expr_single     {
             mk_pexpr_loc (POp ("!", [e])) PTBool $startpos($1) $endpos(e)
         }
-    | e1 = expr_single Ando e2 = expr_single  {
+    | e1 = simple_expr_single Ando e2 = simple_expr_single  {
             mk_pexpr_loc (POp ("&&", [e1; e2])) PTBool $startpos(e1) $endpos(e2) 
         }
-    | e1 = expr_single Oro e2 = expr_single  {
+    | e1 = simple_expr_single Oro e2 = simple_expr_single  {
             mk_pexpr_loc (POp ("||", [e1;e2])) PTBool $startpos(e1) $endpos(e2)
         }
-    | Minus e = expr_single %prec NEGI {
+    | Minus e = simple_expr_single %prec NEGI {
             mk_pexpr_loc (POp ("-", [e])) PTInt $startpos($1) $endpos(e)
         }
-    | MinusDot e = expr_single %prec NEGF {
+    | MinusDot e = simple_expr_single %prec NEGF {
             mk_pexpr_loc (POp ("-.", [e])) PTFloat $startpos($1) $endpos(e)
         }
-    | e1 = expr_single Add e2 = expr_single {
+    | e1 = simple_expr_single Add e2 = simple_expr_single {
             mk_pexpr_loc (POp ("+", [e1;e2])) PTInt $startpos(e1) $endpos(e2)
         }
-    | e1 = expr_single Minus e2 = expr_single {
+    | e1 = simple_expr_single Minus e2 = simple_expr_single {
             mk_pexpr_loc (POp ("-", [e1;e2])) PTInt $startpos(e1) $endpos(e2)
         }
-    | e1 = expr_single Mult e2 = expr_single {
+    | e1 = simple_expr_single Mult e2 = simple_expr_single {
             mk_pexpr_loc (POp ("*", [e1;e2])) PTInt $startpos(e1) $endpos(e2)
         }
-    | e1 = expr_single AddDot e2 = expr_single {
+    | e1 = simple_expr_single AddDot e2 = simple_expr_single {
             mk_pexpr_loc (POp ("+.", [e1;e2])) PTFloat $startpos(e1) $endpos(e2)
         }
-    | e1 = expr_single MinusDot e2 = expr_single {
+    | e1 = simple_expr_single MinusDot e2 = simple_expr_single {
             mk_pexpr_loc (POp ("-.", [e1;e2])) PTFloat $startpos(e1) $endpos(e2)
         }
-    | e1 = expr_single MultDot e2 = expr_single {
+    | e1 = simple_expr_single MultDot e2 = simple_expr_single {
             mk_pexpr_loc (POp ("*.", [e1;e2])) PTFloat $startpos(e1) $endpos(e2)
         }
-    | e1 = expr_single Equal e2 = expr_single {mk_pexpr_loc (POp ("=", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
-    | e1 = expr_single Non_Equal e2 = expr_single {mk_pexpr_loc (POp ("!=", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
-    | e1 = expr_single LT e2 = expr_single    {mk_pexpr_loc (POp ("<", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
-    | e1 = expr_single GT e2 = expr_single    {mk_pexpr_loc (POp (">", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
-    | e1 = expr_single LE e2 = expr_single    {mk_pexpr_loc (POp ("<=", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
-    | e1 = expr_single GE e2 = expr_single    {mk_pexpr_loc (POp (">=", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
-    | If e1 = expr_single Then e2 = expr oe = option(else_expr)   {
+    | e1 = simple_expr_single Equal e2 = simple_expr_single {mk_pexpr_loc (POp ("=", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
+    | e1 = simple_expr_single Non_Equal e2 = simple_expr_single {mk_pexpr_loc (POp ("!=", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
+    | e1 = simple_expr_single LT e2 = simple_expr_single    {mk_pexpr_loc (POp ("<", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
+    | e1 = simple_expr_single GT e2 = simple_expr_single    {mk_pexpr_loc (POp (">", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
+    | e1 = simple_expr_single LE e2 = simple_expr_single    {mk_pexpr_loc (POp ("<=", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
+    | e1 = simple_expr_single GE e2 = simple_expr_single    {mk_pexpr_loc (POp (">=", [e1;e2])) PTBool $startpos(e1) $endpos(e2)}
+
+    | uid = UIden {mk_pexpr_loc (PConstr ((PConstr_basic uid))) (PTVar (new_type_var ())) $startpos(uid) $endpos(uid)}
+    | uid = UIden LB1 el = separated_nonempty_list(Comma, simple_expr_single) RB1 {
+            let elt = List.map (fun (e:pexpr_loc) -> e.eptyp) (el) in
+            let args = mk_pexpr_loc (PTuple (el)) ((PTTuple elt)) $startpos(el) $endpos(el) in
+            mk_pexpr_loc (PConstr ((PConstr_compound (uid, args)))) (PTVar (new_type_var ())) $startpos(uid) $endpos(el)
+        } 
+    /* | uid = UIden e = simple_expr_single %prec Constr_expr {
+            mk_pexpr_loc (PConstr ((PConstr_compound (uid, e)))) (PTVar (new_type_var ())) $startpos(uid) $endpos(e)
+        } */
+
+    | id = Iden LB1 el = separated_nonempty_list(Comma, simple_expr_single) RB1 {
+            if List.length el = 1 then
+                let eh:pexpr_loc = List.hd el in
+                mk_pexpr_loc (POp (id, [eh])) (PTVar (new_type_var ())) $startpos(id) $endpos(el)
+            else 
+                mk_pexpr_loc (POp (id, [(mk_pexpr_loc (PTuple el) (PTTuple (List.map (fun (e:pexpr_loc)->e.eptyp) el)) $startpos(el) $endpos(el) )])) (PTVar (new_type_var ())) $startpos(id) $endpos(el)
+        }
+    | atexpr_single {$1}
+    | where_expr_single  {$1}
+    | e1 = simple_expr_single ColonColon e2 = simple_expr_single %prec COLONCOLON{
+            mk_pexpr_loc (POp ("::", [e1; e2])) e2.eptyp $startpos(e1) $endpos(e2)
+        }
+    | If e1 = simple_expr_single Then e2 = expr oe = option(else_expr) End {
             match oe with
             | None -> begin
                     mk_pexpr_loc (PIF (e1, e2, None)) PTUnt $startpos($1) $endpos(oe)
                 end
             | Some e3 -> begin
-                    mk_pexpr_loc (PIF (e1, e2, oe)) e2.ptyp $startpos($1) $endpos(oe)
+                    mk_pexpr_loc (PIF (e1, e2, oe)) e2.eptyp $startpos($1) $endpos(oe)
                 end
         }
-    | While e1 = expr_single Do e2 = expr Done {
-            mk_pexpr_loc (PWhile (e1, e2)) (PTUnt) $startpos($1) $endpos($5)
-        }
-    | For str = Iden In LB2 e2 = expr_single DotDot e3 = expr_single RB2 Do e4 = expr Done {
-            mk_pexpr_loc (PFor (str, e2, e3, e4)) (PTUnt) $startpos($1) $endpos($11)
-        }
-    | e1 = expr_single LArrow e2 = expr_single    {mk_pexpr_loc (PAssign (e1, e2)) (PTUnt) $startpos(e1) $endpos(e2)}
-    | Match e1 = expr_single With pel = pattern_expr_list {mk_pexpr_loc (PMatch (e1, pel)) (PTVar (new_type_var ())) $startpos($1) $endpos(pel)}
-    | e1 = expr_single With LB3 str_el = str_expr_list RB3    {mk_pexpr_loc (PWith (e1, str_el)) e1.ptyp $startpos(e1) $endpos($5)}
-    | uid = UIden {mk_pexpr_loc (PConstr ((PConstr_basic uid))) (PTVar (new_type_var ())) $startpos(uid) $endpos(uid)}
-    | uid = UIden e = expr_single {
-            mk_pexpr_loc (PConstr ((PConstr_compound (uid, e)))) (PTVar (new_type_var ())) $startpos(uid) $endpos(e)
-        }
-    | id = Iden LB1 el = separated_nonempty_list(Comma, expr_single) RB1 {
-            if List.length el = 1 then
-                let eh:pexpr_loc = List.hd el in
-                mk_pexpr_loc (POp (id, [eh])) (PTVar (new_type_var ())) $startpos(id) $endpos(el)
-            else 
-                mk_pexpr_loc (POp (id, [(mk_pexpr_loc (PTuple el) (PTTuple (List.map (fun (e:pexpr_loc)->e.ptyp) el)) $startpos(el) $endpos(el) )])) (PTVar (new_type_var ())) $startpos(id) $endpos(el)
+    | LB1 simple_expr_single RB1 {$2}
+
+;
+
+complex_expr_single:
+    | LB1 e = expr_single Semicolon el = separated_nonempty_list(Semicolon, expr_single) RB1   {
+            mk_pexpr_loc (PSeq (e::el)) (PTVar (new_type_var())) $startpos(e) $endpos(el)
         }
     | Let p = pattern Equal e = expr_single {mk_pexpr_loc (PLet (p, e)) PTUnt $startpos($1) $endpos(e)}
-    | e1 = expr_single ColonColon e2 = expr_single %prec COLONCOLON{
-            mk_pexpr_loc (POp ("::", [e1; e2])) e2.ptyp $startpos(e1) $endpos(e2)
+
+    | arrayindex_expr_single {$1}
+    
+    
+    | While e1 = simple_expr_single Do e2 = expr Done {
+            mk_pexpr_loc (PWhile (e1, e2)) (PTUnt) $startpos($1) $endpos($5)
         }
-    | e1 = expr_single At e2 = expr_single {
-            mk_pexpr_loc (POp ("@", [e1; e2])) e1.ptyp $startpos(e1) $endpos(e2)
+    | For str = Iden In LB2 e2 = simple_expr_single DotDot e3 = simple_expr_single RB2 Do e4 = expr Done {
+            mk_pexpr_loc (PFor (str, e2, e3, e4)) (PTUnt) $startpos($1) $endpos($11)
         }
-    | e1 = expr_single LB2 e2 = expr_single RB2 {
+    | larrow_expr_single {$1}
+    | Match e1 = simple_expr_single With pel = pattern_expr_list End {mk_pexpr_loc (PMatch (e1, pel)) (PTVar (new_type_var ())) $startpos($1) $endpos(pel)}
+   
+
+;
+
+larrow_expr_single:
+    | e1 = path_expr_single LArrow e2 = expr_single    {mk_pexpr_loc (PAssign (e1, e2)) (PTUnt) $startpos(e1) $endpos(e2)}
+;
+where_expr_single:
+    | e1 = path_expr_single Where LB3 str_el = str_expr_list RB3
+            {mk_pexpr_loc (PWith (e1, str_el)) e1.eptyp $startpos(e1) $endpos($5)} 
+;
+arrayindex_expr_single:
+    | e1 = simple_expr_single LB2 e2 = simple_expr_single RB2 {
         let e:Ast.pexpr_loc = e1 in
-        let et1 = e.ptyp in
+        let et1 = e.eptyp in
         match et1 with
         | PTAray pt -> mk_pexpr_loc (POp ("[]", [e1; e2])) pt $startpos(e1) $endpos($4)
         | PTVar _ -> mk_pexpr_loc (POp ("[]", [e1; e2])) (PTVar (new_type_var ())) $startpos(e1) $endpos($4)
         | _ -> raise (Type_mismatch (e1, et1, (PTAray (PTVar (new_type_var())))))        
         }
-    | LB1 expr_single RB1  {$2}
 ;
 
-expr_single_list:   {[]}
-    | expr_single   {[$1]}
-    | expr_single Semicolon expr_single_list {$1::$3}
+atexpr_single:
+    | e1 = simple_expr_single At e2 = simple_expr_single {
+            mk_pexpr_loc (POp ("@", [e1; e2])) e1.eptyp $startpos(e1) $endpos(e2)
+        }
 ;
 
-str_expr_list:  {[]}
+simple_expr_list:   {[]}
+    | simple_expr_single   {[$1]}
+    | simple_expr_single Semicolon simple_expr_list {$1::$3}
+;
+
+str_expr_list:  
     | Iden Equal expr_single Semicolon {[($1, $3)]}
     | str_expr_list Iden Equal expr_single Semicolon   {($2, $4) :: $1}
 ;
@@ -514,18 +578,18 @@ pattern: id = Iden   {mk_ppat_loc (PPat_Symbol id) (PTVar (new_type_var())) $sta
     | LB2 Vertical pl = pattern_list  Vertical RB2 {
             match pl with
             | [] -> mk_ppat_loc (PPat_Aray []) (PTAray (PTVar (new_type_var()))) $startpos($1) $endpos($5)
-            | p::pl' -> mk_ppat_loc (PPat_Aray (pl)) (PTAray p.ptyp) $startpos($1) $endpos($5)
+            | p::pl' -> mk_ppat_loc (PPat_Aray (pl)) (PTAray p.pptyp) $startpos($1) $endpos($5)
         }
     | LB2 pl = pattern_list RB2   {
             match pl with
             | [] -> mk_ppat_loc (PPat_Lst []) (PTLst (PTVar (new_type_var()))) $startpos($1) $endpos($3)
-            | p::pl' -> mk_ppat_loc (PPat_Lst pl) (PTLst p.ptyp) $startpos($1) $endpos($3)
+            | p::pl' -> mk_ppat_loc (PPat_Lst pl) (PTLst p.pptyp) $startpos($1) $endpos($3)
         }
-    | p1 = pattern ColonColon p2 = pattern  %prec COLONCOLON  {mk_ppat_loc (PPat_Lst_Cons (p1, p2)) (p2.ptyp) $startpos(p1) $endpos(p2)}
-    | Underline     {mk_ppat_loc PPat_Underline (PTVar (new_type_var())) $startpos($1) $endpos($1)}
-    | LB1 p = pattern Comma pl = separated_nonempty_list(Comma, pattern) RB1   {mk_ppat_loc (PPat_Tuple (p::pl)) (PTTuple (List.map (fun pat -> pat.ptyp) (p::pl))) $startpos($1) $endpos($5)}
+    | p1 = pattern ColonColon p2 = pattern  %prec COLONCOLON  {mk_ppat_loc (PPat_Lst_Cons (p1, p2)) (p2.pptyp) $startpos(p1) $endpos(p2)}
+    | Underline {mk_ppat_loc PPat_Underline (PTVar (new_type_var())) $startpos($1) $endpos($1)}
+    | LB1 p = pattern Comma pl = separated_nonempty_list(Comma, pattern) RB1   {mk_ppat_loc (PPat_Tuple (p::pl)) (PTTuple (List.map (fun pat -> pat.pptyp) (p::pl))) $startpos($1) $endpos($5)}
     | uid = UIden {mk_ppat_loc (PPat_Constr (uid, None)) (PTVar (new_type_var())) $startpos(uid) $endpos(uid)}
-    | uid = UIden p = pattern  {mk_ppat_loc (PPat_Constr (uid, Some p)) (PTVar (new_type_var())) $startpos(uid) $endpos(p)}
+    | uid = UIden p = pattern %prec Constr_pat {mk_ppat_loc (PPat_Constr (uid, Some p)) (PTVar (new_type_var())) $startpos(uid) $endpos(p)}
     | LB1 pattern RB1   {$2}
 ;
 

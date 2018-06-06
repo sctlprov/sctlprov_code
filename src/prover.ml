@@ -73,7 +73,34 @@ let add_false_to_cont levl s cont =
 (****************************)
 
 
+let generate_EX_cont gamma fairs levl x fml next contl contr = 
+	(* State_set.fold (fun elem b ->
+			Cont (State_set.empty, fresh_fairs fairs, levl^"1", And (subst_s fml x (State elem), EG (SVar "y", Top, State elem)), contl, b, [], [])) next contr *)
+	let ffairs = fresh_fairs fairs in
+	if !has_fairs then
+		State_set.fold (fun elem b ->
+			Cont (State_set.empty, ffairs, levl^"1", subst_s fml x (State elem), Cont(State_set.empty, ffairs, "-1", EG("y", Top, State elem), contl, b, [], []), b, [], [])
+		) next contr
+	else
+		State_set.fold (fun elem b ->
+			Cont(State_set.empty, ffairs, levl^"1", subst_s fml x (State elem), contl, b, [], [])
+		) next contr
 
+
+let generate_AX_cont gamma fairs levl x fml next contl contr = 
+	(* State_set.fold (fun elem b ->
+			Cont (State_set.empty, fresh_fairs fairs, levl^"1", Or (subst_s fml x (State elem), Neg (EG (SVar "y", Top, State elem))), b, contr, [], [])) next contl *)
+	let ffairs = fresh_fairs fairs in
+	if !has_fairs then
+		State_set.fold (fun elem b ->
+			Cont (State_set.empty, ffairs, levl^"1", subst_s fml x (State elem), b, Cont(State_set.empty, ffairs, "-1", EG("y", Top, State elem), contr, b, [], []), [], [])
+		) next contl
+	else 
+		State_set.fold ( fun elem b ->
+			Cont(State_set.empty, ffairs, levl^"1", subst_s fml x (State elem), b, contr, [], [])
+		) next contl
+	
+(* 
 let generate_EX_cont gamma fairs levl x fml next contl contr = 
 	let ff = fresh_fairs fairs in
 	State_set.fold (fun elem b ->
@@ -86,7 +113,7 @@ let generate_AX_cont gamma fairs levl x fml next contl contr =
     State_set.fold (fun elem b ->
 		Cont (State_set.empty, ff, levl^"1", subst_s fml x (State elem), b, Cont (State_set.empty, ff, "-1", EG ("y", Top, State elem), b, contr, [], []), [], [])	
 	(* Cont (State_set.empty, fresh_fairs fairs, levl^"1", Or (subst_s fml x (State elem), Neg (EG ("y", Top, State elem))), b, contr, [], []) *)
-		) next contl
+		) next contl *)
 
 let generate_EG_cont gamma fairs level x fml s next contl contr =
 	let level1 = level^"1" in

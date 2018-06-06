@@ -1,6 +1,7 @@
 //import Dummy
 (*datatype t1 = int*)
-import Test_modul
+//import Test_modul
+datatype day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
 datatype t2 = int
 datatype t3 = {
         x : int;
@@ -20,6 +21,7 @@ function day_of_z (z) : int -> day =
     | 5 -> Friday
     | 6 -> Saturday
     | _ -> Sunday
+    end
 
 function is_sunday (d) : day -> bool= 
     d = Sunday
@@ -32,6 +34,7 @@ function is_int_sunday (i) : int -> bool =
     | _ -> 
         let (a,b) = (i,2);
         is_sunday (day_of_z (a))
+    end
 
 function fair1 (z) : int -> bool = 
     is_sunday (day_of_z (z))

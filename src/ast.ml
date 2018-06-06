@@ -19,7 +19,7 @@ type ptyp = PTInt | PTFloat | PTBool | PTUnt
           | PTVar of int
 and ptyp_loc = {
     ptyp: ptyp;
-    loc: location;
+    tloc: location;
 }
 
 let domain_size ptyp = 
@@ -83,8 +83,8 @@ let rec replace_udt_with_ptvar ptyp str i =
 
 type pexpr_loc = {
     mutable pexpr: pexpr;
-    mutable ptyp: ptyp;
-    loc: location;
+    mutable eptyp: ptyp;
+    eloc: location;
 }
 and pexpr = 
       PSymbol of string list
@@ -109,8 +109,8 @@ and pexpr =
     | PConstr of pconstr
 and ppattern_loc = {
     ppat: ppattern;
-    mutable ptyp: ptyp;
-    loc: location;
+    mutable pptyp: ptyp;
+    ploc: location;
 }
 and ppattern =
       PPat_Symbol of string
@@ -150,50 +150,50 @@ and pformula_loc = {
 
 let rec pel_add_prefix str pel = 
     match pel.pexpr with
-    | PSymbol strs -> {pexpr = PSymbol (str::strs); ptyp = pel.ptyp; loc = pel.loc}
+    | PSymbol strs -> {pexpr = PSymbol (str::strs); eptyp = pel.eptyp; eloc = pel.eloc}
     | PInt _ | PFloat _ | PUnt | PBool _ -> pel
-    | PLet (ppatl, pel1) -> {pexpr = PLet (ppatl, pel_add_prefix str pel1); ptyp = pel.ptyp; loc = pel.loc}
-    | PAray pels -> {pexpr = PAray (List.map (fun pel -> pel_add_prefix str pel) pels); ptyp = pel.ptyp; loc = pel.loc}
-    | PLst pels -> {pexpr = PLst (List.map (fun pel -> pel_add_prefix str pel) pels); ptyp = pel.ptyp; loc = pel.loc}
-    | POp (op, pels) -> {pexpr = POp (op, List.map (fun pel -> pel_add_prefix str pel) pels); ptyp = pel.ptyp; loc = pel.loc}
-    | PTuple pels -> {pexpr = PTuple (List.map (fun pel -> pel_add_prefix str pel) pels); ptyp = pel.ptyp; loc = pel.loc}
-    | PRecord str_pels -> {pexpr = PRecord (List.map (fun (s,pel) -> (s, pel_add_prefix str pel)) str_pels); ptyp = pel.ptyp; loc = pel.loc}
-    | PIF (pel1, pel2, None) -> {pexpr = PIF (pel_add_prefix str pel1, pel_add_prefix str pel2, None); ptyp = pel.ptyp; loc = pel.loc}
-    | PIF (pel1, pel2, Some pel3) -> {pexpr = PIF (pel_add_prefix str pel1, pel_add_prefix str pel2, Some (pel_add_prefix str pel3)); ptyp = pel.ptyp; loc = pel.loc}
-    | PWhile (pel1, pel2) -> {pexpr = PWhile (pel_add_prefix str pel1, pel_add_prefix str pel2); ptyp = pel.ptyp; loc = pel.loc}
-    | PFor (s, pel1, pel2, pel3) -> {pexpr = PFor (s, pel_add_prefix str pel1, pel_add_prefix str pel2, pel_add_prefix str pel3); ptyp = pel.ptyp; loc = pel.loc}
-    | PSeq pels -> {pexpr = PSeq (List.map (fun pel -> pel_add_prefix str pel) pels); ptyp = pel.ptyp; loc = pel.loc}
-    | PAssign (pel1, pel2) -> {pexpr = PAssign (pel_add_prefix str pel1, pel_add_prefix str pel2); ptyp = pel.ptyp; loc = pel.loc}
-    | PMatch (pel1, ppat_pels) -> {pexpr = PMatch (pel_add_prefix str pel1, List.map (fun (ppatl, pel) -> ppatl, pel_add_prefix str pel) ppat_pels); ptyp = pel.ptyp; loc = pel.loc}
-    | PWith (pel1, str_pels) -> {pexpr = PWith (pel_add_prefix str pel1, List.map (fun (s,pel) -> s, pel_add_prefix str pel) str_pels); ptyp = pel.ptyp; loc = pel.loc}
+    | PLet (ppatl, pel1) -> {pexpr = PLet (ppatl, pel_add_prefix str pel1); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PAray pels -> {pexpr = PAray (List.map (fun pel -> pel_add_prefix str pel) pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PLst pels -> {pexpr = PLst (List.map (fun pel -> pel_add_prefix str pel) pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | POp (op, pels) -> {pexpr = POp (op, List.map (fun pel -> pel_add_prefix str pel) pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PTuple pels -> {pexpr = PTuple (List.map (fun pel -> pel_add_prefix str pel) pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PRecord str_pels -> {pexpr = PRecord (List.map (fun (s,pel) -> (s, pel_add_prefix str pel)) str_pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PIF (pel1, pel2, None) -> {pexpr = PIF (pel_add_prefix str pel1, pel_add_prefix str pel2, None); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PIF (pel1, pel2, Some pel3) -> {pexpr = PIF (pel_add_prefix str pel1, pel_add_prefix str pel2, Some (pel_add_prefix str pel3)); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PWhile (pel1, pel2) -> {pexpr = PWhile (pel_add_prefix str pel1, pel_add_prefix str pel2); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PFor (s, pel1, pel2, pel3) -> {pexpr = PFor (s, pel_add_prefix str pel1, pel_add_prefix str pel2, pel_add_prefix str pel3); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PSeq pels -> {pexpr = PSeq (List.map (fun pel -> pel_add_prefix str pel) pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PAssign (pel1, pel2) -> {pexpr = PAssign (pel_add_prefix str pel1, pel_add_prefix str pel2); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PMatch (pel1, ppat_pels) -> {pexpr = PMatch (pel_add_prefix str pel1, List.map (fun (ppatl, pel) -> ppatl, pel_add_prefix str pel) ppat_pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PWith (pel1, str_pels) -> {pexpr = PWith (pel_add_prefix str pel1, List.map (fun (s,pel) -> s, pel_add_prefix str pel) str_pels); eptyp = pel.eptyp; eloc = pel.eloc}
     | PConstr (PConstr_basic _) -> pel
-    | PConstr (PConstr_compound (s, pel1)) -> {pexpr = PConstr (PConstr_compound (s, pel_add_prefix str pel1)); ptyp = pel.ptyp; loc = pel.loc}
+    | PConstr (PConstr_compound (s, pel1)) -> {pexpr = PConstr (PConstr_compound (s, pel_add_prefix str pel1)); eptyp = pel.eptyp; eloc = pel.eloc}
 
 let rec pel_add_prefix_func strs pel = 
     match pel.pexpr with
     | PSymbol _ (*-> {pexpr = PSymbol (str::strs); ptyp = pel.ptyp; loc = pel.loc}*)
     | PInt _ | PFloat _ | PUnt | PBool _ -> pel
-    | PLet (ppatl, pel1) -> {pexpr = PLet (ppatl, pel_add_prefix_func strs pel1); ptyp = pel.ptyp; loc = pel.loc}
-    | PAray pels -> {pexpr = PAray (List.map (fun pel -> pel_add_prefix_func strs pel) pels); ptyp = pel.ptyp; loc = pel.loc}
-    | PLst pels -> {pexpr = PLst (List.map (fun pel -> pel_add_prefix_func strs pel) pels); ptyp = pel.ptyp; loc = pel.loc}
+    | PLet (ppatl, pel1) -> {pexpr = PLet (ppatl, pel_add_prefix_func strs pel1); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PAray pels -> {pexpr = PAray (List.map (fun pel -> pel_add_prefix_func strs pel) pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PLst pels -> {pexpr = PLst (List.map (fun pel -> pel_add_prefix_func strs pel) pels); eptyp = pel.eptyp; eloc = pel.eloc}
     | POp (op, pels) -> 
         if (List.exists (fun s -> s=op) strs) && (List.length pels = 1) then
             pel_add_prefix op (List.hd pels)
         else 
-            {pexpr = POp (op, List.map (fun pel -> pel_add_prefix_func strs pel) pels); ptyp = pel.ptyp; loc = pel.loc}
+            {pexpr = POp (op, List.map (fun pel -> pel_add_prefix_func strs pel) pels); eptyp = pel.eptyp; eloc = pel.eloc}
 
-    | PTuple pels -> {pexpr = PTuple (List.map (fun pel -> pel_add_prefix_func strs pel) pels); ptyp = pel.ptyp; loc = pel.loc}
-    | PRecord str_pels -> {pexpr = PRecord (List.map (fun (s,pel) -> (s, pel_add_prefix_func strs pel)) str_pels); ptyp = pel.ptyp; loc = pel.loc}
-    | PIF (pel1, pel2, None) -> {pexpr = PIF (pel_add_prefix_func strs pel1, pel_add_prefix_func strs pel2, None); ptyp = pel.ptyp; loc = pel.loc}
-    | PIF (pel1, pel2, Some pel3) -> {pexpr = PIF (pel_add_prefix_func strs pel1, pel_add_prefix_func strs pel2, Some (pel_add_prefix_func strs pel3)); ptyp = pel.ptyp; loc = pel.loc}
-    | PWhile (pel1, pel2) -> {pexpr = PWhile (pel_add_prefix_func strs pel1, pel_add_prefix_func strs pel2); ptyp = pel.ptyp; loc = pel.loc}
-    | PFor (s, pel1, pel2, pel3) -> {pexpr = PFor (s, pel_add_prefix_func strs pel1, pel_add_prefix_func strs pel2, pel_add_prefix_func strs pel3); ptyp = pel.ptyp; loc = pel.loc}
-    | PSeq pels -> {pexpr = PSeq (List.map (fun pel -> pel_add_prefix_func strs pel) pels); ptyp = pel.ptyp; loc = pel.loc}
-    | PAssign (pel1, pel2) -> {pexpr = PAssign (pel_add_prefix_func strs pel1, pel_add_prefix_func strs pel2); ptyp = pel.ptyp; loc = pel.loc}
-    | PMatch (pel1, ppat_pels) -> {pexpr = PMatch (pel_add_prefix_func strs pel1, List.map (fun (ppatl, pel) -> ppatl, pel_add_prefix_func strs pel) ppat_pels); ptyp = pel.ptyp; loc = pel.loc}
-    | PWith (pel1, str_pels) -> {pexpr = PWith (pel_add_prefix_func strs pel1, List.map (fun (s,pel) -> s, pel_add_prefix_func strs pel) str_pels); ptyp = pel.ptyp; loc = pel.loc}
+    | PTuple pels -> {pexpr = PTuple (List.map (fun pel -> pel_add_prefix_func strs pel) pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PRecord str_pels -> {pexpr = PRecord (List.map (fun (s,pel) -> (s, pel_add_prefix_func strs pel)) str_pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PIF (pel1, pel2, None) -> {pexpr = PIF (pel_add_prefix_func strs pel1, pel_add_prefix_func strs pel2, None); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PIF (pel1, pel2, Some pel3) -> {pexpr = PIF (pel_add_prefix_func strs pel1, pel_add_prefix_func strs pel2, Some (pel_add_prefix_func strs pel3)); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PWhile (pel1, pel2) -> {pexpr = PWhile (pel_add_prefix_func strs pel1, pel_add_prefix_func strs pel2); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PFor (s, pel1, pel2, pel3) -> {pexpr = PFor (s, pel_add_prefix_func strs pel1, pel_add_prefix_func strs pel2, pel_add_prefix_func strs pel3); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PSeq pels -> {pexpr = PSeq (List.map (fun pel -> pel_add_prefix_func strs pel) pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PAssign (pel1, pel2) -> {pexpr = PAssign (pel_add_prefix_func strs pel1, pel_add_prefix_func strs pel2); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PMatch (pel1, ppat_pels) -> {pexpr = PMatch (pel_add_prefix_func strs pel1, List.map (fun (ppatl, pel) -> ppatl, pel_add_prefix_func strs pel) ppat_pels); eptyp = pel.eptyp; eloc = pel.eloc}
+    | PWith (pel1, str_pels) -> {pexpr = PWith (pel_add_prefix_func strs pel1, List.map (fun (s,pel) -> s, pel_add_prefix_func strs pel) str_pels); eptyp = pel.eptyp; eloc = pel.eloc}
     | PConstr (PConstr_basic _) -> pel
-    | PConstr (PConstr_compound (s, pel1)) -> {pexpr = PConstr (PConstr_compound (s, pel_add_prefix_func strs pel1)); ptyp = pel.ptyp; loc = pel.loc}
+    | PConstr (PConstr_compound (s, pel1)) -> {pexpr = PConstr (PConstr_compound (s, pel_add_prefix_func strs pel1)); eptyp = pel.eptyp; eloc = pel.eloc}
 
 
 let rec pfml_pstate_type pfmll = 
@@ -206,7 +206,7 @@ let rec pfml_pstate_type pfmll =
             let pst = List.hd psts in
             match pst with
             | PSVar _ -> PTVar (-1)
-            | PState pel -> pel.ptyp
+            | PState pel -> pel.eptyp
         end
     | PNeg pfml1 -> pfml_pstate_type pfml1
     | PAnd (pfml1, pfml2) | POr (pfml1, pfml2) -> 
@@ -218,7 +218,7 @@ let rec pfml_pstate_type pfmll =
     | PAX (_, _, pst) | PEX (_, _, pst) | PAF (_, _, pst) | PEG (_, _, pst) | PAR (_,_,_,_,pst) | PEU (_,_,_,_,pst) -> begin
             match pst with
             | PSVar _ -> PTVar (-1)
-            | PState pel -> pel.ptyp
+            | PState pel -> pel.eptyp
         end
 
 
@@ -247,18 +247,18 @@ type pmodul = {
     pkripke_model: pkripke_model option;
 }
 
-let mk_pexpr_loc pexpr ptyp loc_start loc_end = {
+let mk_pexpr_loc pexpr eptyp loc_start loc_end = {
     pexpr = pexpr;
-    ptyp = ptyp;
-    loc = {
+    eptyp = eptyp;
+    eloc = {
         loc_start = loc_start;
         loc_end = loc_end;
     };
 }
-let mk_ppat_loc ppat ptyp loc_start loc_end = {
+let mk_ppat_loc ppat pptyp loc_start loc_end = {
     ppat = ppat;
-    ptyp = ptyp;
-    loc = {
+    pptyp = pptyp;
+    ploc = {
         loc_start = loc_start;
         loc_end = loc_end;
     };
