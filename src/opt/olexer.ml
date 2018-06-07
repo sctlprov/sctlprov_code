@@ -1,10 +1,10 @@
-# 1 "opt/olexer.mll"
+# 1 "olexer.mll"
  
 	open Oparser
 	let line_num = ref 1
 
 
-# 8 "opt/olexer.ml"
+# 8 "olexer.ml"
 let __ocaml_lex_tables = {
   Lexing.lex_base =
    "\000\000\199\255\002\000\203\255\205\255\002\000\003\000\211\255\
@@ -1731,299 +1731,299 @@ let rec token lexbuf =
 and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 11 "opt/olexer.mll"
+# 11 "olexer.mll"
             (Module)
-# 1737 "opt/olexer.ml"
+# 1737 "olexer.ml"
 
   | 1 ->
-# 12 "opt/olexer.mll"
+# 12 "olexer.mll"
             (Model)
-# 1742 "opt/olexer.ml"
+# 1742 "olexer.ml"
 
   | 2 ->
-# 13 "opt/olexer.mll"
+# 13 "olexer.mll"
           (Var)
-# 1747 "opt/olexer.ml"
+# 1747 "olexer.ml"
 
   | 3 ->
-# 14 "opt/olexer.mll"
+# 14 "olexer.mll"
             (Define)
-# 1752 "opt/olexer.ml"
+# 1752 "olexer.ml"
 
   | 4 ->
-# 15 "opt/olexer.mll"
+# 15 "olexer.mll"
           (Init)
-# 1757 "opt/olexer.ml"
+# 1757 "olexer.ml"
 
   | 5 ->
-# 16 "opt/olexer.mll"
+# 16 "olexer.mll"
                 (Transition)
-# 1762 "opt/olexer.ml"
+# 1762 "olexer.ml"
 
   | 6 ->
-# 17 "opt/olexer.mll"
+# 17 "olexer.mll"
               (Fairness)
-# 1767 "opt/olexer.ml"
+# 1767 "olexer.ml"
 
   | 7 ->
-# 18 "opt/olexer.mll"
+# 18 "olexer.mll"
             (Atomic)
-# 1772 "opt/olexer.ml"
+# 1772 "olexer.ml"
 
   | 8 ->
-# 19 "opt/olexer.mll"
+# 19 "olexer.mll"
           (Spec)
-# 1777 "opt/olexer.ml"
+# 1777 "olexer.ml"
 
   | 9 ->
-# 20 "opt/olexer.mll"
+# 20 "olexer.mll"
           (Int)
-# 1782 "opt/olexer.ml"
+# 1782 "olexer.ml"
 
   | 10 ->
-# 21 "opt/olexer.mll"
+# 21 "olexer.mll"
           (Bool)
-# 1787 "opt/olexer.ml"
+# 1787 "olexer.ml"
 
   | 11 ->
-# 22 "opt/olexer.mll"
+# 22 "olexer.mll"
           (B true)
-# 1792 "opt/olexer.ml"
+# 1792 "olexer.ml"
 
   | 12 ->
-# 23 "opt/olexer.mll"
+# 23 "olexer.mll"
            (B false)
-# 1797 "opt/olexer.ml"
+# 1797 "olexer.ml"
 
   | 13 ->
-# 24 "opt/olexer.mll"
+# 24 "olexer.mll"
           (Top)
-# 1802 "opt/olexer.ml"
+# 1802 "olexer.ml"
 
   | 14 ->
-# 25 "opt/olexer.mll"
+# 25 "olexer.mll"
            (Bottom)
-# 1807 "opt/olexer.ml"
+# 1807 "olexer.ml"
 
   | 15 ->
-# 26 "opt/olexer.mll"
+# 26 "olexer.mll"
           (Neg)
-# 1812 "opt/olexer.ml"
+# 1812 "olexer.ml"
 
   | 16 ->
-# 27 "opt/olexer.mll"
+# 27 "olexer.mll"
          (Mod)
-# 1817 "opt/olexer.ml"
+# 1817 "olexer.ml"
 
   | 17 ->
-# 28 "opt/olexer.mll"
+# 28 "olexer.mll"
         (AX)
-# 1822 "opt/olexer.ml"
+# 1822 "olexer.ml"
 
   | 18 ->
-# 29 "opt/olexer.mll"
+# 29 "olexer.mll"
         (EX)
-# 1827 "opt/olexer.ml"
+# 1827 "olexer.ml"
 
   | 19 ->
-# 30 "opt/olexer.mll"
+# 30 "olexer.mll"
         (AF)
-# 1832 "opt/olexer.ml"
+# 1832 "olexer.ml"
 
   | 20 ->
-# 31 "opt/olexer.mll"
+# 31 "olexer.mll"
         (EG)
-# 1837 "opt/olexer.ml"
+# 1837 "olexer.ml"
 
   | 21 ->
-# 32 "opt/olexer.mll"
+# 32 "olexer.mll"
         (AR)
-# 1842 "opt/olexer.ml"
+# 1842 "olexer.ml"
 
   | 22 ->
-# 33 "opt/olexer.mll"
+# 33 "olexer.mll"
         (EU)
-# 1847 "opt/olexer.ml"
+# 1847 "olexer.ml"
 
   | 23 ->
 let
-# 34 "opt/olexer.mll"
+# 34 "olexer.mll"
          s
-# 1853 "opt/olexer.ml"
+# 1853 "olexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
-# 34 "opt/olexer.mll"
+# 34 "olexer.mll"
             (Id s)
-# 1857 "opt/olexer.ml"
+# 1857 "olexer.ml"
 
   | 24 ->
-# 35 "opt/olexer.mll"
+# 35 "olexer.mll"
         (Scalar)
-# 1862 "opt/olexer.ml"
+# 1862 "olexer.ml"
 
   | 25 ->
-# 36 "opt/olexer.mll"
+# 36 "olexer.mll"
         (Colon)
-# 1867 "opt/olexer.ml"
+# 1867 "olexer.ml"
 
   | 26 ->
-# 37 "opt/olexer.mll"
+# 37 "olexer.mll"
         (Semicolon)
-# 1872 "opt/olexer.ml"
+# 1872 "olexer.ml"
 
   | 27 ->
-# 38 "opt/olexer.mll"
+# 38 "olexer.mll"
         (Comma)
-# 1877 "opt/olexer.ml"
+# 1877 "olexer.ml"
 
   | 28 ->
-# 39 "opt/olexer.mll"
+# 39 "olexer.mll"
         (Dot)
-# 1882 "opt/olexer.ml"
+# 1882 "olexer.ml"
 
   | 29 ->
-# 40 "opt/olexer.mll"
+# 40 "olexer.mll"
          (DotDot)
-# 1887 "opt/olexer.ml"
+# 1887 "olexer.ml"
 
   | 30 ->
-# 41 "opt/olexer.mll"
+# 41 "olexer.mll"
         (LB1)
-# 1892 "opt/olexer.ml"
+# 1892 "olexer.ml"
 
   | 31 ->
-# 42 "opt/olexer.mll"
+# 42 "olexer.mll"
         (RB1)
-# 1897 "opt/olexer.ml"
+# 1897 "olexer.ml"
 
   | 32 ->
-# 43 "opt/olexer.mll"
+# 43 "olexer.mll"
         (LB2)
-# 1902 "opt/olexer.ml"
+# 1902 "olexer.ml"
 
   | 33 ->
-# 44 "opt/olexer.mll"
+# 44 "olexer.mll"
         (RB2)
-# 1907 "opt/olexer.ml"
+# 1907 "olexer.ml"
 
   | 34 ->
-# 45 "opt/olexer.mll"
+# 45 "olexer.mll"
         (LB3)
-# 1912 "opt/olexer.ml"
+# 1912 "olexer.ml"
 
   | 35 ->
-# 46 "opt/olexer.mll"
+# 46 "olexer.mll"
         (RB3)
-# 1917 "opt/olexer.ml"
+# 1917 "olexer.ml"
 
   | 36 ->
 let
-# 47 "opt/olexer.mll"
+# 47 "olexer.mll"
               s
-# 1923 "opt/olexer.ml"
+# 1923 "olexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
-# 47 "opt/olexer.mll"
+# 47 "olexer.mll"
                 (I (int_of_string s))
-# 1927 "opt/olexer.ml"
+# 1927 "olexer.ml"
 
   | 37 ->
-# 48 "opt/olexer.mll"
+# 48 "olexer.mll"
           (And)
-# 1932 "opt/olexer.ml"
+# 1932 "olexer.ml"
 
   | 38 ->
-# 49 "opt/olexer.mll"
+# 49 "olexer.mll"
           (Or)
-# 1937 "opt/olexer.ml"
+# 1937 "olexer.ml"
 
   | 39 ->
-# 50 "opt/olexer.mll"
+# 50 "olexer.mll"
         (Nego)
-# 1942 "opt/olexer.ml"
+# 1942 "olexer.ml"
 
   | 40 ->
-# 51 "opt/olexer.mll"
+# 51 "olexer.mll"
          (Oro)
-# 1947 "opt/olexer.ml"
+# 1947 "olexer.ml"
 
   | 41 ->
-# 52 "opt/olexer.mll"
+# 52 "olexer.mll"
          (Ando)
-# 1952 "opt/olexer.ml"
+# 1952 "olexer.ml"
 
   | 42 ->
-# 53 "opt/olexer.mll"
+# 53 "olexer.mll"
         (Add)
-# 1957 "opt/olexer.ml"
+# 1957 "olexer.ml"
 
   | 43 ->
-# 54 "opt/olexer.mll"
+# 54 "olexer.mll"
         (Minus)
-# 1962 "opt/olexer.ml"
+# 1962 "olexer.ml"
 
   | 44 ->
-# 55 "opt/olexer.mll"
+# 55 "olexer.mll"
         (Mult)
-# 1967 "opt/olexer.ml"
+# 1967 "olexer.ml"
 
   | 45 ->
-# 56 "opt/olexer.mll"
+# 56 "olexer.mll"
         (LT)
-# 1972 "opt/olexer.ml"
+# 1972 "olexer.ml"
 
   | 46 ->
-# 57 "opt/olexer.mll"
+# 57 "olexer.mll"
         (GT)
-# 1977 "opt/olexer.ml"
+# 1977 "olexer.ml"
 
   | 47 ->
-# 58 "opt/olexer.mll"
+# 58 "olexer.mll"
          (LE)
-# 1982 "opt/olexer.ml"
+# 1982 "olexer.ml"
 
   | 48 ->
-# 59 "opt/olexer.mll"
+# 59 "olexer.mll"
          (GE)
-# 1987 "opt/olexer.ml"
+# 1987 "olexer.ml"
 
   | 49 ->
-# 60 "opt/olexer.mll"
+# 60 "olexer.mll"
          (Assigno)
-# 1992 "opt/olexer.ml"
+# 1992 "olexer.ml"
 
   | 50 ->
-# 61 "opt/olexer.mll"
+# 61 "olexer.mll"
         (Equal)
-# 1997 "opt/olexer.ml"
+# 1997 "olexer.ml"
 
   | 51 ->
-# 62 "opt/olexer.mll"
+# 62 "olexer.mll"
          (Non_equal)
-# 2002 "opt/olexer.ml"
+# 2002 "olexer.ml"
 
   | 52 ->
-# 63 "opt/olexer.mll"
+# 63 "olexer.mll"
          (line_num := (!line_num) + 1; token lexbuf)
-# 2007 "opt/olexer.ml"
+# 2007 "olexer.ml"
 
   | 53 ->
-# 64 "opt/olexer.mll"
+# 64 "olexer.mll"
                     (token lexbuf)
-# 2012 "opt/olexer.ml"
+# 2012 "olexer.ml"
 
   | 54 ->
-# 65 "opt/olexer.mll"
+# 65 "olexer.mll"
          (comment_oneline lexbuf)
-# 2017 "opt/olexer.ml"
+# 2017 "olexer.ml"
 
   | 55 ->
-# 66 "opt/olexer.mll"
+# 66 "olexer.mll"
          (comment_multiline lexbuf)
-# 2022 "opt/olexer.ml"
+# 2022 "olexer.ml"
 
   | 56 ->
-# 67 "opt/olexer.mll"
+# 67 "olexer.mll"
         (File_end)
-# 2027 "opt/olexer.ml"
+# 2027 "olexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_token_rec lexbuf __ocaml_lex_state
@@ -2033,14 +2033,14 @@ and comment_oneline lexbuf =
 and __ocaml_lex_comment_oneline_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 70 "opt/olexer.mll"
+# 70 "olexer.mll"
         (line_num := (!line_num) + 1; token lexbuf)
-# 2039 "opt/olexer.ml"
+# 2039 "olexer.ml"
 
   | 1 ->
-# 71 "opt/olexer.mll"
+# 71 "olexer.mll"
      (comment_oneline lexbuf)
-# 2044 "opt/olexer.ml"
+# 2044 "olexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_comment_oneline_rec lexbuf __ocaml_lex_state
@@ -2050,19 +2050,19 @@ and comment_multiline lexbuf =
 and __ocaml_lex_comment_multiline_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 73 "opt/olexer.mll"
+# 73 "olexer.mll"
         (token lexbuf)
-# 2056 "opt/olexer.ml"
+# 2056 "olexer.ml"
 
   | 1 ->
-# 74 "opt/olexer.mll"
+# 74 "olexer.mll"
         (line_num := (!line_num) + 1; comment_multiline lexbuf)
-# 2061 "opt/olexer.ml"
+# 2061 "olexer.ml"
 
   | 2 ->
-# 75 "opt/olexer.mll"
+# 75 "olexer.mll"
        (comment_multiline lexbuf)
-# 2066 "opt/olexer.ml"
+# 2066 "olexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_comment_multiline_rec lexbuf __ocaml_lex_state

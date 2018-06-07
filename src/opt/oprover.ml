@@ -374,7 +374,7 @@ and prove_fairs cont modl =
 				else if State_set.mem s gamma then  
 					let is_fair = list_conditional fairs true (fun (e, ss) -> State_set.mem s ss) in
 					if is_fair = true then begin
-						union_to_true_merge gamma levl;
+						(if levl <> "-1" then union_to_true_merge gamma levl);
 						prove_fairs contl modl
 					end else begin
 						(* union_to_true_merge gamma levl; *)
