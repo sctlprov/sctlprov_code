@@ -128,16 +128,12 @@ let add_false_to_cont levl s cont =
 let merges = Hashtbl.create 10
 let true_merge = Hashtbl.create 10
 let false_merge = Hashtbl.create 10
-(* let visited = Hashtbl.create 10 *)
-(* let tmp_merges = Hashtbl.create 10 *)
 let true_tmp_merge = Hashtbl.create 10
 let false_tmp_merge = Hashtbl.create 10
 let pre_process_merges sub_fml_tbl = 
 	Hashtbl.iter (fun a b -> Hashtbl.add merges a (State_set.empty)) sub_fml_tbl;
 	Hashtbl.iter (fun a b -> Hashtbl.add true_merge a (State_set.empty)) sub_fml_tbl;
 	Hashtbl.iter (fun a b -> Hashtbl.add false_merge a (State_set.empty)) sub_fml_tbl;
-	(* Hashtbl.iter (fun a b -> Hashtbl.add visited a (State_set.empty)) sub_fml_tbl; *)
-	(* Hashtbl.iter (fun a b -> Hashtbl.add tmp_merges a Merge_set.empty) sub_fml_tbl; *)
 	Hashtbl.iter (fun a b -> Hashtbl.add true_tmp_merge a (Merge_set.empty)) sub_fml_tbl;
 	Hashtbl.iter (fun a b -> Hashtbl.add false_tmp_merge a (Merge_set.empty)) sub_fml_tbl
 
