@@ -49,6 +49,9 @@ let add_trans ks s1 s2 =
 		Hashtbl.add ks.trans s1 (State_set.singleton s2)
 
 let next ks s ignore_label = 
+  if s = sd then
+  State_label_set.singleton sd 
+  else begin 
   let nexts = ref State_label_set.empty in
   let lts_trans = Bcg_interface.trans s.state in
   (* print_string (str_kstate s);
@@ -67,7 +70,9 @@ let next ks s ignore_label =
   ) lts_trans;
   (* print_endline ""; *)
   !nexts
+  end
 
 
-let has_tau s = s.label = !tau || s.label = (-2)
-let is_deadlock s = s.state = -1
+let has_tau s = s.label = !tau
+let is_deadlock s = s = sd
+(**)

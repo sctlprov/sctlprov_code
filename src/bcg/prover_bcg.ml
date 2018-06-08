@@ -148,6 +148,7 @@ let rec prove cont modl deadlock ignore_label =
 			List.iter (fun (a, b) -> if a<>"-1" then add_to_false_merge b a modl) fs
 		);
 		begin
+			(* print_endline("proving fml: "^(fml_to_string fml)); *)
 				match fml with
 				| Top -> prove contl modl deadlock ignore_label
 				| Bottom -> prove contr modl deadlock ignore_label
