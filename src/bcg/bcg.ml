@@ -16,7 +16,7 @@ let _ =
     let bcg_property = ref "deadlock" in
     Arg.parse [
         "-bcg", Arg.String (fun s -> bcg_property := s), "\tDetecting livelocks or deadlocks for BCG files"
-    ] (fun s -> files := !files @ [s]) "Usage: sctl [-optimize <true/false>] [-bcg <deadlock/livelock>] [-visualize_addr <ip>] files";
+    ] (fun s -> files := !files @ [s]) "Usage: sctl [-bcg <deadlock/livelock>] files";
     let filename = List.hd !files in
     if List.nth (String.split_on_char '.' filename) 1 = "bcg" then begin
         let lstate = Bcg_interface.read_bcg filename in
