@@ -1,5 +1,5 @@
 # Compiling
-Go to the root directory of the code, and `make`, this would compile the program into an executable file `sctl` in the same directory.
+Go to the root directory of the code, and `make all`, this would compile the program into an executable file `sctl` in the same directory.
 
 **Compiling Environment Requirements**
 
