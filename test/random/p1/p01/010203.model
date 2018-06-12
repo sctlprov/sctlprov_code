@@ -1,0 +1,51 @@
+Model m010203()
+{
+	Var
+	{
+		v1: Bool;
+		v2: Bool;
+		v3: Bool;
+		v4: Bool;
+		v5: Bool;
+		v6: Bool;
+		v7: Bool;
+		v8: Bool;
+		v9: Bool;
+		v10: Bool;
+		v11: Bool;
+		v12: Bool;
+	}
+	
+	Init
+	{
+		v1 := false;
+		v2 := true;
+		v3 := false;
+		v4 := false;
+		v5 := true;
+		v6 := false;
+		v7 := false;
+		v8 := false;
+		v9 := false;
+		v10 := false;
+		v11 := false;
+		v12 := false;
+	}
+	
+	Transition
+	{
+		true : {v1 := !v1; v2 := !v1; v3 := !v5; v4 := !v4; v5 := !v2; v6 := !v8; v7 := !v8; v8 := !v7;};
+		true : {v1 := !v3; v2 := !v10; v3 := !v2; v4 := !v9; v5 := !v9; v6 := !v9; v9 := !v2; v10 := !v9;};
+		true : {v1 := !v5; v2 := !v5; v3 := !v12; v4 := !v4; v5 := !v1; v6 := !v3; v11 := !v6; v12 := !v6;};
+	}
+	
+	Atomic
+	{
+		okay(s) := s(v1) || s(v2) || s(v3) || s(v4) || s(v5) || s(v6);
+	}
+
+	Spec
+	{
+		spec := not EU(x, y, TRUE, not okay(y), ini);
+	}
+}

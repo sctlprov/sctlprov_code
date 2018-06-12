@@ -407,8 +407,6 @@ and prove_fairsb cont runtime modul =
 					prove_fairsb contl runtime modul
 				else begin
 					let next = State_set.filter (fun s -> not (is_in_true_mergeb s levl)) (next s runtime modul) in
-					(* State_set.iter (fun a -> 
-					if (not (in_global_merge a levl)) then print_endline ((str_value (a)))) next; *)
 					prove_fairsb (generate_AR_cont gamma fairs levl x y fml1 fml2 s next contl contr) runtime modul
 				end
 			) 
@@ -416,24 +414,35 @@ and prove_fairsb cont runtime modul =
 			end
 		
 
-	let rec prove_model runtime modul = 
-		orig_fairs := fresh_fairs_modl runtime;
-		let spec_lst = runtime.model.properties in 
-		let rec prove_lst lst = 
-		match lst with
-		| [] -> ()
-		| (s, fml) :: lst' -> 
-			((let nnf_fml = nnf fml in 
-			print_endline (str_fml_ptyp (nnf_fml) runtime.model.state_type);
-			pre_process_merges (select_sub_fmls (sub_fmls nnf_fml "1"));
-			let b = (
-				Merge.get_bin_attr runtime.model;
-				if !Flags.using_bdd && !Merge.flag then
-					prove_fairsb (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) runtime.model.fairness, "1", (nnf_fml), Basic true, Basic false, [], [])) runtime modul
-				else
-					prove_fairs (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) runtime.model.fairness, "1", (nnf_fml), Basic true, Basic false, [], [])) runtime modul) in
-			 print_endline (s ^ ": " ^ (string_of_bool b)));
-			 (* State_set.iter (fun s->print_endline (str_value s)) !searched_state; *)
-			 (* print_endline ("State(s) searched: "^(string_of_int (State_set.cardinal !searched_state))); *)
-			 (* searched_state := State_set.empty; *)
-			 prove_lst lst') in prove_lst spec_lst
+let rec prove_model runtime modul = 
+	orig_fairs := fresh_fairs_modl runtime;
+	let spec_lst = runtime.model.properties in 
+	let rec prove_lst lst = 
+	match lst with
+	| [] -> ()
+	| (s, fml) :: lst' -> 
+		((let nnf_fml = nnf fml in 
+		print_endline (str_fml_ptyp (nnf_fml) runtime.model.state_type);
+		pre_process_merges (select_sub_fmls (sub_fmls nnf_fml "1"));
+		let b = (
+			Merge.get_bin_attr runtime.model;
+			if !Flags.using_bdd && !Merge.flag then
+				prove_fairsb (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) runtime.model.fairness, "1", (nnf_fml), Basic true, Basic false, [], [])) runtime modul
+			else
+				prove_fairs (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) runtime.model.fairness, "1", (nnf_fml), Basic true, Basic false, [], [])) runtime modul) in
+			print_endline (s ^ ": " ^ (string_of_bool b)));
+			prove_lst lst') in prove_lst spec_lst
+
+let rec prove_modelb runtime modul = 
+	orig_fairs := fresh_fairs_modl runtime;
+	let s, fml = List.hd runtime.model.properties in 
+	let nnf_fml = nnf fml in 
+	(* print_endline (str_fml_ptyp (nnf_fml) runtime.model.state_type); *)
+	pre_process_merges (select_sub_fmls (sub_fmls nnf_fml "1"));
+	let b = (
+		Merge.get_bin_attr runtime.model;
+		if !Flags.using_bdd && !Merge.flag then
+			prove_fairsb (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) runtime.model.fairness, "1", (nnf_fml), Basic true, Basic false, [], [])) runtime modul
+		else
+			prove_fairs (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) runtime.model.fairness, "1", (nnf_fml), Basic true, Basic false, [], [])) runtime modul) in
+	b

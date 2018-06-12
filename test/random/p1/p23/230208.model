@@ -1,0 +1,52 @@
+Model m230208()
+{
+	Var
+	{
+		v1: Bool;
+		v2: Bool;
+		v3: Bool;
+		v4: Bool;
+		v5: Bool;
+		v6: Bool;
+		v7: Bool;
+		v8: Bool;
+		v9: Bool;
+		v10: Bool;
+		v11: Bool;
+		v12: Bool;
+	}
+	
+	Init
+	{
+		v1 := false;
+		v2 := false;
+		v3 := false;
+		v4 := true;
+		v5 := true;
+		v6 := true;
+		v7 := false;
+		v8 := false;
+		v9 := false;
+		v10 := false;
+		v11 := false;
+		v12 := false;
+	}
+	
+	Transition
+	{
+		true : {v1 := !v6; v2 := !v2; v3 := !v6; v4 := !v8; v5 := !v7; v6 := !v7; v7 := !v6; v8 := !v7;};
+		true : {v1 := !v9; v2 := !v10; v3 := !v2; v4 := !v4; v5 := !v1; v6 := !v4; v9 := !v4; v10 := !v4;};
+		true : {v1 := !v3; v2 := !v1; v3 := !v2; v4 := !v11; v5 := !v5; v6 := !v1; v11 := !v11; v12 := !v3;};
+	}
+	
+	Atomic
+	{
+		atom1(s) := s(v1);
+		atom2(s) := s(v2);
+		atom3(s) := s(v3) && s(v4) && s(v5) && s(v6);
+	}
+	Spec
+	{
+		spec := not EU(x, y, not AX(z, atom1(z), x), not AX(v, (not EU(w, u, not atom3(w), (not atom2(u)) /\ (not atom3(u)), v)) /\ (not EG(w, not atom3(w), v)), y), ini);
+	}
+}

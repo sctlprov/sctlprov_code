@@ -1,0 +1,78 @@
+Model m160407()
+{
+	Var
+	{
+		v1: Bool;
+		v2: Bool;
+		v3: Bool;
+		v4: Bool;
+		v5: Bool;
+		v6: Bool;
+		v7: Bool;
+		v8: Bool;
+		v9: Bool;
+		v10: Bool;
+		v11: Bool;
+		v12: Bool;
+		v13: Bool;
+		v14: Bool;
+		v15: Bool;
+		v16: Bool;
+		v17: Bool;
+		v18: Bool;
+		v19: Bool;
+		v20: Bool;
+		v21: Bool;
+		v22: Bool;
+		v23: Bool;
+		v24: Bool;
+		
+	}
+	
+	Init
+	{
+		v1 := true;
+		v2 := true;
+		v3 := true;
+		v4 := true;
+		v5 := true;
+		v6 := true;
+		v7 := false;
+		v8 := true;
+		v9 := false;
+		v10 := true;
+		v11 := true;
+		v12 := true;
+		v13 := false;
+		v14 := false;
+		v15 := false;
+		v16 := false;
+		v17 := false;
+		v18 := false;
+		v19 := false;
+		v20 := false;
+		v21 := false;
+		v22 := false;
+		v23 := false;
+		v24 := false;
+		
+	}
+	
+	Transition
+	{ 
+		true : {v1 := !v7; v2 := !v9; v3 := !v3; v4 := !v1; v5 := !v4; v6 := !v9; v7 := !v13; v8 := !v1; v9 := !v15; v10 := !v7; v11 := !v9; v12 := !v16; v13 := !v1; v14 := !v5; v15 := !v5; v16 := !v13;};
+		true : {v1 := !v8; v2 := !v18; v3 := !v7; v4 := !v2; v5 := !v10; v6 := !v8; v7 := !v11; v8 := !v8; v9 := !v6; v10 := !v11; v11 := !v4; v12 := !v2; v17 := !v12; v18 := !v18; v19 := !v4; v20 := !v10;};
+		true : {v1 := !v23; v2 := !v4; v3 := !v4; v4 := !v23; v5 := !v22; v6 := !v3; v7 := !v23; v8 := !v24; v9 := !v7; v10 := !v2; v11 := !v5; v12 := !v22; v21 := !v9; v22 := !v23; v23 := !v5; v24 := !v6;};
+	}
+	
+	Atomic
+	{
+		atom1(s) := s(v1);
+		atom2(s) := s(v2);
+		atom3(s) := s(v3) && s(v4) && s(v5) && s(v6) && s(v7) && s(v8) && s(v9) && s(v10) && s(v11) && s(v12);
+	}
+	Spec
+	{
+		spec := not EU(x, y, TRUE, atom1(y) /\ (not EU(z, v, TRUE, atom2(v) \/ atom3(v), y)), ini);
+	}
+}

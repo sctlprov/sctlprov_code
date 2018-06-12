@@ -57,19 +57,16 @@ let choose_to_prove bdd output_file visualize_addr input_file =
 
 let parse_and_prove fnames ip = 
     let get_mname fname = 
-        (* List.iter (fun str -> print_endline (":"^str^" ")) (String.split_on_char '.' (String.trim fname)); *)
         (
             let lfname = List.hd (List.rev (String.split_on_char '/' (String.trim fname))) in
-            let mname = List.hd (String.split_on_char '.' lfname
+            let mname = List.hd (String.split_on_char '.' lfname) in
+            String.capitalize_ascii mname
         ) in
-        (* print_endline ("mname: "^(String.capitalize_ascii mname)); *)
-        String.capitalize_ascii mname) in
     let pmoduls = Hashtbl.create 1 in
     let opkripke = ref None in
     let start_pmodul = ref "" in
     List.iter (fun fname -> 
         let mname = get_mname fname in
-        (* print_endline ("proving modul "^mname^" in "^fname); *)
         let cha = open_in fname in
         let lbuf = Lexing.from_channel (cha) in
         try
@@ -86,9 +83,9 @@ let parse_and_prove fnames ip =
                 psymbol_tbl = psymbol_tbl;
                 pkripke_model = pkripke_model;
             } in
-            let origin_out = open_out (mname^".origin") in
+            (* let origin_out = open_out (mname^".origin") in
             output_string origin_out (Print.str_modul modul);
-            flush origin_out;
+            flush origin_out; *)
             Hashtbl.add pmoduls mname modul
         with e -> 
             let sp = lbuf.lex_start_p in
@@ -105,10 +102,10 @@ let parse_and_prove fnames ip =
             match dg with
             | Leaf mname -> 
                 (try
-                    Typechecker.check_modul mname moduls;
+                    Typechecker.check_modul mname moduls(*;
                     let out = open_out (mname^".typed") in
                     output_string out (Print.str_modul (Hashtbl.find moduls mname));
-                    flush out
+                    flush out*)
                 with Invalid_pexpr_loc (pel, msg) ->
                     print_endline ("Error: "^msg);
                     print_endline (Print.str_pexprl pel);

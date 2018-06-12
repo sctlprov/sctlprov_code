@@ -1,0 +1,51 @@
+Model m020204()
+{
+	Var
+	{
+		v1: Bool;
+		v2: Bool;
+		v3: Bool;
+		v4: Bool;
+		v5: Bool;
+		v6: Bool;
+		v7: Bool;
+		v8: Bool;
+		v9: Bool;
+		v10: Bool;
+		v11: Bool;
+		v12: Bool;
+	}
+	
+	Init
+	{
+		v1 := true;
+		v2 := true;
+		v3 := false;
+		v4 := false;
+		v5 := true;
+		v6 := true;
+		v7 := false;
+		v8 := false;
+		v9 := false;
+		v10 := false;
+		v11 := false;
+		v12 := false;
+	}
+	
+	Transition
+	{ 
+		true : {v1 := !v4; v2 := !v2; v3 := !v3; v4 := !v5; v5 := !v7; v6 := !v6; v7 := !v6; v8 := !v5;};
+		true : {v1 := !v10; v2 := !v9; v3 := !v3; v4 := !v5; v5 := !v6; v6 := !v1; v9 := !v4; v10 := !v5;};
+		true : {v1 := !v11; v2 := !v12; v3 := !v12; v4 := !v4; v5 := !v3; v6 := !v12; v11 := !v6; v12 := !v12;};
+	}
+	
+	Atomic
+	{
+		okay(s) := s(v1) || s(v2) || s(v3) || s(v4) || s(v5) || s(v6);
+	}
+
+	Spec
+	{
+		spec := AF(x, okay(x), ini);
+	}
+}
