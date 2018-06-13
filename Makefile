@@ -18,3 +18,5 @@ clean:
 	make -C src clean
 	rm -f sctl
 	rm -f testing
+	rm -f *.log
+	rm -f *.cache

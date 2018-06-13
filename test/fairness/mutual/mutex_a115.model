@@ -1,0 +1,180 @@
+Model mutex_a115()
+{
+	Var
+	{
+		s00: {#noncritical, #trying, #critical};
+		s01: {#noncritical, #trying, #critical};
+		s02: {#noncritical, #trying, #critical};
+		s03: {#noncritical, #trying, #critical};
+		s04: {#noncritical, #trying, #critical};
+		s05: {#noncritical, #trying, #critical};
+		s06: {#noncritical, #trying, #critical};
+		s07: {#noncritical, #trying, #critical};
+		s08: {#noncritical, #trying, #critical};
+		s09: {#noncritical, #trying, #critical};
+		s10: {#noncritical, #trying, #critical};
+		s11: {#noncritical, #trying, #critical};
+		turn: (0 .. 11);
+		pc: (0 .. 12);
+	}
+
+	Init
+	{
+		s00 := #noncritical;
+		s01 := #noncritical;
+		s02 := #noncritical;
+		s03 := #noncritical;
+		s04 := #noncritical;
+		s05 := #noncritical;
+		s06 := #noncritical;
+		s07 := #noncritical;
+		s08 := #noncritical;
+		s09 := #noncritical;
+		s10 := #noncritical;
+		s11 := #noncritical;
+		turn := 0;
+		pc := 12;
+	}
+
+	Transition
+	{
+		(s00 = #noncritical && turn = 0) : {s00 := #noncritical; turn := 1; pc := 0;};
+		(s00 = #noncritical && turn != 0) : {s00 := #noncritical; pc := 0;};
+		(s00 = #noncritical && turn = 0) : {s00 := #trying; turn := 1; pc := 0;};
+		(s00 = #noncritical && turn != 0) : {s00 := #trying; pc := 0;};
+		(s00 = #trying && s01 = #noncritical) : {s00 := #critical; pc := 0;};
+		(s00 = #trying && s01 = #trying && turn = 0) : {s00 := #critical; pc := 0;};
+		s00 = #critical : {s00 := #critical; pc := 0;};
+		s00 = #critical : {s00 := #noncritical; pc := 0;};
+		s00 = #trying && s01 != #noncritical && (s01 != #trying || turn != 0) : {pc := 0;};
+		(s01 = #noncritical && turn = 1) : {s01 := #noncritical; turn := 2; pc := 1;};
+		(s01 = #noncritical && turn != 1) : {s01 := #noncritical; pc := 1;};
+		(s01 = #noncritical && turn = 1) : {s01 := #trying; turn := 2; pc := 1;};
+		(s01 = #noncritical && turn != 1) : {s01 := #trying; pc := 1;};
+		(s01 = #trying && s02 = #noncritical) : {s01 := #critical; pc := 1;};
+		(s01 = #trying && s02 = #trying && turn = 1) : {s01 := #critical; pc := 1;};
+		s01 = #critical : {s01 := #critical; pc := 1;};
+		s01 = #critical : {s01 := #noncritical; pc := 1;};
+		s01 = #trying && s02 != #noncritical && (s02 != #trying || turn != 1) : {pc := 1;};
+		(s02 = #noncritical && turn = 2) : {s02 := #noncritical; turn := 3; pc := 2;};
+		(s02 = #noncritical && turn != 2) : {s02 := #noncritical; pc := 2;};
+		(s02 = #noncritical && turn = 2) : {s02 := #trying; turn := 3; pc := 2;};
+		(s02 = #noncritical && turn != 2) : {s02 := #trying; pc := 2;};
+		(s02 = #trying && s03 = #noncritical) : {s02 := #critical; pc := 2;};
+		(s02 = #trying && s03 = #trying && turn = 2) : {s02 := #critical; pc := 2;};
+		s02 = #critical : {s02 := #critical; pc := 2;};
+		s02 = #critical : {s02 := #noncritical; pc := 2;};
+		s02 = #trying && s03 != #noncritical && (s03 != #trying || turn != 2) : {pc := 2;};
+		(s03 = #noncritical && turn = 3) : {s03 := #noncritical; turn := 4; pc := 3;};
+		(s03 = #noncritical && turn != 3) : {s03 := #noncritical; pc := 3;};
+		(s03 = #noncritical && turn = 3) : {s03 := #trying; turn := 4; pc := 3;};
+		(s03 = #noncritical && turn != 3) : {s03 := #trying; pc := 3;};
+		(s03 = #trying && s04 = #noncritical) : {s03 := #critical; pc := 3;};
+		(s03 = #trying && s04 = #trying && turn = 3) : {s03 := #critical; pc := 3;};
+		s03 = #critical : {s03 := #critical; pc := 3;};
+		s03 = #critical : {s03 := #noncritical; pc := 3;};
+		s03 = #trying && s04 != #noncritical && (s04 != #trying || turn != 3) : {pc := 3;};
+		(s04 = #noncritical && turn = 4) : {s04 := #noncritical; turn := 5; pc := 4;};
+		(s04 = #noncritical && turn != 4) : {s04 := #noncritical; pc := 4;};
+		(s04 = #noncritical && turn = 4) : {s04 := #trying; turn := 5; pc := 4;};
+		(s04 = #noncritical && turn != 4) : {s04 := #trying; pc := 4;};
+		(s04 = #trying && s05 = #noncritical) : {s04 := #critical; pc := 4;};
+		(s04 = #trying && s05 = #trying && turn = 4) : {s04 := #critical; pc := 4;};
+		s04 = #critical : {s04 := #critical; pc := 4;};
+		s04 = #critical : {s04 := #noncritical; pc := 4;};
+		s04 = #trying && s05 != #noncritical && (s05 != #trying || turn != 4) : {pc := 4;};
+		(s05 = #noncritical && turn = 5) : {s05 := #noncritical; turn := 6; pc := 5;};
+		(s05 = #noncritical && turn != 5) : {s05 := #noncritical; pc := 5;};
+		(s05 = #noncritical && turn = 5) : {s05 := #trying; turn := 6; pc := 5;};
+		(s05 = #noncritical && turn != 5) : {s05 := #trying; pc := 5;};
+		(s05 = #trying && s06 = #noncritical) : {s05 := #critical; pc := 5;};
+		(s05 = #trying && s06 = #trying && turn = 5) : {s05 := #critical; pc := 5;};
+		s05 = #critical : {s05 := #critical; pc := 5;};
+		s05 = #critical : {s05 := #noncritical; pc := 5;};
+		s05 = #trying && s06 != #noncritical && (s06 != #trying || turn != 5) : {pc := 5;};
+		(s06 = #noncritical && turn = 6) : {s06 := #noncritical; turn := 7; pc := 6;};
+		(s06 = #noncritical && turn != 6) : {s06 := #noncritical; pc := 6;};
+		(s06 = #noncritical && turn = 6) : {s06 := #trying; turn := 7; pc := 6;};
+		(s06 = #noncritical && turn != 6) : {s06 := #trying; pc := 6;};
+		(s06 = #trying && s07 = #noncritical) : {s06 := #critical; pc := 6;};
+		(s06 = #trying && s07 = #trying && turn = 6) : {s06 := #critical; pc := 6;};
+		s06 = #critical : {s06 := #critical; pc := 6;};
+		s06 = #critical : {s06 := #noncritical; pc := 6;};
+		s06 = #trying && s07 != #noncritical && (s07 != #trying || turn != 6) : {pc := 6;};
+		(s07 = #noncritical && turn = 7) : {s07 := #noncritical; turn := 8; pc := 7;};
+		(s07 = #noncritical && turn != 7) : {s07 := #noncritical; pc := 7;};
+		(s07 = #noncritical && turn = 7) : {s07 := #trying; turn := 8; pc := 7;};
+		(s07 = #noncritical && turn != 7) : {s07 := #trying; pc := 7;};
+		(s07 = #trying && s08 = #noncritical) : {s07 := #critical; pc := 7;};
+		(s07 = #trying && s08 = #trying && turn = 7) : {s07 := #critical; pc := 7;};
+		s07 = #critical : {s07 := #critical; pc := 7;};
+		s07 = #critical : {s07 := #noncritical; pc := 7;};
+		s07 = #trying && s08 != #noncritical && (s08 != #trying || turn != 7) : {pc := 7;};
+		(s08 = #noncritical && turn = 8) : {s08 := #noncritical; turn := 9; pc := 8;};
+		(s08 = #noncritical && turn != 8) : {s08 := #noncritical; pc := 8;};
+		(s08 = #noncritical && turn = 8) : {s08 := #trying; turn := 9; pc := 8;};
+		(s08 = #noncritical && turn != 8) : {s08 := #trying; pc := 8;};
+		(s08 = #trying && s09 = #noncritical) : {s08 := #critical; pc := 8;};
+		(s08 = #trying && s09 = #trying && turn = 8) : {s08 := #critical; pc := 8;};
+		s08 = #critical : {s08 := #critical; pc := 8;};
+		s08 = #critical : {s08 := #noncritical; pc := 8;};
+		s08 = #trying && s09 != #noncritical && (s09 != #trying || turn != 8) : {pc := 8;};
+		(s09 = #noncritical && turn = 9) : {s09 := #noncritical; turn := 10; pc := 9;};
+		(s09 = #noncritical && turn != 9) : {s09 := #noncritical; pc := 9;};
+		(s09 = #noncritical && turn = 9) : {s09 := #trying; turn := 10; pc := 9;};
+		(s09 = #noncritical && turn != 9) : {s09 := #trying; pc := 9;};
+		(s09 = #trying && s10 = #noncritical) : {s09 := #critical; pc := 9;};
+		(s09 = #trying && s10 = #trying && turn = 9) : {s09 := #critical; pc := 9;};
+		s09 = #critical : {s09 := #critical; pc := 9;};
+		s09 = #critical : {s09 := #noncritical; pc := 9;};
+		s09 = #trying && s10 != #noncritical && (s10 != #trying || turn != 9) : {pc := 9;};
+		(s10 = #noncritical && turn = 10) : {s10 := #noncritical; turn := 11; pc := 10;};
+		(s10 = #noncritical && turn != 10) : {s10 := #noncritical; pc := 10;};
+		(s10 = #noncritical && turn = 10) : {s10 := #trying; turn := 11; pc := 10;};
+		(s10 = #noncritical && turn != 10) : {s10 := #trying; pc := 10;};
+		(s10 = #trying && s11 = #noncritical) : {s10 := #critical; pc := 10;};
+		(s10 = #trying && s11 = #trying && turn = 10) : {s10 := #critical; pc := 10;};
+		s10 = #critical : {s10 := #critical; pc := 10;};
+		s10 = #critical : {s10 := #noncritical; pc := 10;};
+		s10 = #trying && s11 != #noncritical && (s11 != #trying || turn != 10) : {pc := 10;};
+		(s11 = #noncritical && turn = 11) : {s11 := #noncritical; turn := 0; pc := 11;};
+		(s11 = #noncritical && turn != 11) : {s11 := #noncritical; pc := 11;};
+		(s11 = #noncritical && turn = 11) : {s11 := #trying; turn := 0; pc := 11;};
+		(s11 = #noncritical && turn != 11) : {s11 := #trying; pc := 11;};
+		(s11 = #trying && s00 = #noncritical) : {s11 := #critical; pc := 11;};
+		(s11 = #trying && s00 = #trying && turn = 11) : {s11 := #critical; pc := 11;};
+		s11 = #critical : {s11 := #critical; pc := 11;};
+		s11 = #critical : {s11 := #noncritical; pc := 11;};
+		s11 = #trying && s00 != #noncritical && (s00 != #trying || turn != 11) : {pc := 11;};
+	}
+
+	Atomic
+	{
+		atom1(s) := s(s01 = #critical);
+		atom2(s) := s(s00 = #critical);
+		fair0(s) := s(pc = 0);
+		fair1(s) := s(pc = 1);
+		fair2(s) := s(pc = 2);
+		fair3(s) := s(pc = 3);
+		fair4(s) := s(pc = 4);
+		fair5(s) := s(pc = 5);
+		fair6(s) := s(pc = 6);
+		fair7(s) := s(pc = 7);
+		fair8(s) := s(pc = 8);
+		fair9(s) := s(pc = 9);
+		fair10(s) := s(pc = 10);
+		fair11(s) := s(pc = 11);
+		fair12(s) := s(s00 != #critical);
+	}
+
+	Fairness
+	{
+		fair0(s); fair1(s); fair2(s); fair3(s); fair4(s); fair5(s); fair6(s); fair7(s); fair8(s); fair9(s); fair10(s); fair11(s); fair12(s); 
+	}
+
+	Spec
+	{
+		mutual := AR (x, y, FALSE, (not atom1(y)) \/ (AR (z, w, (not atom1(z)) /\ AR(v, p, atom2(v), (not atom1(p)) \/ atom2(p), z) /\ AF(p, atom2(p), z), atom1(w) \/ ((not atom1(w)) /\ AR(v, p, atom2(v), (not atom1(p)) \/ atom2(p), w) /\ AF(p, atom2(p), w)), y) /\ AF(w, (not atom1(w)) /\ AR(v, p, atom2(v), (not atom1(p)) \/ atom2(p), w) /\ AF(p, atom2(p), w), y)), ini);
+	}
+
+}
