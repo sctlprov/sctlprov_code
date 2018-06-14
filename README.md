@@ -22,3 +22,6 @@ This repository includes three version of the SCTLProV prover, the difference of
 The way of the invokation of these three versions is as follows.
 
 ![sctlprov](sctlprov.png)
+
+## Testing
+See [this README file](https://github.com/sctlprov/sctlprov_benchmarks).
