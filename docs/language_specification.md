@@ -51,8 +51,8 @@ float	::= [-]{0...9}+.{0...9}*
 ```
     Model  Var  Define  Init  Transition  Atomic  Fairness  Spec  int  bool  list
     array  true false   TRUE  FALSE   not  AX  EX  AF  EG  AR  EU   datatype  value
-    function  let  match  with  if  then  else ( ) [ ] { } = != < <= > >= + +. - -. 
-    * *. / /. ! | || && -> : :: , ; .  
+    function  let  match  with  if  then  else end ( ) [ ] { } = != < <= > >= + +. - 
+    -. * *. / /. ! | || && -> : :: , ; .  
 ```
 
 ## 2.2 Values 
@@ -135,15 +135,15 @@ Patterns are used to match different cases of expressions. The way that patterns
         | expr >= expr                          (*larger than or equal*)
         | ( expr )                              (*expression grouping*)
         | let pattern = expr                    (*declare local variables*)
-        | if expr then expr                     (*if-then expression*)
-        | if expr then expr else expr           (*if-then-else expression *)
+        | if expr then expr end                 (*if-then expression*)
+        | if expr then expr else expr end       (*if-then-else expression *)
         | expr ; expr                           (*sequence of expressions*)
         | expr <- expr                          (*assignment*)
         | match_expr                            (*pattern matching*)
         | expr with {iden = expr ; ... ; iden = expr [;]}  (*a record with changed bindings*)
         | iden (expr , ..., expr)             (*a function call*)
     
-    match_expr ::= match expr with {| pattern -> expr}+
+    match_expr ::= match expr with {| pattern -> expr}+ end
      
     pattern ::= 
           iden 
@@ -244,7 +244,7 @@ datatype size = (width, height)
 value rect : (size, position) = ((10, 20), (0, 0))
 
 datatype radius = int
-value circle : (radius, position) = (5, (5, 10)) 
+value circle : (radius, position) = (5, (5, 10))
 
 //An object can be either a rectangle, or a circle
 datatype object = Rectangle (size, position) | Circle (radius, position)
@@ -297,13 +297,10 @@ value bound = (10, 10)
 
 function increase ((fst, snd), x, y) : (state, int, int) -> state =
     (fst + x, snd + y)
-function larger ((fst1, snd1), (fst2, snd2)) : (state, state) -> bool = 
-	(fst1 > fst2) && (snd1 > snd2)
-function next (s) : state -> list state =
-	if larger (s, bound) then 
-		[s]
-	else
-		[increase (s, 1, 1)]
+function larger ((fst1, snd1), (fst2, snd2)) : (state, state) -> bool =
+    (fst1 > fst2) && (snd1 > snd2)
+function next (s) : state -> list state = 
+    if larger (s, bound) then [s] else [increase (s, 1, 1)] end
 ```
 
 The syntax of function definition is as follows.
@@ -355,11 +352,11 @@ kripke_decl ::=
        Spec { iden := formula ; ... ; iden := formula ;}
     }
 
-trasitions ::= 
-      expr 
+trasitions ::=
+      expr
     | expr : expr ; ... ; expr : expr ;
-			
-formula ::= 
+
+formula ::=
          iden ( iden , ... , iden )
        | not formula
        | formula /\ formula
@@ -384,4 +381,3 @@ decl   ::= type_decl | value_decl | fun_decl
 
 main_file ::= kripke_decl | module kripke_decl
 ```
-

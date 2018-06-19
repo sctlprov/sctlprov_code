@@ -24,4 +24,4 @@ The way of the invokation of these three versions is as follows.
 ![sctlprov](sctlprov.png)
 
 ## Testing
-See [this README file](https://github.com/sctlprov/sctlprov_benchmarks).
+See [this repository](https://github.com/sctlprov/sctlprov_testing).

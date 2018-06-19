@@ -1,8 +1,0 @@
-counterexample for find:
-0: |- AR(x, y, ((not safe(x))), ((not okay(y))), {farmer:=false;wolf:=false;goat:=true;cabbage:=true})		[2, 1]
-
-2: |- (not okay({farmer:=false;wolf:=false;goat:=true;cabbage:=true}))		[]
-
-1: |- (not safe({farmer:=false;wolf:=false;goat:=true;cabbage:=true}))		[]
-
-***********************************ouput complete**************************************
