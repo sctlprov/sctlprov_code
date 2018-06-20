@@ -10,6 +10,10 @@ bcg:
 	make -C src/bcg all
 	mv src/bcg/sctl sctl
 
+no-bcg:
+	make -C src no-bcg
+	mv src/sctl sctl
+
 clean:
 	make -C src clean
 	rm -f sctl
