@@ -3,7 +3,11 @@ Go to the root directory of the code, and `make all`, this would compile the pro
 
 **Compiling Environment Requirements**
 
-1. OCaml is installed, and packages yojson and cuddidl are installed via opam;
+1. OCaml is installed, and packages yojson and mlcuddidl are installed via opam:
+    ```
+        opam install yojson
+        opam install mlcuddidl
+    ```
 2. [CADP](http://cadp.inria.fr/) is installed, and the corresponding environment variables are successfully set up according to the README files of CADP.
 
 # Running

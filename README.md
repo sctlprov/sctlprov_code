@@ -23,5 +23,11 @@ The way of the invokation of these three versions is as follows.
 
 ![sctlprov](sctlprov.png)
 
+## Input Language
+See `./docs/language_specification.md`.
+
+## Compiling and Running
+See `./docs/compiling_running.md`.
+
 ## Testing
 See [this repository](https://github.com/sctlprov/sctlprov_testing).
