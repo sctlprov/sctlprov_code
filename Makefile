@@ -2,9 +2,9 @@ all:
 	make -C src all
 	mv src/sctl sctl 
 
-opt:
-	make -C src/opt all
-	mv src/opt/sctl sctl
+finite:
+	make -C src/finite all
+	mv src/finite/sctl sctl
 
 bcg:
 	make -C src/bcg all

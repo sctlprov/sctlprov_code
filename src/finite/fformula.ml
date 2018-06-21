@@ -1,4 +1,4 @@
-open Oterm
+open Fterm
 
 type formula = 
 	  Top

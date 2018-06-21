@@ -4,12 +4,12 @@ open Dep
 open Interp
 open Printf
 open Lexing
-open Oterm 
-open Oformula
-open Omodul
-open Oprover_output
-open Oprover
-open Oparser 
+open Fterm 
+open Fformula
+open Fmodul
+open Fprover_output
+open Fprover
+open Fparser 
 
 let input_paras pl = 
 	let rec get_para_from_stdin i paras = 
@@ -25,7 +25,7 @@ let input_paras pl =
 
 let choose_to_prove bdd output_file visualize_addr input_file = 
 	try
-		let (modl_tbl, modl) = Oparser.input Olexer.token (Lexing.from_channel (open_in input_file)) in
+		let (modl_tbl, modl) = Fparser.input Flexer.token (Lexing.from_channel (open_in input_file)) in
 		let modl_tbl1 = Hashtbl.create (Hashtbl.length modl_tbl) 
 		and modl1 = modul021 modl in	
 		Hashtbl.iter (fun a b -> Hashtbl.add modl_tbl1 a (modul021 b)) modl_tbl;
@@ -34,19 +34,19 @@ let choose_to_prove bdd output_file visualize_addr input_file =
 		let modl4 = modul324 modl3 in
 		let modl5 = modul425 modl4 in
 		match (bdd, output_file, visualize_addr) with
-		| (true, None, None) -> Oprover_bdd.prove_model modl5
+		| (true, None, None) -> Fprover_bdd.prove_model modl5
 		| (false, None, None) -> 
 			print_endline ("verifying on the model " ^ modl5.name ^"...");
-			Oprover.prove_model modl5
+			Fprover.prove_model modl5
 		| (_, Some filename, _) -> 
 			let out = open_out filename in
-			Oprover_output.Seq_Prover.prove_model modl5 out filename;
+			Fprover_output.Seq_Prover.prove_model modl5 out filename;
 			close_out out
 		| (_, None, _) ->
 			if visualize_addr <> None then begin
 				printf "prove with visualization\n";
 				flush stdout;
-				Oprover_visualization.prove_model modl5 (Options.value visualize_addr)
+				Fprover_visualization.prove_model modl5 (Options.value visualize_addr)
 			end else begin
 				printf "input arguments not valid\n";
 				flush stdout

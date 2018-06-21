@@ -1,7 +1,7 @@
-open Oterm
-open Oformula
-open Omodul
-open Obdd 
+open Fterm
+open Fformula
+open Fmodul
+open Fbdd 
 
 
 (***normal to binary***)
@@ -103,24 +103,24 @@ let false_merge = Hashtbl.create 10
 let is_in_true_merge s levl modl = 
 	try
 		let bs = ia_to_bin s modl in
-		Obdd.int_array_satisfy bs (Hashtbl.find true_merge levl)
+		Fbdd.int_array_satisfy bs (Hashtbl.find true_merge levl)
 	with Not_found -> print_endline ("level not found in finding true merge: "^levl); exit 1
 
 let is_in_false_merge s levl modl = 
 	let bs = ia_to_bin s modl in
-	Obdd.int_array_satisfy bs (Hashtbl.find false_merge levl)
+	Fbdd.int_array_satisfy bs (Hashtbl.find false_merge levl)
 
 let add_to_true_merge s levl modl = 
 	try
 		let bss = Hashtbl.find true_merge levl 
 		and bs = ia_to_bin s modl in
-		Hashtbl.replace true_merge levl (Obdd.add_int_array bs bss)
+		Hashtbl.replace true_merge levl (Fbdd.add_int_array bs bss)
 	with Not_found -> print_endline ("level not found in finding true merge: "^levl); exit 1
 let add_to_false_merge s levl modl = 
 	try
 		let bss = Hashtbl.find false_merge levl 
 		and bs = ia_to_bin s modl in
-		Hashtbl.replace false_merge levl (Obdd.add_int_array bs bss)
+		Hashtbl.replace false_merge levl (Fbdd.add_int_array bs bss)
 	with Not_found -> print_endline ("level not found in finding false merge: "^levl); exit 1
 
 let add_true_to_cont levl s cont = 
@@ -138,28 +138,20 @@ let add_false_to_cont levl s cont =
 	(*whether state s is already in an existing merge*)
 let merges = Hashtbl.create 10
 let pre_process_merges sub_fml_tbl = 
-	Hashtbl.iter (fun a b -> Hashtbl.add merges a (!(Obdd.leaf_false))) sub_fml_tbl;
-	Hashtbl.iter (fun a b -> Hashtbl.add true_merge a (!(Obdd.leaf_false))) sub_fml_tbl;
-	Hashtbl.iter (fun a b -> Hashtbl.add false_merge a (!(Obdd.leaf_false))) sub_fml_tbl
+	Hashtbl.iter (fun a b -> Hashtbl.add merges a (!(Fbdd.leaf_false))) sub_fml_tbl;
+	Hashtbl.iter (fun a b -> Hashtbl.add true_merge a (!(Fbdd.leaf_false))) sub_fml_tbl;
+	Hashtbl.iter (fun a b -> Hashtbl.add false_merge a (!(Fbdd.leaf_false))) sub_fml_tbl
 
 let in_global_merge s level modl = 
 	let bs = ia_to_bin s modl in
-    let sts = Hashtbl.find merges level in Obdd.int_array_satisfy bs sts
+    let sts = Hashtbl.find merges level in Fbdd.int_array_satisfy bs sts
 
 let add_to_global_merge ss level modl = 
 	let sts = Hashtbl.find merges level in
-	Hashtbl.replace merges level (State_set.fold (fun elem b -> let bs = ia_to_bin elem modl in Obdd.add_int_array bs b) ss sts)
- 
-(*
-let in_global_merge s level modl = 
-	State_set.mem s (Hashtbl.find merges level)
+	Hashtbl.replace merges level (State_set.fold (fun elem b -> let bs = ia_to_bin elem modl in Fbdd.add_int_array bs b) ss sts)
 
-let add_to_global_merge ss level modl = 
-	let sts = Hashtbl.find merges level in
-	Hashtbl.replace merges level (State_set.fold (fun elem b -> State_set.add elem b) ss sts)
-*)
 let clear_global_merge level = 
-	Hashtbl.replace merges level (!(Obdd.leaf_false))
+	Hashtbl.replace merges level (!(Fbdd.leaf_false))
 let get_global_merge level = 
 	Hashtbl.find merges level
 
@@ -322,19 +314,6 @@ and prove_fairs cont modl =
 						end
 				end
             | EU (x, y, fml1, fml2, State s) -> 
-            	(*if State_set.is_empty gamma 
-					then clear_global_merge levl 
-					else add_to_global_merge gamma levl modl;
-					if in_global_merge s levl modl
-					then
-						let is_fair = list_conditional fairs true (fun (e, ss) -> State_set.mem s ss) in
-						if is_fair then prove_fairs contr modl else prove_fairs contl modl 
-						(* prove_fairs contr modl *)
-					else
-						let next = next s modl.transitions modl.var_index_tbl in
-						let fairs_new = List.map (fun (e, ss) -> if satisfy_fair e s modl then (e, State_set.add s gamma) else (e,ss)) fairs in
-						prove_fairs (generate_EU_cont gamma fairs_new levl x y fml1 fml2 s next contl contr) modl*)
-				 (
 					if State_set.is_empty gamma 
 					then clear_global_merge levl 
 					else add_to_global_merge gamma levl modl;
@@ -344,41 +323,22 @@ and prove_fairs cont modl =
 					else
 						let next = next s modl.transitions modl.var_index_tbl in
 						prove_fairs (generate_EU_cont gamma fairs levl x y fml1 fml2 s next contl contr) modl
-				) 
             | AR (x, y, fml1, fml2, State s) ->
-            	(*(
-            		if State_set.is_empty gamma
+					if State_set.is_empty gamma
 					then clear_global_merge levl
-					else add_to_global_merge gamma levl modl;
-					(*print_endline ("AR merge size: "^(string_of_int (State_set.cardinal (Hashtbl.find merges levl))))*)
-				);		
-				if in_global_merge s levl modl
-				then 
-					let is_fair = list_conditional fairs true (fun (e, ss) -> State_set.mem s ss) in
-						if is_fair then prove_fairs contl modl else prove_fairs contr modl
-				else
-					let next = next s modl.transitions modl.var_index_tbl in
-					let fairs_new = List.map (fun (e, ss) -> if satisfy_fair e s modl then (e, State_set.add s gamma) else (e,ss)) fairs in
-					prove_fairs (generate_AR_cont gamma fairs_new levl x y fml1 fml2 s next contl contr) modl*)
-				 (
-					(if State_set.is_empty gamma
-					then clear_global_merge levl
-					else add_to_global_merge gamma levl modl;
-					(*print_endline ("AR merge size: "^(string_of_int (State_set.cardinal (Hashtbl.find merges levl))))*)
-					);		
+					else add_to_global_merge gamma levl modl;		
 					if in_global_merge s levl modl
 					then 
 						prove_fairs contl modl
 					else
 						let next = next s modl.transitions modl.var_index_tbl in
 						prove_fairs (generate_AR_cont gamma fairs levl x y fml1 fml2 s next contl contr) modl
-				) 
 			| _ -> (print_endline ("Unable to prove: "^(fml_to_string fml)); raise Unable_to_prove)
         end
 
 	let rec prove_model modl = 
 		get_bin_attr modl;
-		Obdd.init !ia_bin_size;
+		Fbdd.init !ia_bin_size;
 		orig_fairs := fresh_fairs_modl modl;
 		let spec_lst = modl.spec_list in 
 		let rec prove_lst lst = 
@@ -388,7 +348,7 @@ and prove_fairs cont modl =
 			((let nnf_fml = nnf fml in 
 			print_endline (fml_to_string (nnf_fml));
 			pre_process_merges (select_sub_fmls (sub_fmls nnf_fml "1"));
-			let b = (prove_fairs (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) modl.fairness, "1", Oformula.subst_s (nnf_fml) (SVar "ini") (State modl.init_assign), Basic true, Basic false, [], [])) modl) in
+			let b = (prove_fairs (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) modl.fairness, "1", Fformula.subst_s (nnf_fml) (SVar "ini") (State modl.init_assign), Basic true, Basic false, [], [])) modl) in
 			 print_endline (s ^ ": " ^ (string_of_bool b)));
 			 prove_lst lst') in prove_lst spec_lst
 

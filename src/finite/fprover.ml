@@ -1,6 +1,6 @@
-open Oterm
-open Oformula
-open Omodul
+open Fterm
+open Fformula
+open Fmodul
 (* open Bdd *)
 
 
@@ -443,7 +443,7 @@ let rec prove_model modl =
 		((let nnf_fml = nnf fml in 
 		print_endline (fml_to_string (nnf_fml));
 		pre_process_merges (select_sub_fmls (sub_fmls nnf_fml "1"));
-		let b = (prove_fairs (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) modl.fairness, "1", Oformula.subst_s (nnf_fml) (SVar "ini") (State modl.init_assign), Basic true, Basic false, [], [])) modl) in
+		let b = (prove_fairs (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) modl.fairness, "1", Fformula.subst_s (nnf_fml) (SVar "ini") (State modl.init_assign), Basic true, Basic false, [], [])) modl) in
 			print_endline (s ^ ": " ^ (string_of_bool b)));
 			prove_lst lst') in prove_lst spec_lst
 			 
@@ -452,7 +452,7 @@ let rec prove_modelb modl =
 	let s, fml = List.hd modl.spec_list in 
 	let nnf_fml = nnf fml in 
 	pre_process_merges (select_sub_fmls (sub_fmls nnf_fml "1"));
-	let b = (prove_fairs (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) modl.fairness, "1", Oformula.subst_s (nnf_fml) (SVar "ini") (State modl.init_assign), Basic true, Basic false, [], [])) modl) in
+	let b = (prove_fairs (Cont (State_set.empty, List.map (fun e -> (e, State_set.empty)) modl.fairness, "1", Fformula.subst_s (nnf_fml) (SVar "ini") (State modl.init_assign), Basic true, Basic false, [], [])) modl) in
 	b
 
 

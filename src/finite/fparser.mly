@@ -1,8 +1,8 @@
 %{
 open Lexing
-open Oterm
-open Oformula
-open Omodul
+open Fterm
+open Fformula
+open Fmodul
 
 let parse_error s = ()
 
@@ -132,7 +132,7 @@ let rec check_current_symbols stbl =
 
 
 %start input
-%type <(((string, Omodul.modul0) Hashtbl.t) * Omodul.modul0)>input
+%type <(((string, Fmodul.modul0) Hashtbl.t) * Fmodul.modul0)>input
 
 %%
 input: inputs File_end	{(module_tbl, !modl)}

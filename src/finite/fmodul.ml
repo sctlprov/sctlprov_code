@@ -1,5 +1,5 @@
-open Oterm
-open Oformula
+open Fterm
+open Fformula
 
 module Key = 
 	struct
