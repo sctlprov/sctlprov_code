@@ -54,7 +54,7 @@ type token =
 
 open Parsing;;
 let _ = parse_error;;
-# 2 "finite/fparser.mly"
+# 2 "fixed_state/fparser.mly"
 open Lexing
 open Fterm
 open Fformula
@@ -163,7 +163,7 @@ let rec check_current_symbols stbl =
   !tmp_s
 (***************************************************************)
 (* let parse_error s = print_endline s *)
-# 167 "finite/fparser.ml"
+# 167 "fixed_state/fparser.ml"
 let yytransl_const = [|
   257 (* Module *);
   258 (* Model *);
@@ -823,15 +823,15 @@ let yyact = [|
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 1 : 'inputs) in
     Obj.repr(
-# 138 "finite/fparser.mly"
+# 138 "fixed_state/fparser.mly"
                        ((module_tbl, !modl))
-# 829 "finite/fparser.ml"
+# 829 "fixed_state/fparser.ml"
                : (((string, Fmodul.modul0) Hashtbl.t) * Fmodul.modul0)))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 142 "finite/fparser.mly"
+# 142 "fixed_state/fparser.mly"
                      ()
-# 835 "finite/fparser.ml"
+# 835 "fixed_state/fparser.ml"
                : 'inputs))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 10 : 'inputs) in
@@ -841,7 +841,7 @@ let yyact = [|
     let _9 = (Parsing.peek_val __caml_parser_env 2 : 'init_decl) in
     let _10 = (Parsing.peek_val __caml_parser_env 1 : 'trans_decl) in
     Obj.repr(
-# 144 "finite/fparser.mly"
+# 144 "fixed_state/fparser.mly"
        (tmp_parameter_list := _5; 
 	Hashtbl.add module_tbl _3 
 	  {name = _3;
@@ -855,7 +855,7 @@ let yyact = [|
 	   spec_list = !tmp_spec_list
 	  };
 	clear_tmps ())
-# 859 "finite/fparser.ml"
+# 859 "fixed_state/fparser.ml"
                : 'inputs))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 11 : 'inputs) in
@@ -866,7 +866,7 @@ let yyact = [|
     let _10 = (Parsing.peek_val __caml_parser_env 2 : 'init_decl) in
     let _11 = (Parsing.peek_val __caml_parser_env 1 : 'trans_decl) in
     Obj.repr(
-# 158 "finite/fparser.mly"
+# 158 "fixed_state/fparser.mly"
        (tmp_parameter_list := _5;
 	Hashtbl.add module_tbl _3 
 	  {name = _3;
@@ -880,7 +880,7 @@ let yyact = [|
 	   spec_list = !tmp_spec_list
 	  }; 
 	clear_tmps ())
-# 884 "finite/fparser.ml"
+# 884 "fixed_state/fparser.ml"
                : 'inputs))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 12 : 'inputs) in
@@ -892,7 +892,7 @@ let yyact = [|
     let _11 = (Parsing.peek_val __caml_parser_env 2 : 'atomic_decl) in
     let _12 = (Parsing.peek_val __caml_parser_env 1 : 'spec_decl) in
     Obj.repr(
-# 172 "finite/fparser.mly"
+# 172 "fixed_state/fparser.mly"
        (tmp_parameter_list := _5; 
 	modl := {name = _3;
 		 parameter_list = !tmp_parameter_list;
@@ -905,7 +905,7 @@ let yyact = [|
 		 spec_list = !tmp_spec_list
 		}; (*Hashtbl.add module_tbl $3 !modl;*)
 	clear_tmps ())
-# 909 "finite/fparser.ml"
+# 909 "fixed_state/fparser.ml"
                : 'inputs))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 13 : 'inputs) in
@@ -918,7 +918,7 @@ let yyact = [|
     let _12 = (Parsing.peek_val __caml_parser_env 2 : 'atomic_decl) in
     let _13 = (Parsing.peek_val __caml_parser_env 1 : 'spec_decl) in
     Obj.repr(
-# 185 "finite/fparser.mly"
+# 185 "fixed_state/fparser.mly"
        (tmp_parameter_list := _5;
 	modl := {name = _3;
 		 parameter_list = !tmp_parameter_list;
@@ -931,7 +931,7 @@ let yyact = [|
 		 spec_list = !tmp_spec_list
 		}; (*Hashtbl.add module_tbl $3 !modl;*)
 	clear_tmps ())
-# 935 "finite/fparser.ml"
+# 935 "fixed_state/fparser.ml"
                : 'inputs))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 13 : 'inputs) in
@@ -944,7 +944,7 @@ let yyact = [|
     let _12 = (Parsing.peek_val __caml_parser_env 2 : 'fairness_decl) in
     let _13 = (Parsing.peek_val __caml_parser_env 1 : 'spec_decl) in
     Obj.repr(
-# 198 "finite/fparser.mly"
+# 198 "fixed_state/fparser.mly"
        (tmp_parameter_list := _5; 
 	modl := {name = _3;
 		 parameter_list = !tmp_parameter_list;
@@ -957,7 +957,7 @@ let yyact = [|
 		 spec_list = !tmp_spec_list
 		}; (*Hashtbl.add module_tbl $3 !modl;*)
 	clear_tmps ())
-# 961 "finite/fparser.ml"
+# 961 "fixed_state/fparser.ml"
                : 'inputs))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 14 : 'inputs) in
@@ -971,7 +971,7 @@ let yyact = [|
     let _13 = (Parsing.peek_val __caml_parser_env 2 : 'fairness_decl) in
     let _14 = (Parsing.peek_val __caml_parser_env 1 : 'spec_decl) in
     Obj.repr(
-# 211 "finite/fparser.mly"
+# 211 "fixed_state/fparser.mly"
        (tmp_parameter_list := _5;
 	modl := {name = _3;
 		 parameter_list = !tmp_parameter_list;
@@ -984,103 +984,103 @@ let yyact = [|
 		 spec_list = !tmp_spec_list
 		}; (*Hashtbl.add module_tbl $3 !modl;*)
 	clear_tmps ())
-# 988 "finite/fparser.ml"
+# 988 "fixed_state/fparser.ml"
                : 'inputs))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 226 "finite/fparser.mly"
+# 226 "fixed_state/fparser.mly"
                     ([])
-# 994 "finite/fparser.ml"
+# 994 "fixed_state/fparser.ml"
                : 'parameters))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr_type) in
     Obj.repr(
-# 227 "finite/fparser.mly"
+# 227 "fixed_state/fparser.mly"
                         ([(_1, _3)])
-# 1002 "finite/fparser.ml"
+# 1002 "fixed_state/fparser.ml"
                : 'parameters))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 4 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 2 : 'expr_type) in
     let _5 = (Parsing.peek_val __caml_parser_env 0 : 'parameters) in
     Obj.repr(
-# 228 "finite/fparser.mly"
+# 228 "fixed_state/fparser.mly"
                                          ((_1, _3)::_5)
-# 1011 "finite/fparser.ml"
+# 1011 "fixed_state/fparser.ml"
                : 'parameters))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 3 : int) in
     let _4 = (Parsing.peek_val __caml_parser_env 1 : int) in
     Obj.repr(
-# 232 "finite/fparser.mly"
+# 232 "fixed_state/fparser.mly"
                         (Int_type (_2, _4))
-# 1019 "finite/fparser.ml"
+# 1019 "fixed_state/fparser.ml"
                : 'expr_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 233 "finite/fparser.mly"
+# 233 "fixed_state/fparser.mly"
           (Bool_type)
-# 1025 "finite/fparser.ml"
+# 1025 "fixed_state/fparser.ml"
                : 'expr_type))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'scalars) in
     Obj.repr(
-# 234 "finite/fparser.mly"
+# 234 "fixed_state/fparser.mly"
                      (Scalar_type _2)
-# 1032 "finite/fparser.ml"
+# 1032 "fixed_state/fparser.ml"
                : 'expr_type))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 236 "finite/fparser.mly"
+# 236 "fixed_state/fparser.mly"
        (try
 	  (let m = Hashtbl.find module_tbl _1 in (Module_type m.name))
 	 with Not_found -> (print_endline ("module "^(_1)^" is not defined."); exit 1))
-# 1041 "finite/fparser.ml"
+# 1041 "fixed_state/fparser.ml"
                : 'expr_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 242 "finite/fparser.mly"
+# 242 "fixed_state/fparser.mly"
      ([])
-# 1047 "finite/fparser.ml"
+# 1047 "fixed_state/fparser.ml"
                : 'scalars))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 243 "finite/fparser.mly"
+# 243 "fixed_state/fparser.mly"
                ([_2])
-# 1054 "finite/fparser.ml"
+# 1054 "fixed_state/fparser.ml"
                : 'scalars))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 2 : string) in
     let _4 = (Parsing.peek_val __caml_parser_env 0 : 'scalars) in
     Obj.repr(
-# 244 "finite/fparser.mly"
+# 244 "fixed_state/fparser.mly"
                              (_2 :: _4)
-# 1062 "finite/fparser.ml"
+# 1062 "fixed_state/fparser.ml"
                : 'scalars))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'vars) in
     Obj.repr(
-# 247 "finite/fparser.mly"
+# 247 "fixed_state/fparser.mly"
                            (tmp_var_list := _3)
-# 1069 "finite/fparser.ml"
+# 1069 "fixed_state/fparser.ml"
                : 'var_decl))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 250 "finite/fparser.mly"
+# 250 "fixed_state/fparser.mly"
        ([])
-# 1075 "finite/fparser.ml"
+# 1075 "fixed_state/fparser.ml"
                : 'vars))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 4 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 2 : 'expr_type) in
     let _5 = (Parsing.peek_val __caml_parser_env 0 : 'vars) in
     Obj.repr(
-# 251 "finite/fparser.mly"
+# 251 "fixed_state/fparser.mly"
                                      ((_1, _3)::_5)
-# 1084 "finite/fparser.ml"
+# 1084 "fixed_state/fparser.ml"
                : 'vars))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 7 : string) in
@@ -1088,219 +1088,219 @@ let yyact = [|
     let _5 = (Parsing.peek_val __caml_parser_env 3 : 'exp) in
     let _8 = (Parsing.peek_val __caml_parser_env 0 : 'vars) in
     Obj.repr(
-# 252 "finite/fparser.mly"
+# 252 "fixed_state/fparser.mly"
                                                  ((_1, Array_type (_3, _5)) :: _8)
-# 1094 "finite/fparser.ml"
+# 1094 "fixed_state/fparser.ml"
                : 'vars))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'symbols) in
     Obj.repr(
-# 262 "finite/fparser.mly"
+# 262 "fixed_state/fparser.mly"
                                     ()
-# 1101 "finite/fparser.ml"
+# 1101 "fixed_state/fparser.ml"
                : 'symbol_decl))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 271 "finite/fparser.mly"
+# 271 "fixed_state/fparser.mly"
           ()
-# 1107 "finite/fparser.ml"
+# 1107 "fixed_state/fparser.ml"
                : 'symbols))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 4 : 'symbols) in
     let _2 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _4 = (Parsing.peek_val __caml_parser_env 1 : 'dexp) in
     Obj.repr(
-# 272 "finite/fparser.mly"
+# 272 "fixed_state/fparser.mly"
                                      (Hashtbl.add !tmp_symbol_tbl _2 _4)
-# 1116 "finite/fparser.ml"
+# 1116 "fixed_state/fparser.ml"
                : 'symbols))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : int) in
     Obj.repr(
-# 276 "finite/fparser.mly"
+# 276 "fixed_state/fparser.mly"
      (Const _1)
-# 1123 "finite/fparser.ml"
+# 1123 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : bool) in
     Obj.repr(
-# 277 "finite/fparser.mly"
+# 277 "fixed_state/fparser.mly"
      (Const (if _1 then 1 else 0))
-# 1130 "finite/fparser.ml"
+# 1130 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 278 "finite/fparser.mly"
+# 278 "fixed_state/fparser.mly"
       (Vars _1)
-# 1137 "finite/fparser.ml"
+# 1137 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'dexp) in
     Obj.repr(
-# 279 "finite/fparser.mly"
+# 279 "fixed_state/fparser.mly"
                    (Vars_index (_1, _3))
-# 1145 "finite/fparser.ml"
+# 1145 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'dnested_var) in
     Obj.repr(
-# 288 "finite/fparser.mly"
+# 288 "fixed_state/fparser.mly"
                 (_1)
-# 1152 "finite/fparser.ml"
+# 1152 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 290 "finite/fparser.mly"
+# 290 "fixed_state/fparser.mly"
      (let i = find_scalar_position _2 !tmp_var_list in 
 	     (if i = -1 then (print_endline ("unknown type for "^_2); exit 1)
 	      else Const i))
-# 1161 "finite/fparser.ml"
+# 1161 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 293 "finite/fparser.mly"
+# 293 "fixed_state/fparser.mly"
               (Negi _2)
-# 1168 "finite/fparser.ml"
+# 1168 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 294 "finite/fparser.mly"
+# 294 "fixed_state/fparser.mly"
              (Negb _2)
-# 1175 "finite/fparser.ml"
+# 1175 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 295 "finite/fparser.mly"
+# 295 "fixed_state/fparser.mly"
                    (Equal (_1, _3))
-# 1183 "finite/fparser.ml"
+# 1183 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 296 "finite/fparser.mly"
+# 296 "fixed_state/fparser.mly"
                        (Negb (Equal (_1, _3)))
-# 1191 "finite/fparser.ml"
+# 1191 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 297 "finite/fparser.mly"
+# 297 "fixed_state/fparser.mly"
                   (Ando (_1, _3))
-# 1199 "finite/fparser.ml"
+# 1199 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 298 "finite/fparser.mly"
+# 298 "fixed_state/fparser.mly"
                   (Oro (_1, _3))
-# 1207 "finite/fparser.ml"
+# 1207 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 299 "finite/fparser.mly"
+# 299 "fixed_state/fparser.mly"
                          (Add (_1, _3))
-# 1215 "finite/fparser.ml"
+# 1215 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 300 "finite/fparser.mly"
+# 300 "fixed_state/fparser.mly"
                    (Minus (_1, _3))
-# 1223 "finite/fparser.ml"
+# 1223 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 301 "finite/fparser.mly"
+# 301 "fixed_state/fparser.mly"
                   (Mult (_1, _3))
-# 1231 "finite/fparser.ml"
+# 1231 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 302 "finite/fparser.mly"
+# 302 "fixed_state/fparser.mly"
                  (Mod (_1, _3))
-# 1239 "finite/fparser.ml"
+# 1239 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 303 "finite/fparser.mly"
+# 303 "fixed_state/fparser.mly"
                 (LT (_1, _3))
-# 1247 "finite/fparser.ml"
+# 1247 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 304 "finite/fparser.mly"
+# 304 "fixed_state/fparser.mly"
                 (GT (_1, _3))
-# 1255 "finite/fparser.ml"
+# 1255 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 305 "finite/fparser.mly"
+# 305 "fixed_state/fparser.mly"
                 (LE (_1, _3))
-# 1263 "finite/fparser.ml"
+# 1263 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'dexp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dexp) in
     Obj.repr(
-# 306 "finite/fparser.mly"
+# 306 "fixed_state/fparser.mly"
                 (GE (_1, _3))
-# 1271 "finite/fparser.ml"
+# 1271 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'dexp) in
     Obj.repr(
-# 307 "finite/fparser.mly"
+# 307 "fixed_state/fparser.mly"
                         (_2)
-# 1278 "finite/fparser.ml"
+# 1278 "fixed_state/fparser.ml"
                : 'dexp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 310 "finite/fparser.mly"
+# 310 "fixed_state/fparser.mly"
                        (Nested_vars (Vars _1, Vars _3))
-# 1286 "finite/fparser.ml"
+# 1286 "fixed_state/fparser.ml"
                : 'dnested_var))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 5 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 3 : 'dexp) in
     let _6 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 311 "finite/fparser.mly"
+# 311 "fixed_state/fparser.mly"
                           (Nested_vars (Vars_index (_1, _3), Vars _6))
-# 1295 "finite/fparser.ml"
+# 1295 "fixed_state/fparser.ml"
                : 'dnested_var))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 5 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _5 = (Parsing.peek_val __caml_parser_env 1 : 'dexp) in
     Obj.repr(
-# 312 "finite/fparser.mly"
+# 312 "fixed_state/fparser.mly"
                           (Nested_vars (Vars _1, Vars_index (_3, _5)))
-# 1304 "finite/fparser.ml"
+# 1304 "fixed_state/fparser.ml"
                : 'dnested_var))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 8 : string) in
@@ -1308,66 +1308,66 @@ let yyact = [|
     let _6 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _8 = (Parsing.peek_val __caml_parser_env 1 : 'dexp) in
     Obj.repr(
-# 313 "finite/fparser.mly"
+# 313 "fixed_state/fparser.mly"
                                        (Nested_vars (Vars_index (_1, _3), Vars_index (_6, _8)))
-# 1314 "finite/fparser.ml"
+# 1314 "fixed_state/fparser.ml"
                : 'dnested_var))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'dnested_var) in
     Obj.repr(
-# 314 "finite/fparser.mly"
+# 314 "fixed_state/fparser.mly"
                        (Nested_vars (Vars _1, _3))
-# 1322 "finite/fparser.ml"
+# 1322 "fixed_state/fparser.ml"
                : 'dnested_var))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 5 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 3 : 'dexp) in
     let _6 = (Parsing.peek_val __caml_parser_env 0 : 'dnested_var) in
     Obj.repr(
-# 315 "finite/fparser.mly"
+# 315 "fixed_state/fparser.mly"
                                    (Nested_vars (Vars_index (_1, _3), _6))
-# 1331 "finite/fparser.ml"
+# 1331 "fixed_state/fparser.ml"
                : 'dnested_var))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'inis) in
     Obj.repr(
-# 320 "finite/fparser.mly"
+# 320 "fixed_state/fparser.mly"
   (tmp_init_assign := _3)
-# 1338 "finite/fparser.ml"
+# 1338 "fixed_state/fparser.ml"
                : 'init_decl))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 323 "finite/fparser.mly"
+# 323 "fixed_state/fparser.mly"
        ([])
-# 1344 "finite/fparser.ml"
+# 1344 "fixed_state/fparser.ml"
                : 'inis))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 4 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _5 = (Parsing.peek_val __caml_parser_env 0 : 'inis) in
     Obj.repr(
-# 324 "finite/fparser.mly"
+# 324 "fixed_state/fparser.mly"
                                  ((Expr _3) :: _5)
-# 1353 "finite/fparser.ml"
+# 1353 "fixed_state/fparser.ml"
                : 'inis))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 6 : string) in
     let _4 = (Parsing.peek_val __caml_parser_env 3 : 'exps) in
     let _7 = (Parsing.peek_val __caml_parser_env 0 : 'inis) in
     Obj.repr(
-# 325 "finite/fparser.mly"
+# 325 "fixed_state/fparser.mly"
                                           ((Expr (Aray _4)) :: _7)
-# 1362 "finite/fparser.ml"
+# 1362 "fixed_state/fparser.ml"
                : 'inis))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 6 : string) in
     let _4 = (Parsing.peek_val __caml_parser_env 3 : 'exp) in
     let _7 = (Parsing.peek_val __caml_parser_env 0 : 'inis) in
     Obj.repr(
-# 326 "finite/fparser.mly"
+# 326 "fixed_state/fparser.mly"
                                           ((Expr (Aray [_4])) :: _7)
-# 1371 "finite/fparser.ml"
+# 1371 "fixed_state/fparser.ml"
                : 'inis))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 7 : string) in
@@ -1375,9 +1375,9 @@ let yyact = [|
     let _5 = (Parsing.peek_val __caml_parser_env 3 : 'exps) in
     let _8 = (Parsing.peek_val __caml_parser_env 0 : 'inis) in
     Obj.repr(
-# 327 "finite/fparser.mly"
+# 327 "fixed_state/fparser.mly"
                                              ((Module_instance (_3, _5)) :: _8)
-# 1381 "finite/fparser.ml"
+# 1381 "fixed_state/fparser.ml"
                : 'inis))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 7 : string) in
@@ -1385,54 +1385,54 @@ let yyact = [|
     let _5 = (Parsing.peek_val __caml_parser_env 3 : 'exp) in
     let _8 = (Parsing.peek_val __caml_parser_env 0 : 'inis) in
     Obj.repr(
-# 328 "finite/fparser.mly"
+# 328 "fixed_state/fparser.mly"
                                             ((Module_instance (_3, [_5])) :: _8)
-# 1391 "finite/fparser.ml"
+# 1391 "fixed_state/fparser.ml"
                : 'inis))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 6 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 4 : string) in
     let _7 = (Parsing.peek_val __caml_parser_env 0 : 'inis) in
     Obj.repr(
-# 329 "finite/fparser.mly"
+# 329 "fixed_state/fparser.mly"
                                         ((Module_instance (_3, [])) :: _7)
-# 1400 "finite/fparser.ml"
+# 1400 "fixed_state/fparser.ml"
                : 'inis))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 332 "finite/fparser.mly"
+# 332 "fixed_state/fparser.mly"
                     ([_1; _3])
-# 1408 "finite/fparser.ml"
+# 1408 "fixed_state/fparser.ml"
                : 'exps))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exps) in
     Obj.repr(
-# 333 "finite/fparser.mly"
+# 333 "fixed_state/fparser.mly"
                   (_1 :: _3)
-# 1416 "finite/fparser.ml"
+# 1416 "fixed_state/fparser.ml"
                : 'exps))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : int) in
     Obj.repr(
-# 338 "finite/fparser.mly"
+# 338 "fixed_state/fparser.mly"
       (Const _1)
-# 1423 "finite/fparser.ml"
+# 1423 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : bool) in
     Obj.repr(
-# 339 "finite/fparser.mly"
+# 339 "fixed_state/fparser.mly"
       (Const (if _1 then 1 else 0))
-# 1430 "finite/fparser.ml"
+# 1430 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'exp) in
     Obj.repr(
-# 340 "finite/fparser.mly"
+# 340 "fixed_state/fparser.mly"
                    (let i1 = position_in_state_var_list _1 !tmp_state_var_list in 
 								if (i1 = -1) then
 								begin
@@ -1440,312 +1440,312 @@ let yyact = [|
 								exit 1;
 								end;
 								State_expr (i1, _3))
-# 1444 "finite/fparser.ml"
+# 1444 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 347 "finite/fparser.mly"
+# 347 "fixed_state/fparser.mly"
                      (Negi _2)
-# 1451 "finite/fparser.ml"
+# 1451 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 348 "finite/fparser.mly"
+# 348 "fixed_state/fparser.mly"
                     (Negb _2)
-# 1458 "finite/fparser.ml"
+# 1458 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 349 "finite/fparser.mly"
+# 349 "fixed_state/fparser.mly"
                                 (Equal (_1, _3))
-# 1466 "finite/fparser.ml"
+# 1466 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 350 "finite/fparser.mly"
+# 350 "fixed_state/fparser.mly"
                                     (Negb (Equal (_1, _3)))
-# 1474 "finite/fparser.ml"
+# 1474 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 351 "finite/fparser.mly"
+# 351 "fixed_state/fparser.mly"
                                (Ando (_1, _3))
-# 1482 "finite/fparser.ml"
+# 1482 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 352 "finite/fparser.mly"
+# 352 "fixed_state/fparser.mly"
                               (Oro (_1, _3))
-# 1490 "finite/fparser.ml"
+# 1490 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 353 "finite/fparser.mly"
+# 353 "fixed_state/fparser.mly"
                               (Add (_1, _3))
-# 1498 "finite/fparser.ml"
+# 1498 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 354 "finite/fparser.mly"
+# 354 "fixed_state/fparser.mly"
                                 (Minus (_1, _3))
-# 1506 "finite/fparser.ml"
+# 1506 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 355 "finite/fparser.mly"
+# 355 "fixed_state/fparser.mly"
                                (Mult (_1, _3))
-# 1514 "finite/fparser.ml"
+# 1514 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 356 "finite/fparser.mly"
+# 356 "fixed_state/fparser.mly"
                               (Mod (_1, _3))
-# 1522 "finite/fparser.ml"
+# 1522 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 357 "finite/fparser.mly"
+# 357 "fixed_state/fparser.mly"
                              (LT (_1, _3))
-# 1530 "finite/fparser.ml"
+# 1530 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 358 "finite/fparser.mly"
+# 358 "fixed_state/fparser.mly"
                              (GT (_1, _3))
-# 1538 "finite/fparser.ml"
+# 1538 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 359 "finite/fparser.mly"
+# 359 "fixed_state/fparser.mly"
                              (LE (_1, _3))
-# 1546 "finite/fparser.ml"
+# 1546 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'state_expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'state_expr) in
     Obj.repr(
-# 360 "finite/fparser.mly"
+# 360 "fixed_state/fparser.mly"
                              (GE (_1, _3))
-# 1554 "finite/fparser.ml"
+# 1554 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'state_expr) in
     Obj.repr(
-# 361 "finite/fparser.mly"
+# 361 "fixed_state/fparser.mly"
                        (_2)
-# 1561 "finite/fparser.ml"
+# 1561 "fixed_state/fparser.ml"
                : 'state_expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : int) in
     Obj.repr(
-# 365 "finite/fparser.mly"
+# 365 "fixed_state/fparser.mly"
      (Const _1)
-# 1568 "finite/fparser.ml"
+# 1568 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : bool) in
     Obj.repr(
-# 366 "finite/fparser.mly"
+# 366 "fixed_state/fparser.mly"
      (Const (if _1 then 1 else 0))
-# 1575 "finite/fparser.ml"
+# 1575 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 367 "finite/fparser.mly"
+# 367 "fixed_state/fparser.mly"
       (Vars _1)
-# 1582 "finite/fparser.ml"
+# 1582 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'exp) in
     Obj.repr(
-# 368 "finite/fparser.mly"
+# 368 "fixed_state/fparser.mly"
                   (Vars_index (_1, _3))
-# 1590 "finite/fparser.ml"
+# 1590 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'nested_var) in
     Obj.repr(
-# 369 "finite/fparser.mly"
+# 369 "fixed_state/fparser.mly"
                (_1)
-# 1597 "finite/fparser.ml"
+# 1597 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 371 "finite/fparser.mly"
+# 371 "fixed_state/fparser.mly"
      (let i = find_scalar_position _2 !tmp_var_list in
 	     if i = -1 then (print_endline ("unknown type for "^_2); exit 1)
 	     else (Const i))
-# 1606 "finite/fparser.ml"
+# 1606 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 374 "finite/fparser.mly"
+# 374 "fixed_state/fparser.mly"
               (Negi _2)
-# 1613 "finite/fparser.ml"
+# 1613 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 375 "finite/fparser.mly"
+# 375 "fixed_state/fparser.mly"
              (Negb _2)
-# 1620 "finite/fparser.ml"
+# 1620 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 376 "finite/fparser.mly"
+# 376 "fixed_state/fparser.mly"
                  (Equal (_1, _3))
-# 1628 "finite/fparser.ml"
+# 1628 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 377 "finite/fparser.mly"
+# 377 "fixed_state/fparser.mly"
                      (Negb (Equal (_1, _3)))
-# 1636 "finite/fparser.ml"
+# 1636 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 378 "finite/fparser.mly"
+# 378 "fixed_state/fparser.mly"
                 (Ando (_1, _3))
-# 1644 "finite/fparser.ml"
+# 1644 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 379 "finite/fparser.mly"
+# 379 "fixed_state/fparser.mly"
                (Oro (_1, _3))
-# 1652 "finite/fparser.ml"
+# 1652 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 380 "finite/fparser.mly"
+# 380 "fixed_state/fparser.mly"
                (Add (_1, _3))
-# 1660 "finite/fparser.ml"
+# 1660 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 381 "finite/fparser.mly"
+# 381 "fixed_state/fparser.mly"
                  (Minus (_1, _3))
-# 1668 "finite/fparser.ml"
+# 1668 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 382 "finite/fparser.mly"
+# 382 "fixed_state/fparser.mly"
                 (Mult (_1, _3))
-# 1676 "finite/fparser.ml"
+# 1676 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 383 "finite/fparser.mly"
+# 383 "fixed_state/fparser.mly"
                (Mod (_1, _3))
-# 1684 "finite/fparser.ml"
+# 1684 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 384 "finite/fparser.mly"
+# 384 "fixed_state/fparser.mly"
               (LT (_1, _3))
-# 1692 "finite/fparser.ml"
+# 1692 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 385 "finite/fparser.mly"
+# 385 "fixed_state/fparser.mly"
               (GT (_1, _3))
-# 1700 "finite/fparser.ml"
+# 1700 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 386 "finite/fparser.mly"
+# 386 "fixed_state/fparser.mly"
               (LE (_1, _3))
-# 1708 "finite/fparser.ml"
+# 1708 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'exp) in
     Obj.repr(
-# 387 "finite/fparser.mly"
+# 387 "fixed_state/fparser.mly"
               (GE (_1, _3))
-# 1716 "finite/fparser.ml"
+# 1716 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'exp) in
     Obj.repr(
-# 388 "finite/fparser.mly"
+# 388 "fixed_state/fparser.mly"
                (_2)
-# 1723 "finite/fparser.ml"
+# 1723 "fixed_state/fparser.ml"
                : 'exp))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 391 "finite/fparser.mly"
+# 391 "fixed_state/fparser.mly"
                       (Nested_vars (Vars _1, Vars _3))
-# 1731 "finite/fparser.ml"
+# 1731 "fixed_state/fparser.ml"
                : 'nested_var))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 5 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 3 : 'exp) in
     let _6 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 392 "finite/fparser.mly"
+# 392 "fixed_state/fparser.mly"
                          (Nested_vars (Vars_index (_1, _3), Vars _6))
-# 1740 "finite/fparser.ml"
+# 1740 "fixed_state/fparser.ml"
                : 'nested_var))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 5 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _5 = (Parsing.peek_val __caml_parser_env 1 : 'exp) in
     Obj.repr(
-# 393 "finite/fparser.mly"
+# 393 "fixed_state/fparser.mly"
                          (Nested_vars (Vars _1, Vars_index (_3, _5)))
-# 1749 "finite/fparser.ml"
+# 1749 "fixed_state/fparser.ml"
                : 'nested_var))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 8 : string) in
@@ -1753,63 +1753,63 @@ let yyact = [|
     let _6 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _8 = (Parsing.peek_val __caml_parser_env 1 : 'exp) in
     Obj.repr(
-# 394 "finite/fparser.mly"
+# 394 "fixed_state/fparser.mly"
                                      (Nested_vars (Vars_index (_1, _3), Vars_index (_6, _8)))
-# 1759 "finite/fparser.ml"
+# 1759 "fixed_state/fparser.ml"
                : 'nested_var))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'nested_var) in
     Obj.repr(
-# 395 "finite/fparser.mly"
+# 395 "fixed_state/fparser.mly"
                       (Nested_vars (Vars _1, _3))
-# 1767 "finite/fparser.ml"
+# 1767 "fixed_state/fparser.ml"
                : 'nested_var))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 5 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 3 : 'exp) in
     let _6 = (Parsing.peek_val __caml_parser_env 0 : 'nested_var) in
     Obj.repr(
-# 396 "finite/fparser.mly"
+# 396 "fixed_state/fparser.mly"
                                  (Nested_vars (Vars_index (_1, _3), _6))
-# 1776 "finite/fparser.ml"
+# 1776 "fixed_state/fparser.ml"
                : 'nested_var))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'trans) in
     Obj.repr(
-# 401 "finite/fparser.mly"
+# 401 "fixed_state/fparser.mly"
   (tmp_transitions := _3)
-# 1783 "finite/fparser.ml"
+# 1783 "fixed_state/fparser.ml"
                : 'trans_decl))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 404 "finite/fparser.mly"
+# 404 "fixed_state/fparser.mly"
         ([])
-# 1789 "finite/fparser.ml"
+# 1789 "fixed_state/fparser.ml"
                : 'trans))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 6 : 'exp) in
     let _4 = (Parsing.peek_val __caml_parser_env 3 : 'rests) in
     let _7 = (Parsing.peek_val __caml_parser_env 0 : 'trans) in
     Obj.repr(
-# 405 "finite/fparser.mly"
+# 405 "fixed_state/fparser.mly"
                                            ((_1, _4) :: _7)
-# 1798 "finite/fparser.ml"
+# 1798 "fixed_state/fparser.ml"
                : 'trans))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 408 "finite/fparser.mly"
+# 408 "fixed_state/fparser.mly"
         ([])
-# 1804 "finite/fparser.ml"
+# 1804 "fixed_state/fparser.ml"
                : 'rests))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 4 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _5 = (Parsing.peek_val __caml_parser_env 0 : 'rests) in
     Obj.repr(
-# 409 "finite/fparser.mly"
+# 409 "fixed_state/fparser.mly"
                                   ((Vars _1, _3) :: _5)
-# 1813 "finite/fparser.ml"
+# 1813 "fixed_state/fparser.ml"
                : 'rests))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 7 : string) in
@@ -1817,43 +1817,43 @@ let yyact = [|
     let _6 = (Parsing.peek_val __caml_parser_env 2 : 'exp) in
     let _8 = (Parsing.peek_val __caml_parser_env 0 : 'rests) in
     Obj.repr(
-# 410 "finite/fparser.mly"
+# 410 "fixed_state/fparser.mly"
                                               ((Vars_index (_1, _3), _6) :: _8)
-# 1823 "finite/fparser.ml"
+# 1823 "fixed_state/fparser.ml"
                : 'rests))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'fairness) in
     Obj.repr(
-# 417 "finite/fparser.mly"
+# 417 "fixed_state/fparser.mly"
                                          (tmp_fairness := _3)
-# 1830 "finite/fparser.ml"
+# 1830 "fixed_state/fparser.ml"
                : 'fairness_decl))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 420 "finite/fparser.mly"
+# 420 "fixed_state/fparser.mly"
           ([])
-# 1836 "finite/fparser.ml"
+# 1836 "fixed_state/fparser.ml"
                : 'fairness))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'fml) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'fairness) in
     Obj.repr(
-# 422 "finite/fparser.mly"
+# 422 "fixed_state/fparser.mly"
                           (_1 :: _3)
-# 1844 "finite/fparser.ml"
+# 1844 "fixed_state/fparser.ml"
                : 'fairness))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'atomics) in
     Obj.repr(
-# 435 "finite/fparser.mly"
+# 435 "fixed_state/fparser.mly"
   (tmp_state_var_list := [])
-# 1851 "finite/fparser.ml"
+# 1851 "fixed_state/fparser.ml"
                : 'atomic_decl))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 438 "finite/fparser.mly"
+# 438 "fixed_state/fparser.mly"
           ()
-# 1857 "finite/fparser.ml"
+# 1857 "fixed_state/fparser.ml"
                : 'atomics))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 7 : 'atomics) in
@@ -1861,153 +1861,153 @@ let yyact = [|
     let _4 = (Parsing.peek_val __caml_parser_env 4 : 'bound_var) in
     let _7 = (Parsing.peek_val __caml_parser_env 1 : 'state_expr) in
     Obj.repr(
-# 440 "finite/fparser.mly"
+# 440 "fixed_state/fparser.mly"
      (Hashtbl.add !tmp_atomic_tbl _2 _7)
-# 1867 "finite/fparser.ml"
+# 1867 "fixed_state/fparser.ml"
                : 'atomics))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'bound_vars) in
     Obj.repr(
-# 443 "finite/fparser.mly"
+# 443 "fixed_state/fparser.mly"
                       (tmp_state_var_list := _1)
-# 1874 "finite/fparser.ml"
+# 1874 "fixed_state/fparser.ml"
                : 'bound_var))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 446 "finite/fparser.mly"
+# 446 "fixed_state/fparser.mly"
              ([])
-# 1880 "finite/fparser.ml"
+# 1880 "fixed_state/fparser.ml"
                : 'bound_vars))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 447 "finite/fparser.mly"
+# 447 "fixed_state/fparser.mly"
       ([_1])
-# 1887 "finite/fparser.ml"
+# 1887 "fixed_state/fparser.ml"
                : 'bound_vars))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'bound_vars) in
     Obj.repr(
-# 448 "finite/fparser.mly"
+# 448 "fixed_state/fparser.mly"
                         (_1 :: _3)
-# 1895 "finite/fparser.ml"
+# 1895 "fixed_state/fparser.ml"
                : 'bound_vars))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'specs) in
     Obj.repr(
-# 452 "finite/fparser.mly"
+# 452 "fixed_state/fparser.mly"
   (tmp_spec_list := _3)
-# 1902 "finite/fparser.ml"
+# 1902 "fixed_state/fparser.ml"
                : 'spec_decl))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 455 "finite/fparser.mly"
+# 455 "fixed_state/fparser.mly"
         ([])
-# 1908 "finite/fparser.ml"
+# 1908 "fixed_state/fparser.ml"
                : 'specs))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 4 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 2 : 'fml) in
     let _5 = (Parsing.peek_val __caml_parser_env 0 : 'specs) in
     Obj.repr(
-# 456 "finite/fparser.mly"
+# 456 "fixed_state/fparser.mly"
                                   ((_1, _3) :: _5)
-# 1917 "finite/fparser.ml"
+# 1917 "fixed_state/fparser.ml"
                : 'specs))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 459 "finite/fparser.mly"
+# 459 "fixed_state/fparser.mly"
           (Top)
-# 1923 "finite/fparser.ml"
+# 1923 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 460 "finite/fparser.mly"
+# 460 "fixed_state/fparser.mly"
           (Bottom)
-# 1929 "finite/fparser.ml"
+# 1929 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'atom_fml_para) in
     Obj.repr(
-# 461 "finite/fparser.mly"
+# 461 "fixed_state/fparser.mly"
                             (Atomic (_1, _3))
-# 1937 "finite/fparser.ml"
+# 1937 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : string) in
     Obj.repr(
-# 462 "finite/fparser.mly"
+# 462 "fixed_state/fparser.mly"
               (Atomic (_1, []))
-# 1944 "finite/fparser.ml"
+# 1944 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 1 : string) in
     Obj.repr(
-# 463 "finite/fparser.mly"
+# 463 "fixed_state/fparser.mly"
                  (Atomic (_1, [SVar _3]))
-# 1952 "finite/fparser.ml"
+# 1952 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'fml) in
     Obj.repr(
-# 464 "finite/fparser.mly"
+# 464 "fixed_state/fparser.mly"
            (Neg _2)
-# 1959 "finite/fparser.ml"
+# 1959 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'fml) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'fml) in
     Obj.repr(
-# 465 "finite/fparser.mly"
+# 465 "fixed_state/fparser.mly"
                (And (_1, _3))
-# 1967 "finite/fparser.ml"
+# 1967 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'fml) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'fml) in
     Obj.repr(
-# 466 "finite/fparser.mly"
+# 466 "fixed_state/fparser.mly"
               (Or (_1, _3))
-# 1975 "finite/fparser.ml"
+# 1975 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 5 : string) in
     let _5 = (Parsing.peek_val __caml_parser_env 3 : 'fml) in
     let _7 = (Parsing.peek_val __caml_parser_env 1 : string) in
     Obj.repr(
-# 467 "finite/fparser.mly"
+# 467 "fixed_state/fparser.mly"
                                     (AX (SVar _3, _5, SVar _7))
-# 1984 "finite/fparser.ml"
+# 1984 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 5 : string) in
     let _5 = (Parsing.peek_val __caml_parser_env 3 : 'fml) in
     let _7 = (Parsing.peek_val __caml_parser_env 1 : string) in
     Obj.repr(
-# 468 "finite/fparser.mly"
+# 468 "fixed_state/fparser.mly"
                                     (EX (SVar _3, _5, SVar _7))
-# 1993 "finite/fparser.ml"
+# 1993 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 5 : string) in
     let _5 = (Parsing.peek_val __caml_parser_env 3 : 'fml) in
     let _7 = (Parsing.peek_val __caml_parser_env 1 : string) in
     Obj.repr(
-# 469 "finite/fparser.mly"
+# 469 "fixed_state/fparser.mly"
                                     (AF (SVar _3, _5, SVar _7))
-# 2002 "finite/fparser.ml"
+# 2002 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 5 : string) in
     let _5 = (Parsing.peek_val __caml_parser_env 3 : 'fml) in
     let _7 = (Parsing.peek_val __caml_parser_env 1 : string) in
     Obj.repr(
-# 470 "finite/fparser.mly"
+# 470 "fixed_state/fparser.mly"
                                     (EG (SVar _3, _5, SVar _7))
-# 2011 "finite/fparser.ml"
+# 2011 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 9 : string) in
@@ -2016,9 +2016,9 @@ let yyact = [|
     let _9 = (Parsing.peek_val __caml_parser_env 3 : 'fml) in
     let _11 = (Parsing.peek_val __caml_parser_env 1 : string) in
     Obj.repr(
-# 472 "finite/fparser.mly"
+# 472 "fixed_state/fparser.mly"
      (AR (SVar _3, SVar _5, _7, _9, SVar _11))
-# 2022 "finite/fparser.ml"
+# 2022 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 9 : string) in
@@ -2027,32 +2027,32 @@ let yyact = [|
     let _9 = (Parsing.peek_val __caml_parser_env 3 : 'fml) in
     let _11 = (Parsing.peek_val __caml_parser_env 1 : string) in
     Obj.repr(
-# 474 "finite/fparser.mly"
+# 474 "fixed_state/fparser.mly"
      (EU (SVar _3, SVar _5, _7, _9, SVar _11))
-# 2033 "finite/fparser.ml"
+# 2033 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'fml) in
     Obj.repr(
-# 475 "finite/fparser.mly"
+# 475 "fixed_state/fparser.mly"
                 (_2)
-# 2040 "finite/fparser.ml"
+# 2040 "fixed_state/fparser.ml"
                : 'fml))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 478 "finite/fparser.mly"
+# 478 "fixed_state/fparser.mly"
                             ([(SVar _1); (SVar _3)])
-# 2048 "finite/fparser.ml"
+# 2048 "fixed_state/fparser.ml"
                : 'atom_fml_para))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'atom_fml_para) in
     Obj.repr(
-# 479 "finite/fparser.mly"
+# 479 "fixed_state/fparser.mly"
                           ((SVar _1) :: _3)
-# 2056 "finite/fparser.ml"
+# 2056 "fixed_state/fparser.ml"
                : 'atom_fml_para))
 (* Entry input *)
 ; (fun __caml_parser_env -> raise (Parsing.YYexit (Parsing.peek_val __caml_parser_env 0)))
@@ -2077,6 +2077,6 @@ let yytables =
 let input (lexfun : Lexing.lexbuf -> token) (lexbuf : Lexing.lexbuf) =
    (Parsing.yyparse yytables 1 lexfun lexbuf : (((string, Fmodul.modul0) Hashtbl.t) * Fmodul.modul0))
 ;;
-# 483 "finite/fparser.mly"
+# 483 "fixed_state/fparser.mly"
 
-# 2083 "finite/fparser.ml"
+# 2083 "fixed_state/fparser.ml"

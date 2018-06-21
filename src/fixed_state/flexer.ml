@@ -1,10 +1,10 @@
-# 1 "finite/flexer.mll"
+# 1 "fixed_state/flexer.mll"
  
 	open Fparser
 	let line_num = ref 1
 
 
-# 8 "finite/flexer.ml"
+# 8 "fixed_state/flexer.ml"
 let __ocaml_lex_tables = {
   Lexing.lex_base =
    "\000\000\199\255\002\000\203\255\205\255\002\000\003\000\211\255\
@@ -1731,299 +1731,299 @@ let rec token lexbuf =
 and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 11 "finite/flexer.mll"
+# 11 "fixed_state/flexer.mll"
             (Module)
-# 1737 "finite/flexer.ml"
+# 1737 "fixed_state/flexer.ml"
 
   | 1 ->
-# 12 "finite/flexer.mll"
+# 12 "fixed_state/flexer.mll"
             (Model)
-# 1742 "finite/flexer.ml"
+# 1742 "fixed_state/flexer.ml"
 
   | 2 ->
-# 13 "finite/flexer.mll"
+# 13 "fixed_state/flexer.mll"
           (Var)
-# 1747 "finite/flexer.ml"
+# 1747 "fixed_state/flexer.ml"
 
   | 3 ->
-# 14 "finite/flexer.mll"
+# 14 "fixed_state/flexer.mll"
             (Define)
-# 1752 "finite/flexer.ml"
+# 1752 "fixed_state/flexer.ml"
 
   | 4 ->
-# 15 "finite/flexer.mll"
+# 15 "fixed_state/flexer.mll"
           (Init)
-# 1757 "finite/flexer.ml"
+# 1757 "fixed_state/flexer.ml"
 
   | 5 ->
-# 16 "finite/flexer.mll"
+# 16 "fixed_state/flexer.mll"
                 (Transition)
-# 1762 "finite/flexer.ml"
+# 1762 "fixed_state/flexer.ml"
 
   | 6 ->
-# 17 "finite/flexer.mll"
+# 17 "fixed_state/flexer.mll"
               (Fairness)
-# 1767 "finite/flexer.ml"
+# 1767 "fixed_state/flexer.ml"
 
   | 7 ->
-# 18 "finite/flexer.mll"
+# 18 "fixed_state/flexer.mll"
             (Atomic)
-# 1772 "finite/flexer.ml"
+# 1772 "fixed_state/flexer.ml"
 
   | 8 ->
-# 19 "finite/flexer.mll"
+# 19 "fixed_state/flexer.mll"
           (Spec)
-# 1777 "finite/flexer.ml"
+# 1777 "fixed_state/flexer.ml"
 
   | 9 ->
-# 20 "finite/flexer.mll"
+# 20 "fixed_state/flexer.mll"
           (Int)
-# 1782 "finite/flexer.ml"
+# 1782 "fixed_state/flexer.ml"
 
   | 10 ->
-# 21 "finite/flexer.mll"
+# 21 "fixed_state/flexer.mll"
           (Bool)
-# 1787 "finite/flexer.ml"
+# 1787 "fixed_state/flexer.ml"
 
   | 11 ->
-# 22 "finite/flexer.mll"
+# 22 "fixed_state/flexer.mll"
           (B true)
-# 1792 "finite/flexer.ml"
+# 1792 "fixed_state/flexer.ml"
 
   | 12 ->
-# 23 "finite/flexer.mll"
+# 23 "fixed_state/flexer.mll"
            (B false)
-# 1797 "finite/flexer.ml"
+# 1797 "fixed_state/flexer.ml"
 
   | 13 ->
-# 24 "finite/flexer.mll"
+# 24 "fixed_state/flexer.mll"
           (Top)
-# 1802 "finite/flexer.ml"
+# 1802 "fixed_state/flexer.ml"
 
   | 14 ->
-# 25 "finite/flexer.mll"
+# 25 "fixed_state/flexer.mll"
            (Bottom)
-# 1807 "finite/flexer.ml"
+# 1807 "fixed_state/flexer.ml"
 
   | 15 ->
-# 26 "finite/flexer.mll"
+# 26 "fixed_state/flexer.mll"
           (Neg)
-# 1812 "finite/flexer.ml"
+# 1812 "fixed_state/flexer.ml"
 
   | 16 ->
-# 27 "finite/flexer.mll"
+# 27 "fixed_state/flexer.mll"
          (Mod)
-# 1817 "finite/flexer.ml"
+# 1817 "fixed_state/flexer.ml"
 
   | 17 ->
-# 28 "finite/flexer.mll"
+# 28 "fixed_state/flexer.mll"
         (AX)
-# 1822 "finite/flexer.ml"
+# 1822 "fixed_state/flexer.ml"
 
   | 18 ->
-# 29 "finite/flexer.mll"
+# 29 "fixed_state/flexer.mll"
         (EX)
-# 1827 "finite/flexer.ml"
+# 1827 "fixed_state/flexer.ml"
 
   | 19 ->
-# 30 "finite/flexer.mll"
+# 30 "fixed_state/flexer.mll"
         (AF)
-# 1832 "finite/flexer.ml"
+# 1832 "fixed_state/flexer.ml"
 
   | 20 ->
-# 31 "finite/flexer.mll"
+# 31 "fixed_state/flexer.mll"
         (EG)
-# 1837 "finite/flexer.ml"
+# 1837 "fixed_state/flexer.ml"
 
   | 21 ->
-# 32 "finite/flexer.mll"
+# 32 "fixed_state/flexer.mll"
         (AR)
-# 1842 "finite/flexer.ml"
+# 1842 "fixed_state/flexer.ml"
 
   | 22 ->
-# 33 "finite/flexer.mll"
+# 33 "fixed_state/flexer.mll"
         (EU)
-# 1847 "finite/flexer.ml"
+# 1847 "fixed_state/flexer.ml"
 
   | 23 ->
 let
-# 34 "finite/flexer.mll"
+# 34 "fixed_state/flexer.mll"
          s
-# 1853 "finite/flexer.ml"
+# 1853 "fixed_state/flexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
-# 34 "finite/flexer.mll"
+# 34 "fixed_state/flexer.mll"
             (Id s)
-# 1857 "finite/flexer.ml"
+# 1857 "fixed_state/flexer.ml"
 
   | 24 ->
-# 35 "finite/flexer.mll"
+# 35 "fixed_state/flexer.mll"
         (Scalar)
-# 1862 "finite/flexer.ml"
+# 1862 "fixed_state/flexer.ml"
 
   | 25 ->
-# 36 "finite/flexer.mll"
+# 36 "fixed_state/flexer.mll"
         (Colon)
-# 1867 "finite/flexer.ml"
+# 1867 "fixed_state/flexer.ml"
 
   | 26 ->
-# 37 "finite/flexer.mll"
+# 37 "fixed_state/flexer.mll"
         (Semicolon)
-# 1872 "finite/flexer.ml"
+# 1872 "fixed_state/flexer.ml"
 
   | 27 ->
-# 38 "finite/flexer.mll"
+# 38 "fixed_state/flexer.mll"
         (Comma)
-# 1877 "finite/flexer.ml"
+# 1877 "fixed_state/flexer.ml"
 
   | 28 ->
-# 39 "finite/flexer.mll"
+# 39 "fixed_state/flexer.mll"
         (Dot)
-# 1882 "finite/flexer.ml"
+# 1882 "fixed_state/flexer.ml"
 
   | 29 ->
-# 40 "finite/flexer.mll"
+# 40 "fixed_state/flexer.mll"
          (DotDot)
-# 1887 "finite/flexer.ml"
+# 1887 "fixed_state/flexer.ml"
 
   | 30 ->
-# 41 "finite/flexer.mll"
+# 41 "fixed_state/flexer.mll"
         (LB1)
-# 1892 "finite/flexer.ml"
+# 1892 "fixed_state/flexer.ml"
 
   | 31 ->
-# 42 "finite/flexer.mll"
+# 42 "fixed_state/flexer.mll"
         (RB1)
-# 1897 "finite/flexer.ml"
+# 1897 "fixed_state/flexer.ml"
 
   | 32 ->
-# 43 "finite/flexer.mll"
+# 43 "fixed_state/flexer.mll"
         (LB2)
-# 1902 "finite/flexer.ml"
+# 1902 "fixed_state/flexer.ml"
 
   | 33 ->
-# 44 "finite/flexer.mll"
+# 44 "fixed_state/flexer.mll"
         (RB2)
-# 1907 "finite/flexer.ml"
+# 1907 "fixed_state/flexer.ml"
 
   | 34 ->
-# 45 "finite/flexer.mll"
+# 45 "fixed_state/flexer.mll"
         (LB3)
-# 1912 "finite/flexer.ml"
+# 1912 "fixed_state/flexer.ml"
 
   | 35 ->
-# 46 "finite/flexer.mll"
+# 46 "fixed_state/flexer.mll"
         (RB3)
-# 1917 "finite/flexer.ml"
+# 1917 "fixed_state/flexer.ml"
 
   | 36 ->
 let
-# 47 "finite/flexer.mll"
+# 47 "fixed_state/flexer.mll"
               s
-# 1923 "finite/flexer.ml"
+# 1923 "fixed_state/flexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
-# 47 "finite/flexer.mll"
+# 47 "fixed_state/flexer.mll"
                 (I (int_of_string s))
-# 1927 "finite/flexer.ml"
+# 1927 "fixed_state/flexer.ml"
 
   | 37 ->
-# 48 "finite/flexer.mll"
+# 48 "fixed_state/flexer.mll"
           (And)
-# 1932 "finite/flexer.ml"
+# 1932 "fixed_state/flexer.ml"
 
   | 38 ->
-# 49 "finite/flexer.mll"
+# 49 "fixed_state/flexer.mll"
           (Or)
-# 1937 "finite/flexer.ml"
+# 1937 "fixed_state/flexer.ml"
 
   | 39 ->
-# 50 "finite/flexer.mll"
+# 50 "fixed_state/flexer.mll"
         (Nego)
-# 1942 "finite/flexer.ml"
+# 1942 "fixed_state/flexer.ml"
 
   | 40 ->
-# 51 "finite/flexer.mll"
+# 51 "fixed_state/flexer.mll"
          (Oro)
-# 1947 "finite/flexer.ml"
+# 1947 "fixed_state/flexer.ml"
 
   | 41 ->
-# 52 "finite/flexer.mll"
+# 52 "fixed_state/flexer.mll"
          (Ando)
-# 1952 "finite/flexer.ml"
+# 1952 "fixed_state/flexer.ml"
 
   | 42 ->
-# 53 "finite/flexer.mll"
+# 53 "fixed_state/flexer.mll"
         (Add)
-# 1957 "finite/flexer.ml"
+# 1957 "fixed_state/flexer.ml"
 
   | 43 ->
-# 54 "finite/flexer.mll"
+# 54 "fixed_state/flexer.mll"
         (Minus)
-# 1962 "finite/flexer.ml"
+# 1962 "fixed_state/flexer.ml"
 
   | 44 ->
-# 55 "finite/flexer.mll"
+# 55 "fixed_state/flexer.mll"
         (Mult)
-# 1967 "finite/flexer.ml"
+# 1967 "fixed_state/flexer.ml"
 
   | 45 ->
-# 56 "finite/flexer.mll"
+# 56 "fixed_state/flexer.mll"
         (LT)
-# 1972 "finite/flexer.ml"
+# 1972 "fixed_state/flexer.ml"
 
   | 46 ->
-# 57 "finite/flexer.mll"
+# 57 "fixed_state/flexer.mll"
         (GT)
-# 1977 "finite/flexer.ml"
+# 1977 "fixed_state/flexer.ml"
 
   | 47 ->
-# 58 "finite/flexer.mll"
+# 58 "fixed_state/flexer.mll"
          (LE)
-# 1982 "finite/flexer.ml"
+# 1982 "fixed_state/flexer.ml"
 
   | 48 ->
-# 59 "finite/flexer.mll"
+# 59 "fixed_state/flexer.mll"
          (GE)
-# 1987 "finite/flexer.ml"
+# 1987 "fixed_state/flexer.ml"
 
   | 49 ->
-# 60 "finite/flexer.mll"
+# 60 "fixed_state/flexer.mll"
          (Assigno)
-# 1992 "finite/flexer.ml"
+# 1992 "fixed_state/flexer.ml"
 
   | 50 ->
-# 61 "finite/flexer.mll"
+# 61 "fixed_state/flexer.mll"
         (Equal)
-# 1997 "finite/flexer.ml"
+# 1997 "fixed_state/flexer.ml"
 
   | 51 ->
-# 62 "finite/flexer.mll"
+# 62 "fixed_state/flexer.mll"
          (Non_equal)
-# 2002 "finite/flexer.ml"
+# 2002 "fixed_state/flexer.ml"
 
   | 52 ->
-# 63 "finite/flexer.mll"
+# 63 "fixed_state/flexer.mll"
          (line_num := (!line_num) + 1; token lexbuf)
-# 2007 "finite/flexer.ml"
+# 2007 "fixed_state/flexer.ml"
 
   | 53 ->
-# 64 "finite/flexer.mll"
+# 64 "fixed_state/flexer.mll"
                     (token lexbuf)
-# 2012 "finite/flexer.ml"
+# 2012 "fixed_state/flexer.ml"
 
   | 54 ->
-# 65 "finite/flexer.mll"
+# 65 "fixed_state/flexer.mll"
          (comment_oneline lexbuf)
-# 2017 "finite/flexer.ml"
+# 2017 "fixed_state/flexer.ml"
 
   | 55 ->
-# 66 "finite/flexer.mll"
+# 66 "fixed_state/flexer.mll"
          (comment_multiline lexbuf)
-# 2022 "finite/flexer.ml"
+# 2022 "fixed_state/flexer.ml"
 
   | 56 ->
-# 67 "finite/flexer.mll"
+# 67 "fixed_state/flexer.mll"
         (File_end)
-# 2027 "finite/flexer.ml"
+# 2027 "fixed_state/flexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_token_rec lexbuf __ocaml_lex_state
@@ -2033,14 +2033,14 @@ and comment_oneline lexbuf =
 and __ocaml_lex_comment_oneline_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 70 "finite/flexer.mll"
+# 70 "fixed_state/flexer.mll"
         (line_num := (!line_num) + 1; token lexbuf)
-# 2039 "finite/flexer.ml"
+# 2039 "fixed_state/flexer.ml"
 
   | 1 ->
-# 71 "finite/flexer.mll"
+# 71 "fixed_state/flexer.mll"
      (comment_oneline lexbuf)
-# 2044 "finite/flexer.ml"
+# 2044 "fixed_state/flexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_comment_oneline_rec lexbuf __ocaml_lex_state
@@ -2050,19 +2050,19 @@ and comment_multiline lexbuf =
 and __ocaml_lex_comment_multiline_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 73 "finite/flexer.mll"
+# 73 "fixed_state/flexer.mll"
         (token lexbuf)
-# 2056 "finite/flexer.ml"
+# 2056 "fixed_state/flexer.ml"
 
   | 1 ->
-# 74 "finite/flexer.mll"
+# 74 "fixed_state/flexer.mll"
         (line_num := (!line_num) + 1; comment_multiline lexbuf)
-# 2061 "finite/flexer.ml"
+# 2061 "fixed_state/flexer.ml"
 
   | 2 ->
-# 75 "finite/flexer.mll"
+# 75 "fixed_state/flexer.mll"
        (comment_multiline lexbuf)
-# 2066 "finite/flexer.ml"
+# 2066 "fixed_state/flexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_comment_multiline_rec lexbuf __ocaml_lex_state
