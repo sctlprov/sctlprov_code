@@ -5,7 +5,7 @@ This repository includes three version of the SCTLProV prover, the difference of
 * **The general version**: this version accepts the full input language of SCTLProV, which is specified in `./docs/language_specification.md`.
 
   This version is compiled by `make all`.
-* **The fixed-state version**: in this version, a state of a Kripke model can only be represented by a fixed number of integers (or Booleans). This version of SCTLProV accepts a restricted version of the input language:
+* **The fixed-state version**: in this version, a state of a Kripke model can only have a fixed length, i.e., a state can only be represented by a fixed number of integers (or Booleans). This version of SCTLProV accepts a restricted version of the input language:
     - No definition of types, values, or functions;
     - Data types can only have fixed ranges: booleans and scalars.
 
