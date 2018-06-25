@@ -3,8 +3,8 @@ all:
 	ocamlopt -c ast.ml
 	menhir --infer --explain parser.mly
 	ocamllex lexer.mll
-	ocamlyacc fixed_state/oparser.mly
-	ocamllex fixed_state/olexer.mll
+	ocamlyacc fixed_state/fparser.mly
+	ocamllex fixed_state/flexer.mll
 	$(CADP)/src/com/cadp_cc  -c bcg/bcg_interface_stubs.c -I$(CADP)/incl -L$(CADP)/bin.`$(CADP)/com/arch` -lBCG_IO -lBCG -lm
 	ocamlmklib -failsafe -custom -o cbcg bcg_interface_stubs.o -I $(CADP)/incl -L$(CADP)/bin.`$(CADP)/com/arch` -lBCG_IO -lBCG -lm
 	ocamlopt -a -o obcg.cmxa -cc "$(CADP)/src/com/cadp_cc" bcg/bcg_interface.ml -cclib libcbcg.a -ccopt -L$(CADP)/bin.`$(CADP)/com/arch` -ccopt -L$(CADP)/bin.`$(CADP)/com/arch` -cclib -lBCG_IO -cclib -lBCG
